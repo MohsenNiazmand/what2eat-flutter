@@ -360,9 +360,15 @@ Development is **strictly phased**. Complete one phase, commit, update [Developm
 - Handle 404 on GET (no preferences yet) — show empty form
 - Optional: prompt new users to set preferences after first login
 
-**Acceptance criteria:**
-- CRUD matches backend behavior (upsert on PUT, 404 on GET when empty)
-- Preferences sent to backend on save
+**Deliverables:**
+- [x] `GetPreferencesUseCase`, `SavePreferencesUseCase`, `DeletePreferencesUseCase`
+- [x] 404 on GET mapped to empty form (no error shown)
+- [x] `PreferencesScreen` with chip multi-select for dietary/cuisine options
+- [x] Save (PUT upsert) and delete with confirmation dialog
+- [x] Navigation from Profile via `/preferences` route
+- [x] Localized option labels (fa/en); API values in English
+
+**Status:** ✅ Complete
 
 ---
 
@@ -473,28 +479,29 @@ Development is **strictly phased**. Complete one phase, commit, update [Developm
 
 | Field | Value |
 |-------|-------|
-| **Last Completed Phase** | Phase 6 — Main Shell & Profile |
+| **Last Completed Phase** | Phase 7 — Preferences Feature |
 | **Completed At** | 2026-07-15 |
-| **Next Phase** | Phase 7 — Preferences Feature |
+| **Next Phase** | Phase 8 — Recipe Generation (AI) |
 | **Commit Scope** | `mobile/what_2_eat/` |
 
 ### What Has Been Done
 
 - Phase 0–5: Full foundation through OTP authentication
-- Phase 6: Profile feature
-  - `ProfileScreen` with mobile display, name edit, save, logout dialog
-  - `UpdateProfileNotifier` and `ProfileRefreshNotifier` providers
-  - Logout clears session and navigates to login
-  - Home / Generate / Favorites tabs still placeholders
+- Phase 6: Profile feature (display/edit name, logout)
+- Phase 7: Preferences feature
+  - Use cases: Get (404 → null), Save (upsert), Delete
+  - `PreferencesScreen` with FilterChip multi-select
+  - Profile → `/preferences` navigation
   - `flutter analyze` and `flutter test` pass
 
-### What To Do Next (Phase 7)
+### What To Do Next (Phase 8)
 
-1. Create preferences use cases (Get, Save, Delete)
-2. Build preferences screen with dietary/cuisine multi-select
-3. Handle 404 when no preferences exist yet
-4. Update **Development Progress** section to Phase 7 complete
-5. Provide English commit message to the user (do not run git commands)
+1. Create `GenerateRecipe` use case
+2. Build generate screen with dynamic ingredient input
+3. Build recipe detail screen (shared with Phase 9)
+4. Handle 502 AI provider errors
+5. Update **Development Progress** section to Phase 8 complete
+6. Provide English commit message to the user (do not run git commands)
 
 ### Phase Completion Checklist
 

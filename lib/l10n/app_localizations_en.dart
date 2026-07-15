@@ -132,4 +132,91 @@ class AppLocalizationsEn extends AppLocalizations {
   String routeNotFound(String path) {
     return 'Route not found: $path';
   }
+
+  @override
+  String get managePreferences => 'Dietary preferences';
+
+  @override
+  String get preferencesTitle => 'Preferences';
+
+  @override
+  String get preferencesSubtitle =>
+      'Choose dietary restrictions and cuisines you prefer. These help personalize recipe suggestions.';
+
+  @override
+  String get preferencesEmptyHint =>
+      'You have not set preferences yet. Select options below and save.';
+
+  @override
+  String get dietaryRestrictionsSection => 'Dietary restrictions';
+
+  @override
+  String get preferredCuisinesSection => 'Preferred cuisines';
+
+  @override
+  String get savePreferences => 'Save preferences';
+
+  @override
+  String get deletePreferences => 'Delete preferences';
+
+  @override
+  String get deletePreferencesTitle => 'Delete preferences';
+
+  @override
+  String get deletePreferencesConfirmation =>
+      'Are you sure you want to delete your preferences?';
+
+  @override
+  String get preferencesSavedSuccess => 'Preferences saved successfully';
+
+  @override
+  String get preferencesDeletedSuccess => 'Preferences deleted successfully';
+
+  @override
+  String get retry => 'Retry';
+
+  @override
+  String get dietaryVegan => 'Vegan';
+
+  @override
+  String get dietaryVegetarian => 'Vegetarian';
+
+  @override
+  String get dietaryGlutenFree => 'Gluten-free';
+
+  @override
+  String get dietaryDairyFree => 'Dairy-free';
+
+  @override
+  String get dietaryHalal => 'Halal';
+
+  @override
+  String get dietaryLowCarb => 'Low-carb';
+
+  @override
+  String get dietaryNutFree => 'Nut-free';
+
+  @override
+  String get cuisinePersian => 'Persian';
+
+  @override
+  String get cuisineItalian => 'Italian';
+
+  @override
+  String get cuisineMediterranean => 'Mediterranean';
+
+  @override
+  String get cuisineIndian => 'Indian';
+
+  @override
+  String get cuisineChinese => 'Chinese';
+
+  @override
+  String get cuisineMexican => 'Mexican';
+
+  @override
+  String get cuisineTurkish => 'Turkish';
+
+  @override
+  String get cuisineFrench => 'French';
 }

@@ -53,5 +53,33 @@
         "type": "String"
       }
     }
-  }
+  },
+  "managePreferences": "Dietary preferences",
+  "preferencesTitle": "Preferences",
+  "preferencesSubtitle": "Choose dietary restrictions and cuisines you prefer. These help personalize recipe suggestions.",
+  "preferencesEmptyHint": "You have not set preferences yet. Select options below and save.",
+  "dietaryRestrictionsSection": "Dietary restrictions",
+  "preferredCuisinesSection": "Preferred cuisines",
+  "savePreferences": "Save preferences",
+  "deletePreferences": "Delete preferences",
+  "deletePreferencesTitle": "Delete preferences",
+  "deletePreferencesConfirmation": "Are you sure you want to delete your preferences?",
+  "preferencesSavedSuccess": "Preferences saved successfully",
+  "preferencesDeletedSuccess": "Preferences deleted successfully",
+  "retry": "Retry",
+  "dietaryVegan": "Vegan",
+  "dietaryVegetarian": "Vegetarian",
+  "dietaryGlutenFree": "Gluten-free",
+  "dietaryDairyFree": "Dairy-free",
+  "dietaryHalal": "Halal",
+  "dietaryLowCarb": "Low-carb",
+  "dietaryNutFree": "Nut-free",
+  "cuisinePersian": "Persian",
+  "cuisineItalian": "Italian",
+  "cuisineMediterranean": "Mediterranean",
+  "cuisineIndian": "Indian",
+  "cuisineChinese": "Chinese",
+  "cuisineMexican": "Mexican",
+  "cuisineTurkish": "Turkish",
+  "cuisineFrench": "French"
 }

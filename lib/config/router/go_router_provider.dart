@@ -9,6 +9,7 @@ import 'package:what_2_eat/features/auth/presentation/screens/login_screen.dart'
 import 'package:what_2_eat/features/auth/presentation/screens/otp_verification_screen.dart';
 import 'package:what_2_eat/features/main/presentation/screens/main_shell_screen.dart';
 import 'package:what_2_eat/features/main/presentation/screens/placeholder_tab_screen.dart';
+import 'package:what_2_eat/features/preferences/presentation/screens/preferences_screen.dart';
 import 'package:what_2_eat/features/profile/presentation/screens/profile_screen.dart';
 import 'package:what_2_eat/features/splash/presentation/screens/splash_screen.dart';
 import 'package:what_2_eat/shared/domain/enums/placeholder_tab.dart';
@@ -75,6 +76,10 @@ GoRouter goRouter(GoRouterRef ref) {
           final mobile = state.uri.queryParameters['mobile'] ?? '';
           return OtpVerificationScreen(mobileNumber: mobile);
         },
+      ),
+      GoRoute(
+        path: AppRoutes.preferences,
+        builder: (context, state) => const PreferencesScreen(),
       ),
       StatefulShellRoute.indexedStack(
         builder: (context, state, navigationShell) {

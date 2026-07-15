@@ -337,6 +337,174 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Route not found: {path}'**
   String routeNotFound(String path);
+
+  /// No description provided for @managePreferences.
+  ///
+  /// In en, this message translates to:
+  /// **'Dietary preferences'**
+  String get managePreferences;
+
+  /// No description provided for @preferencesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Preferences'**
+  String get preferencesTitle;
+
+  /// No description provided for @preferencesSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose dietary restrictions and cuisines you prefer. These help personalize recipe suggestions.'**
+  String get preferencesSubtitle;
+
+  /// No description provided for @preferencesEmptyHint.
+  ///
+  /// In en, this message translates to:
+  /// **'You have not set preferences yet. Select options below and save.'**
+  String get preferencesEmptyHint;
+
+  /// No description provided for @dietaryRestrictionsSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Dietary restrictions'**
+  String get dietaryRestrictionsSection;
+
+  /// No description provided for @preferredCuisinesSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Preferred cuisines'**
+  String get preferredCuisinesSection;
+
+  /// No description provided for @savePreferences.
+  ///
+  /// In en, this message translates to:
+  /// **'Save preferences'**
+  String get savePreferences;
+
+  /// No description provided for @deletePreferences.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete preferences'**
+  String get deletePreferences;
+
+  /// No description provided for @deletePreferencesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete preferences'**
+  String get deletePreferencesTitle;
+
+  /// No description provided for @deletePreferencesConfirmation.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete your preferences?'**
+  String get deletePreferencesConfirmation;
+
+  /// No description provided for @preferencesSavedSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Preferences saved successfully'**
+  String get preferencesSavedSuccess;
+
+  /// No description provided for @preferencesDeletedSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Preferences deleted successfully'**
+  String get preferencesDeletedSuccess;
+
+  /// No description provided for @retry.
+  ///
+  /// In en, this message translates to:
+  /// **'Retry'**
+  String get retry;
+
+  /// No description provided for @dietaryVegan.
+  ///
+  /// In en, this message translates to:
+  /// **'Vegan'**
+  String get dietaryVegan;
+
+  /// No description provided for @dietaryVegetarian.
+  ///
+  /// In en, this message translates to:
+  /// **'Vegetarian'**
+  String get dietaryVegetarian;
+
+  /// No description provided for @dietaryGlutenFree.
+  ///
+  /// In en, this message translates to:
+  /// **'Gluten-free'**
+  String get dietaryGlutenFree;
+
+  /// No description provided for @dietaryDairyFree.
+  ///
+  /// In en, this message translates to:
+  /// **'Dairy-free'**
+  String get dietaryDairyFree;
+
+  /// No description provided for @dietaryHalal.
+  ///
+  /// In en, this message translates to:
+  /// **'Halal'**
+  String get dietaryHalal;
+
+  /// No description provided for @dietaryLowCarb.
+  ///
+  /// In en, this message translates to:
+  /// **'Low-carb'**
+  String get dietaryLowCarb;
+
+  /// No description provided for @dietaryNutFree.
+  ///
+  /// In en, this message translates to:
+  /// **'Nut-free'**
+  String get dietaryNutFree;
+
+  /// No description provided for @cuisinePersian.
+  ///
+  /// In en, this message translates to:
+  /// **'Persian'**
+  String get cuisinePersian;
+
+  /// No description provided for @cuisineItalian.
+  ///
+  /// In en, this message translates to:
+  /// **'Italian'**
+  String get cuisineItalian;
+
+  /// No description provided for @cuisineMediterranean.
+  ///
+  /// In en, this message translates to:
+  /// **'Mediterranean'**
+  String get cuisineMediterranean;
+
+  /// No description provided for @cuisineIndian.
+  ///
+  /// In en, this message translates to:
+  /// **'Indian'**
+  String get cuisineIndian;
+
+  /// No description provided for @cuisineChinese.
+  ///
+  /// In en, this message translates to:
+  /// **'Chinese'**
+  String get cuisineChinese;
+
+  /// No description provided for @cuisineMexican.
+  ///
+  /// In en, this message translates to:
+  /// **'Mexican'**
+  String get cuisineMexican;
+
+  /// No description provided for @cuisineTurkish.
+  ///
+  /// In en, this message translates to:
+  /// **'Turkish'**
+  String get cuisineTurkish;
+
+  /// No description provided for @cuisineFrench.
+  ///
+  /// In en, this message translates to:
+  /// **'French'**
+  String get cuisineFrench;
 }
 
 class _AppLocalizationsDelegate

@@ -133,4 +133,91 @@ class AppLocalizationsFa extends AppLocalizations {
   String routeNotFound(String path) {
     return 'مسیر یافت نشد: $path';
   }
+
+  @override
+  String get managePreferences => 'ترجیحات غذایی';
+
+  @override
+  String get preferencesTitle => 'ترجیحات';
+
+  @override
+  String get preferencesSubtitle =>
+      'محدودیت‌های غذایی و سبک‌های آشپزی مورد علاقه خود را انتخاب کنید تا پیشنهاد دستور پخت شخصی‌سازی شود.';
+
+  @override
+  String get preferencesEmptyHint =>
+      'هنوز ترجیحی ثبت نکرده‌اید. گزینه‌ها را انتخاب و ذخیره کنید.';
+
+  @override
+  String get dietaryRestrictionsSection => 'محدودیت‌های غذایی';
+
+  @override
+  String get preferredCuisinesSection => 'سبک‌های آشپزی';
+
+  @override
+  String get savePreferences => 'ذخیره ترجیحات';
+
+  @override
+  String get deletePreferences => 'حذف ترجیحات';
+
+  @override
+  String get deletePreferencesTitle => 'حذف ترجیحات';
+
+  @override
+  String get deletePreferencesConfirmation =>
+      'آیا مطمئن هستید که می‌خواهید ترجیحات خود را حذف کنید؟';
+
+  @override
+  String get preferencesSavedSuccess => 'ترجیحات با موفقیت ذخیره شد';
+
+  @override
+  String get preferencesDeletedSuccess => 'ترجیحات با موفقیت حذف شد';
+
+  @override
+  String get retry => 'تلاش مجدد';
+
+  @override
+  String get dietaryVegan => 'وگان';
+
+  @override
+  String get dietaryVegetarian => 'گیاهخواری';
+
+  @override
+  String get dietaryGlutenFree => 'بدون گلوتن';
+
+  @override
+  String get dietaryDairyFree => 'بدون لبنیات';
+
+  @override
+  String get dietaryHalal => 'حلال';
+
+  @override
+  String get dietaryLowCarb => 'کم‌کربوهیدرات';
+
+  @override
+  String get dietaryNutFree => 'بدون آجیل';
+
+  @override
+  String get cuisinePersian => 'ایرانی';
+
+  @override
+  String get cuisineItalian => 'ایتالیایی';
+
+  @override
+  String get cuisineMediterranean => 'مدیترانه‌ای';
+
+  @override
+  String get cuisineIndian => 'هندی';
+
+  @override
+  String get cuisineChinese => 'چینی';
+
+  @override
+  String get cuisineMexican => 'مکزیکی';
+
+  @override
+  String get cuisineTurkish => 'ترکی';
+
+  @override
+  String get cuisineFrench => 'فرانسوی';
 }

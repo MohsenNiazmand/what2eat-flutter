@@ -22,6 +22,9 @@ import 'package:what_2_eat/features/favorites/domain/repositories/favorite_repos
 import 'package:what_2_eat/features/preferences/data/repositories/preference_repository_impl.dart';
 import 'package:what_2_eat/features/preferences/data/services/preference_api.dart';
 import 'package:what_2_eat/features/preferences/domain/repositories/preference_repository.dart';
+import 'package:what_2_eat/features/preferences/domain/usecases/delete_preferences_usecase.dart';
+import 'package:what_2_eat/features/preferences/domain/usecases/get_preferences_usecase.dart';
+import 'package:what_2_eat/features/preferences/domain/usecases/save_preferences_usecase.dart';
 import 'package:what_2_eat/features/recipes/data/repositories/recipe_repository_impl.dart';
 import 'package:what_2_eat/features/recipes/data/services/recipe_api.dart';
 import 'package:what_2_eat/features/recipes/domain/repositories/recipe_repository.dart';
@@ -90,5 +93,14 @@ Future<void> initializeDependencies() async {
     )
     ..registerLazySingleton<UpdateProfileUseCase>(
       () => UpdateProfileUseCase(getIt()),
+    )
+    ..registerLazySingleton<GetPreferencesUseCase>(
+      () => GetPreferencesUseCase(getIt()),
+    )
+    ..registerLazySingleton<SavePreferencesUseCase>(
+      () => SavePreferencesUseCase(getIt()),
+    )
+    ..registerLazySingleton<DeletePreferencesUseCase>(
+      () => DeletePreferencesUseCase(getIt()),
     );
 }
