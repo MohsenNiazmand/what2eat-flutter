@@ -4,8 +4,24 @@
   "appNamePersian": "What2Eat",
   "loginTitle": "Login",
   "loginWithMobile": "Login with mobile number",
-  "loginPlaceholderHint": "OTP login screen will be implemented in Phase 5",
-  "continueTemporary": "Continue (temporary)",
+  "loginSubtitle": "Enter your Iranian mobile number to receive a verification code",
+  "mobileNumberLabel": "Mobile number",
+  "mobileNumberHint": "09XXXXXXXXX",
+  "invalidMobileNumber": "Enter a valid mobile number (09XXXXXXXXX)",
+  "sendOtp": "Send verification code",
+  "otpTitle": "Verification code",
+  "otpSubtitle": "Enter the 6-digit code sent to {mobile}",
+  "@otpSubtitle": {
+    "placeholders": {
+      "mobile": {
+        "type": "String"
+      }
+    }
+  },
+  "verifyOtp": "Verify and continue",
+  "resendOtp": "Resend code",
+  "otpSentSuccess": "Verification code sent",
+  "otpInvalid": "Enter the 6-digit verification code",
   "navRecipes": "Recipes",
   "navGenerate": "Generate",
   "navFavorites": "Favorites",

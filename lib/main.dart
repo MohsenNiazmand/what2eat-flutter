@@ -8,7 +8,7 @@ Future<void> main() async {
   await initializeDependencies();
 
   runApp(
-    ProviderScope(
+    const ProviderScope(
       child: What2EatApp(),
     ),
   );

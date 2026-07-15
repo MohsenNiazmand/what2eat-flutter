@@ -1,23 +1,64 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:what_2_eat/config/router/routes.dart';
 import 'package:what_2_eat/core/extensions/context_extensions.dart';
-import 'package:what_2_eat/features/auth/presentation/screens/login_placeholder_screen.dart';
+import 'package:what_2_eat/features/auth/domain/enums/auth_status.dart';
+import 'package:what_2_eat/features/auth/presentation/providers/auth_state_provider.dart';
+import 'package:what_2_eat/features/auth/presentation/screens/login_screen.dart';
+import 'package:what_2_eat/features/auth/presentation/screens/otp_verification_screen.dart';
 import 'package:what_2_eat/features/main/presentation/screens/main_shell_screen.dart';
 import 'package:what_2_eat/features/main/presentation/screens/placeholder_tab_screen.dart';
 import 'package:what_2_eat/features/splash/presentation/screens/splash_screen.dart';
 import 'package:what_2_eat/shared/domain/enums/placeholder_tab.dart';
 
+part 'go_router_provider.g.dart';
+
 final GlobalKey<NavigatorState> rootNavigatorKey =
     GlobalKey<NavigatorState>(debugLabel: 'root');
 
-class AppRouter {
-  AppRouter();
+@Riverpod(keepAlive: true)
+GoRouter goRouter(GoRouterRef ref) {
+  final authListenable = ValueNotifier(ref.read(authStateProvider));
 
-  late final GoRouter router = GoRouter(
+  ref
+    ..listen(authStateProvider, (_, next) {
+      authListenable.value = next;
+    })
+    ..onDispose(authListenable.dispose);
+
+  return GoRouter(
     navigatorKey: rootNavigatorKey,
     initialLocation: AppRoutes.splash,
     debugLogDiagnostics: true,
+    refreshListenable: authListenable,
+    redirect: (context, state) {
+      final status = authListenable.value;
+      final path = state.uri.path;
+
+      if (status == AuthStatus.initial) {
+        return path == AppRoutes.splash ? null : AppRoutes.splash;
+      }
+
+      if (path == AppRoutes.splash) {
+        return status == AuthStatus.authenticated
+            ? AppRoutes.home
+            : AppRoutes.login;
+      }
+
+      final isAuthRoute =
+          path == AppRoutes.login || path == AppRoutes.otpVerification;
+
+      if (status == AuthStatus.unauthenticated && !isAuthRoute) {
+        return AppRoutes.login;
+      }
+
+      if (status == AuthStatus.authenticated && isAuthRoute) {
+        return AppRoutes.home;
+      }
+
+      return null;
+    },
     routes: [
       GoRoute(
         path: AppRoutes.splash,
@@ -25,7 +66,14 @@ class AppRouter {
       ),
       GoRoute(
         path: AppRoutes.login,
-        builder: (context, state) => const LoginPlaceholderScreen(),
+        builder: (context, state) => const LoginScreen(),
+      ),
+      GoRoute(
+        path: AppRoutes.otpVerification,
+        builder: (context, state) {
+          final mobile = state.uri.queryParameters['mobile'] ?? '';
+          return OtpVerificationScreen(mobileNumber: mobile);
+        },
       ),
       StatefulShellRoute.indexedStack(
         builder: (context, state, navigationShell) {

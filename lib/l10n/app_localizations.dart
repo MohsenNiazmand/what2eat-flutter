@@ -122,17 +122,71 @@ abstract class AppLocalizations {
   /// **'Login with mobile number'**
   String get loginWithMobile;
 
-  /// No description provided for @loginPlaceholderHint.
+  /// No description provided for @loginSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'OTP login screen will be implemented in Phase 5'**
-  String get loginPlaceholderHint;
+  /// **'Enter your Iranian mobile number to receive a verification code'**
+  String get loginSubtitle;
 
-  /// No description provided for @continueTemporary.
+  /// No description provided for @mobileNumberLabel.
   ///
   /// In en, this message translates to:
-  /// **'Continue (temporary)'**
-  String get continueTemporary;
+  /// **'Mobile number'**
+  String get mobileNumberLabel;
+
+  /// No description provided for @mobileNumberHint.
+  ///
+  /// In en, this message translates to:
+  /// **'09XXXXXXXXX'**
+  String get mobileNumberHint;
+
+  /// No description provided for @invalidMobileNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a valid mobile number (09XXXXXXXXX)'**
+  String get invalidMobileNumber;
+
+  /// No description provided for @sendOtp.
+  ///
+  /// In en, this message translates to:
+  /// **'Send verification code'**
+  String get sendOtp;
+
+  /// No description provided for @otpTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Verification code'**
+  String get otpTitle;
+
+  /// No description provided for @otpSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the 6-digit code sent to {mobile}'**
+  String otpSubtitle(String mobile);
+
+  /// No description provided for @verifyOtp.
+  ///
+  /// In en, this message translates to:
+  /// **'Verify and continue'**
+  String get verifyOtp;
+
+  /// No description provided for @resendOtp.
+  ///
+  /// In en, this message translates to:
+  /// **'Resend code'**
+  String get resendOtp;
+
+  /// No description provided for @otpSentSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Verification code sent'**
+  String get otpSentSuccess;
+
+  /// No description provided for @otpInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the 6-digit verification code'**
+  String get otpInvalid;
 
   /// No description provided for @navRecipes.
   ///

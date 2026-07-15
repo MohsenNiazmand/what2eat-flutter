@@ -21,11 +21,40 @@ class AppLocalizationsEn extends AppLocalizations {
   String get loginWithMobile => 'Login with mobile number';
 
   @override
-  String get loginPlaceholderHint =>
-      'OTP login screen will be implemented in Phase 5';
+  String get loginSubtitle =>
+      'Enter your Iranian mobile number to receive a verification code';
 
   @override
-  String get continueTemporary => 'Continue (temporary)';
+  String get mobileNumberLabel => 'Mobile number';
+
+  @override
+  String get mobileNumberHint => '09XXXXXXXXX';
+
+  @override
+  String get invalidMobileNumber => 'Enter a valid mobile number (09XXXXXXXXX)';
+
+  @override
+  String get sendOtp => 'Send verification code';
+
+  @override
+  String get otpTitle => 'Verification code';
+
+  @override
+  String otpSubtitle(String mobile) {
+    return 'Enter the 6-digit code sent to $mobile';
+  }
+
+  @override
+  String get verifyOtp => 'Verify and continue';
+
+  @override
+  String get resendOtp => 'Resend code';
+
+  @override
+  String get otpSentSuccess => 'Verification code sent';
+
+  @override
+  String get otpInvalid => 'Enter the 6-digit verification code';
 
   @override
   String get navRecipes => 'Recipes';

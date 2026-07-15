@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:what_2_eat/config/router/routes.dart';
 import 'package:what_2_eat/core/constants/colors.dart';
 import 'package:what_2_eat/core/extensions/context_extensions.dart';
+import 'package:what_2_eat/features/auth/presentation/providers/auth_state_provider.dart';
 
 class SplashScreen extends HookConsumerWidget {
   const SplashScreen({super.key});
@@ -15,10 +14,7 @@ class SplashScreen extends HookConsumerWidget {
     useEffect(
       () {
         SchedulerBinding.instance.addPostFrameCallback((_) async {
-          await Future<void>.delayed(const Duration(milliseconds: 800));
-          if (!context.mounted) return;
-          // Auth check will be wired in Phase 5.
-          context.go(AppRoutes.login);
+          await ref.read(authStateProvider.notifier).checkSession();
         });
         return null;
       },

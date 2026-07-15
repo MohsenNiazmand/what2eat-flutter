@@ -21,11 +21,41 @@ class AppLocalizationsFa extends AppLocalizations {
   String get loginWithMobile => 'ورود با شماره موبایل';
 
   @override
-  String get loginPlaceholderHint =>
-      'صفحه ورود OTP در Phase 5 پیاده‌سازی می‌شود';
+  String get loginSubtitle =>
+      'شماره موبایل خود را وارد کنید تا کد تأیید برایتان ارسال شود';
 
   @override
-  String get continueTemporary => 'ادامه (موقت)';
+  String get mobileNumberLabel => 'شماره موبایل';
+
+  @override
+  String get mobileNumberHint => '09XXXXXXXXX';
+
+  @override
+  String get invalidMobileNumber =>
+      'شماره موبایل معتبر وارد کنید (09XXXXXXXXX)';
+
+  @override
+  String get sendOtp => 'ارسال کد تأیید';
+
+  @override
+  String get otpTitle => 'کد تأیید';
+
+  @override
+  String otpSubtitle(String mobile) {
+    return 'کد ۶ رقمی ارسال‌شده به $mobile را وارد کنید';
+  }
+
+  @override
+  String get verifyOtp => 'تأیید و ادامه';
+
+  @override
+  String get resendOtp => 'ارسال مجدد کد';
+
+  @override
+  String get otpSentSuccess => 'کد تأیید ارسال شد';
+
+  @override
+  String get otpInvalid => 'کد تأیید ۶ رقمی را وارد کنید';
 
   @override
   String get navRecipes => 'دستورها';

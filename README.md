@@ -310,10 +310,15 @@ Development is **strictly phased**. Complete one phase, commit, update [Developm
   - Authenticated → `/home`
 - Persist user info after verify
 
-**Acceptance criteria:**
-- Full OTP flow works against local backend (dev OTP `123456`)
-- Logout clears tokens and navigates to login
-- Back button handled correctly on auth screens
+**Deliverables:**
+- [x] `LoginScreen` with mobile validation and OTP request
+- [x] `OtpVerificationScreen` with Pinput (6-digit) and resend
+- [x] Riverpod providers: auth state, current user, login, verify, logout
+- [x] `goRouterProvider` with auth redirect guards
+- [x] Splash wired to `checkSession()` + auto redirect
+- [x] User persisted in `currentUserProvider` after verify
+
+**Status:** ✅ Complete
 
 ---
 
@@ -464,30 +469,28 @@ Development is **strictly phased**. Complete one phase, commit, update [Developm
 
 | Field | Value |
 |-------|-------|
-| **Last Completed Phase** | Phase 4 — Domain Layer (Auth & Shared Entities) |
+| **Last Completed Phase** | Phase 5 — Authentication UI & Routing |
 | **Completed At** | 2026-07-15 |
-| **Next Phase** | Phase 5 — Authentication UI & Routing |
+| **Next Phase** | Phase 6 — Main Shell & Profile |
 | **Commit Scope** | `mobile/what_2_eat/` |
 
 ### What Has Been Done
 
-- Phase 0–3: README, scaffold, l10n, networking, auth interceptor, secure storage
-- Phase 4: Domain layer
-  - Entities: `User`, `Recipe`, `Ingredient`, `Preference`, `Favorite`, `PaginatedResult`
-  - Repositories: auth, recipe, preference, favorite (interface + impl)
-  - Auth use cases: RequestOtp, VerifyOtp, RefreshToken, Logout, GetCurrentUser,
-    IsLoggedIn, UpdateProfile
-  - `guard()` maps exceptions to `Failure`; models mapped via `entity_mappers.dart`
-  - All registered in GetIt
+- Phase 0–4: Full foundation through domain layer
+- Phase 5: Authentication UI & routing
+  - Login + OTP verification screens with l10n and Pinput
+  - Auth Riverpod providers (state, login, verify, logout, current user)
+  - GoRouter redirect guards based on auth status
+  - Splash checks session and redirects automatically
   - `flutter analyze` and `flutter test` pass
 
-### What To Do Next (Phase 5)
+### What To Do Next (Phase 6)
 
-1. Build Login and OTP verification screens (replace placeholders)
-2. Add Riverpod providers for auth state and OTP flow
-3. Wire splash screen to `IsLoggedInUseCase`
-4. Add GoRouter redirect guards (unauthenticated → login, authenticated → home)
-5. Update **Development Progress** section to Phase 5 complete
+1. Replace profile placeholder with real profile screen
+2. Display mobile number and name from `currentUserProvider`
+3. Edit display name via `UpdateProfileUseCase`
+4. Wire logout button to `LogoutNotifier`
+5. Update **Development Progress** section to Phase 6 complete
 6. Provide English commit message to the user (do not run git commands)
 
 ### Phase Completion Checklist

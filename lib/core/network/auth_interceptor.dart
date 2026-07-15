@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:dio/dio.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:go_router/go_router.dart';
-import 'package:what_2_eat/config/router/app_router.dart';
+import 'package:what_2_eat/config/router/go_router_provider.dart';
 import 'package:what_2_eat/config/router/routes.dart';
 import 'package:what_2_eat/core/storage/device_id_service.dart';
 import 'package:what_2_eat/core/storage/token_storage.dart';
