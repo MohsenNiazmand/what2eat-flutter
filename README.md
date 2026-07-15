@@ -413,10 +413,14 @@ Development is **strictly phased**. Complete one phase, commit, update [Developm
 - Recipe detail screen integration (from favorites/list/generate)
 - Empty and loading states
 
-**Acceptance criteria:**
-- Pagination works (`page`, `limit`, `total`)
-- Search filters results
-- Tapping a recipe opens detail view
+**Deliverables:**
+- [x] `ListRecipesUseCase` (GetRecipeById from Phase 8)
+- [x] `RecipeListScreen` on Home tab with search, category filter, pagination
+- [x] Infinite scroll load-more and pull-to-refresh
+- [x] Tap recipe → `RecipeDetailScreen` with recipe extra
+- [x] Empty, loading, and error states
+
+**Status:** ✅ Complete
 
 ---
 
@@ -483,9 +487,9 @@ Development is **strictly phased**. Complete one phase, commit, update [Developm
 
 | Field | Value |
 |-------|-------|
-| **Last Completed Phase** | Phase 8 — Recipe Generation (AI) |
+| **Last Completed Phase** | Phase 9 — Recipe Browse & Search |
 | **Completed At** | 2026-07-15 |
-| **Next Phase** | Phase 9 — Recipe Browse & Search |
+| **Next Phase** | Phase 10 — Favorites Feature |
 | **Commit Scope** | `mobile/what_2_eat/` |
 
 ### What Has Been Done
@@ -493,19 +497,21 @@ Development is **strictly phased**. Complete one phase, commit, update [Developm
 - Phase 0–5: Full foundation through OTP authentication
 - Phase 6: Profile feature (display/edit name, logout)
 - Phase 7: Preferences feature (dietary/cuisine chips, CRUD)
-- Phase 8: Recipe generation
-  - `GenerateRecipeScreen` on Generate tab with dynamic inputs
-  - `RecipeDetailScreen` at `/recipes/:id` (reused in Phase 9)
-  - 502 mapped to `AiProviderFailure` with localized message
+- Phase 8: Recipe generation (Generate tab, detail screen, 502 handling)
+- Phase 9: Recipe browse & search
+  - `RecipeListScreen` on Home tab with debounced search
+  - Category dropdown, infinite scroll, pull-to-refresh
+  - Navigate to existing `RecipeDetailScreen`
   - `flutter analyze` and `flutter test` pass
 
-### What To Do Next (Phase 9)
+### What To Do Next (Phase 10)
 
-1. Create `ListRecipes` use case (already in repository — wire provider)
-2. Build recipe list screen on Home tab with pagination and search
-3. Navigate to existing `RecipeDetailScreen` from list
-4. Update **Development Progress** section to Phase 9 complete
-5. Provide English commit message to the user (do not run git commands)
+1. Create favorites use cases (Add, Remove, List, IsFavorite)
+2. Build favorites tab screen
+3. Add favorite toggle on recipe detail screen
+4. Handle 409 conflict gracefully
+5. Update **Development Progress** section to Phase 10 complete
+6. Provide English commit message to the user (do not run git commands)
 
 ### Phase Completion Checklist
 

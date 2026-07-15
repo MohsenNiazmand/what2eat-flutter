@@ -30,6 +30,7 @@ import 'package:what_2_eat/features/recipes/data/services/recipe_api.dart';
 import 'package:what_2_eat/features/recipes/domain/repositories/recipe_repository.dart';
 import 'package:what_2_eat/features/recipes/domain/usecases/generate_recipe_usecase.dart';
 import 'package:what_2_eat/features/recipes/domain/usecases/get_recipe_by_id_usecase.dart';
+import 'package:what_2_eat/features/recipes/domain/usecases/list_recipes_usecase.dart';
 
 final GetIt getIt = GetIt.instance;
 
@@ -110,5 +111,8 @@ Future<void> initializeDependencies() async {
     )
     ..registerLazySingleton<GetRecipeByIdUseCase>(
       () => GetRecipeByIdUseCase(getIt()),
+    )
+    ..registerLazySingleton<ListRecipesUseCase>(
+      () => ListRecipesUseCase(getIt()),
     );
 }

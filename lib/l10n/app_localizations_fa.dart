@@ -321,4 +321,39 @@ class AppLocalizationsFa extends AppLocalizations {
   String caloriesLabel(int calories) {
     return '$calories کیلوکالری';
   }
+
+  @override
+  String get searchRecipesHint => 'جستجوی دستور پخت…';
+
+  @override
+  String get categoryFilterLabel => 'دسته‌بندی';
+
+  @override
+  String get categoryAll => 'همه دسته‌ها';
+
+  @override
+  String get categoryMainDish => 'غذای اصلی';
+
+  @override
+  String get categoryAppetizer => 'پیش‌غذا';
+
+  @override
+  String get categoryDessert => 'دسر';
+
+  @override
+  String get categorySoup => 'سوپ';
+
+  @override
+  String get categorySalad => 'سالاد';
+
+  @override
+  String get categoryStew => 'خورشت';
+
+  @override
+  String get noRecipesFound => 'دستور پختی یافت نشد';
+
+  @override
+  String totalTimeLabel(int minutes) {
+    return '$minutes دقیقه در مجموع';
+  }
 }

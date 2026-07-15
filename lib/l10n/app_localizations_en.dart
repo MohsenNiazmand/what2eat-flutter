@@ -320,4 +320,39 @@ class AppLocalizationsEn extends AppLocalizations {
   String caloriesLabel(int calories) {
     return '$calories kcal';
   }
+
+  @override
+  String get searchRecipesHint => 'Search recipes…';
+
+  @override
+  String get categoryFilterLabel => 'Category';
+
+  @override
+  String get categoryAll => 'All categories';
+
+  @override
+  String get categoryMainDish => 'Main dish';
+
+  @override
+  String get categoryAppetizer => 'Appetizer';
+
+  @override
+  String get categoryDessert => 'Dessert';
+
+  @override
+  String get categorySoup => 'Soup';
+
+  @override
+  String get categorySalad => 'Salad';
+
+  @override
+  String get categoryStew => 'Stew';
+
+  @override
+  String get noRecipesFound => 'No recipes found';
+
+  @override
+  String totalTimeLabel(int minutes) {
+    return '$minutes min total';
+  }
 }

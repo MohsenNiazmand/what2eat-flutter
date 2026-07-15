@@ -152,5 +152,23 @@
         "type": "int"
       }
     }
+  },
+  "searchRecipesHint": "Search recipes…",
+  "categoryFilterLabel": "Category",
+  "categoryAll": "All categories",
+  "categoryMainDish": "Main dish",
+  "categoryAppetizer": "Appetizer",
+  "categoryDessert": "Dessert",
+  "categorySoup": "Soup",
+  "categorySalad": "Salad",
+  "categoryStew": "Stew",
+  "noRecipesFound": "No recipes found",
+  "totalTimeLabel": "{minutes} min total",
+  "@totalTimeLabel": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
   }
 }

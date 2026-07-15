@@ -13,6 +13,7 @@ import 'package:what_2_eat/features/preferences/presentation/screens/preferences
 import 'package:what_2_eat/features/profile/presentation/screens/profile_screen.dart';
 import 'package:what_2_eat/features/recipes/presentation/screens/generate_recipe_screen.dart';
 import 'package:what_2_eat/features/recipes/presentation/screens/recipe_detail_screen.dart';
+import 'package:what_2_eat/features/recipes/presentation/screens/recipe_list_screen.dart';
 import 'package:what_2_eat/features/splash/presentation/screens/splash_screen.dart';
 import 'package:what_2_eat/shared/domain/entities/recipe.dart';
 import 'package:what_2_eat/shared/domain/enums/placeholder_tab.dart';
@@ -104,10 +105,7 @@ GoRouter goRouter(GoRouterRef ref) {
             routes: [
               GoRoute(
                 path: AppRoutes.home,
-                builder: (context, state) => const PlaceholderTabScreen(
-                  tab: PlaceholderTab.recipes,
-                  icon: Icons.restaurant_menu,
-                ),
+                builder: (context, state) => const RecipeListScreen(),
               ),
             ],
           ),

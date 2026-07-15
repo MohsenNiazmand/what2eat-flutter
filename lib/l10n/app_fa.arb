@@ -96,5 +96,16 @@
   "prepTimeLabel": "آماده‌سازی: {minutes} دقیقه",
   "cookTimeLabel": "پخت: {minutes} دقیقه",
   "servingsCountLabel": "{count} نفر",
-  "caloriesLabel": "{calories} کیلوکالری"
+  "caloriesLabel": "{calories} کیلوکالری",
+  "searchRecipesHint": "جستجوی دستور پخت…",
+  "categoryFilterLabel": "دسته‌بندی",
+  "categoryAll": "همه دسته‌ها",
+  "categoryMainDish": "غذای اصلی",
+  "categoryAppetizer": "پیش‌غذا",
+  "categoryDessert": "دسر",
+  "categorySoup": "سوپ",
+  "categorySalad": "سالاد",
+  "categoryStew": "خورشت",
+  "noRecipesFound": "دستور پختی یافت نشد",
+  "totalTimeLabel": "{minutes} دقیقه در مجموع"
 }

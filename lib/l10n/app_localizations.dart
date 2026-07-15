@@ -679,6 +679,72 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{calories} kcal'**
   String caloriesLabel(int calories);
+
+  /// No description provided for @searchRecipesHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Search recipes…'**
+  String get searchRecipesHint;
+
+  /// No description provided for @categoryFilterLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Category'**
+  String get categoryFilterLabel;
+
+  /// No description provided for @categoryAll.
+  ///
+  /// In en, this message translates to:
+  /// **'All categories'**
+  String get categoryAll;
+
+  /// No description provided for @categoryMainDish.
+  ///
+  /// In en, this message translates to:
+  /// **'Main dish'**
+  String get categoryMainDish;
+
+  /// No description provided for @categoryAppetizer.
+  ///
+  /// In en, this message translates to:
+  /// **'Appetizer'**
+  String get categoryAppetizer;
+
+  /// No description provided for @categoryDessert.
+  ///
+  /// In en, this message translates to:
+  /// **'Dessert'**
+  String get categoryDessert;
+
+  /// No description provided for @categorySoup.
+  ///
+  /// In en, this message translates to:
+  /// **'Soup'**
+  String get categorySoup;
+
+  /// No description provided for @categorySalad.
+  ///
+  /// In en, this message translates to:
+  /// **'Salad'**
+  String get categorySalad;
+
+  /// No description provided for @categoryStew.
+  ///
+  /// In en, this message translates to:
+  /// **'Stew'**
+  String get categoryStew;
+
+  /// No description provided for @noRecipesFound.
+  ///
+  /// In en, this message translates to:
+  /// **'No recipes found'**
+  String get noRecipesFound;
+
+  /// No description provided for @totalTimeLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'{minutes} min total'**
+  String totalTimeLabel(int minutes);
 }
 
 class _AppLocalizationsDelegate
