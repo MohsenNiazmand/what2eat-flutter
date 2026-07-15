@@ -356,4 +356,13 @@ class AppLocalizationsFa extends AppLocalizations {
   String totalTimeLabel(int minutes) {
     return '$minutes دقیقه در مجموع';
   }
+
+  @override
+  String get noFavoritesFound => 'هنوز دستور مورد علاقه‌ای ندارید';
+
+  @override
+  String get addToFavorites => 'افزودن به علاقه‌مندی‌ها';
+
+  @override
+  String get removeFromFavorites => 'حذف از علاقه‌مندی‌ها';
 }

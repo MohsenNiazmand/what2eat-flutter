@@ -61,6 +61,9 @@ class ExceptionMapper {
     if (statusCode == 404) {
       return NotFoundFailure(message ?? 'Not found');
     }
+    if (statusCode == 409) {
+      return ConflictFailure(message ?? 'Resource already exists');
+    }
     if (statusCode == 502) {
       return AiProviderFailure(
         message ?? 'AI service temporarily unavailable',

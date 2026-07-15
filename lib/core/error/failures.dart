@@ -26,6 +26,10 @@ final class NotFoundFailure extends Failure {
   const NotFoundFailure([super.message = 'Resource not found']);
 }
 
+final class ConflictFailure extends Failure {
+  const ConflictFailure([super.message = 'Resource already exists']);
+}
+
 final class AiProviderFailure extends Failure {
   const AiProviderFailure([
     super.message = 'AI service temporarily unavailable',

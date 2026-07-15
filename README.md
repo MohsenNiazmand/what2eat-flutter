@@ -435,10 +435,14 @@ Development is **strictly phased**. Complete one phase, commit, update [Developm
 - Handle 409 conflict (already favorited) gracefully
 - Optimistic UI update optional (rollback on failure)
 
-**Acceptance criteria:**
-- Add/remove favorite syncs with backend
-- Favorites tab shows embedded recipe data
-- Favorite state reflected on detail screen
+**Deliverables:**
+- [x] Favorites use cases with 409 → success in `AddFavoriteUseCase`
+- [x] `ConflictFailure` for 409 responses
+- [x] `FavoritesScreen` on Favorites tab with pull-to-refresh
+- [x] `FavoriteButton` heart toggle on `RecipeDetailScreen`
+- [x] `favoriteRecipeIdsProvider` for synced favorite state
+
+**Status:** ✅ Complete
 
 ---
 
@@ -487,9 +491,9 @@ Development is **strictly phased**. Complete one phase, commit, update [Developm
 
 | Field | Value |
 |-------|-------|
-| **Last Completed Phase** | Phase 9 — Recipe Browse & Search |
+| **Last Completed Phase** | Phase 10 — Favorites Feature |
 | **Completed At** | 2026-07-15 |
-| **Next Phase** | Phase 10 — Favorites Feature |
+| **Next Phase** | Phase 11 — Polish & UX Finalization |
 | **Commit Scope** | `mobile/what_2_eat/` |
 
 ### What Has Been Done
@@ -498,19 +502,20 @@ Development is **strictly phased**. Complete one phase, commit, update [Developm
 - Phase 6: Profile feature (display/edit name, logout)
 - Phase 7: Preferences feature (dietary/cuisine chips, CRUD)
 - Phase 8: Recipe generation (Generate tab, detail screen, 502 handling)
-- Phase 9: Recipe browse & search
-  - `RecipeListScreen` on Home tab with debounced search
-  - Category dropdown, infinite scroll, pull-to-refresh
-  - Navigate to existing `RecipeDetailScreen`
+- Phase 9: Recipe browse & search (Home tab, pagination, filters)
+- Phase 10: Favorites feature
+  - Add/Remove/List/IsFavorite use cases; 409 handled gracefully
+  - `FavoritesScreen` on Favorites tab
+  - Heart toggle on `RecipeDetailScreen`
   - `flutter analyze` and `flutter test` pass
 
-### What To Do Next (Phase 10)
+### What To Do Next (Phase 11)
 
-1. Create favorites use cases (Add, Remove, List, IsFavorite)
-2. Build favorites tab screen
-3. Add favorite toggle on recipe detail screen
-4. Handle 409 conflict gracefully
-5. Update **Development Progress** section to Phase 10 complete
+1. Add shared loading, empty, and error-retry widgets
+2. Verify Persian/RTL layout across all screens
+3. Handle edge cases (no network, session expired, empty states)
+4. Final `flutter analyze` cleanup
+5. Update **Development Progress** section to Phase 11 complete
 6. Provide English commit message to the user (do not run git commands)
 
 ### Phase Completion Checklist

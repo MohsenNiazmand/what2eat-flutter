@@ -107,5 +107,8 @@
   "categorySalad": "سالاد",
   "categoryStew": "خورشت",
   "noRecipesFound": "دستور پختی یافت نشد",
-  "totalTimeLabel": "{minutes} دقیقه در مجموع"
+  "totalTimeLabel": "{minutes} دقیقه در مجموع",
+  "noFavoritesFound": "هنوز دستور مورد علاقه‌ای ندارید",
+  "addToFavorites": "افزودن به علاقه‌مندی‌ها",
+  "removeFromFavorites": "حذف از علاقه‌مندی‌ها"
 }

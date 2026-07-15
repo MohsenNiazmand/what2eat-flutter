@@ -355,4 +355,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String totalTimeLabel(int minutes) {
     return '$minutes min total';
   }
+
+  @override
+  String get noFavoritesFound => 'No favorite recipes yet';
+
+  @override
+  String get addToFavorites => 'Add to favorites';
+
+  @override
+  String get removeFromFavorites => 'Remove from favorites';
 }

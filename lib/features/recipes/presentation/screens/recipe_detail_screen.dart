@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:what_2_eat/core/extensions/context_extensions.dart';
+import 'package:what_2_eat/features/favorites/presentation/widgets/favorite_button.dart';
 import 'package:what_2_eat/features/recipes/presentation/providers/recipe_detail_provider.dart';
 import 'package:what_2_eat/features/recipes/presentation/widgets/recipe_detail_content.dart';
 import 'package:what_2_eat/shared/domain/entities/recipe.dart';
@@ -18,10 +19,7 @@ class RecipeDetailScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     if (initialRecipe != null) {
-      return Scaffold(
-        appBar: AppBar(title: Text(initialRecipe!.title)),
-        body: RecipeDetailContent(recipe: initialRecipe!),
-      );
+      return _RecipeDetailScaffold(recipe: initialRecipe!);
     }
 
     final recipeAsync = ref.watch(recipeDetailProvider(recipeId));
@@ -57,12 +55,26 @@ class RecipeDetailScreen extends ConsumerWidget {
           ),
         );
       },
-      data: (recipe) {
-        return Scaffold(
-          appBar: AppBar(title: Text(recipe.title)),
-          body: RecipeDetailContent(recipe: recipe),
-        );
-      },
+      data: (recipe) => _RecipeDetailScaffold(recipe: recipe),
+    );
+  }
+}
+
+class _RecipeDetailScaffold extends StatelessWidget {
+  const _RecipeDetailScaffold({required this.recipe});
+
+  final Recipe recipe;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(recipe.title),
+        actions: [
+          FavoriteButton(recipeId: recipe.id),
+        ],
+      ),
+      body: RecipeDetailContent(recipe: recipe),
     );
   }
 }

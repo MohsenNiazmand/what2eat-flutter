@@ -7,8 +7,8 @@ import 'package:what_2_eat/features/auth/domain/enums/auth_status.dart';
 import 'package:what_2_eat/features/auth/presentation/providers/auth_state_provider.dart';
 import 'package:what_2_eat/features/auth/presentation/screens/login_screen.dart';
 import 'package:what_2_eat/features/auth/presentation/screens/otp_verification_screen.dart';
+import 'package:what_2_eat/features/favorites/presentation/screens/favorites_screen.dart';
 import 'package:what_2_eat/features/main/presentation/screens/main_shell_screen.dart';
-import 'package:what_2_eat/features/main/presentation/screens/placeholder_tab_screen.dart';
 import 'package:what_2_eat/features/preferences/presentation/screens/preferences_screen.dart';
 import 'package:what_2_eat/features/profile/presentation/screens/profile_screen.dart';
 import 'package:what_2_eat/features/recipes/presentation/screens/generate_recipe_screen.dart';
@@ -16,7 +16,6 @@ import 'package:what_2_eat/features/recipes/presentation/screens/recipe_detail_s
 import 'package:what_2_eat/features/recipes/presentation/screens/recipe_list_screen.dart';
 import 'package:what_2_eat/features/splash/presentation/screens/splash_screen.dart';
 import 'package:what_2_eat/shared/domain/entities/recipe.dart';
-import 'package:what_2_eat/shared/domain/enums/placeholder_tab.dart';
 
 part 'go_router_provider.g.dart';
 
@@ -121,10 +120,7 @@ GoRouter goRouter(GoRouterRef ref) {
             routes: [
               GoRoute(
                 path: AppRoutes.favorites,
-                builder: (context, state) => const PlaceholderTabScreen(
-                  tab: PlaceholderTab.favorites,
-                  icon: Icons.favorite,
-                ),
+                builder: (context, state) => const FavoritesScreen(),
               ),
             ],
           ),

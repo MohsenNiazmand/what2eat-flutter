@@ -19,6 +19,10 @@ import 'package:what_2_eat/features/auth/domain/usecases/verify_otp_usecase.dart
 import 'package:what_2_eat/features/favorites/data/repositories/favorite_repository_impl.dart';
 import 'package:what_2_eat/features/favorites/data/services/favorite_api.dart';
 import 'package:what_2_eat/features/favorites/domain/repositories/favorite_repository.dart';
+import 'package:what_2_eat/features/favorites/domain/usecases/add_favorite_usecase.dart';
+import 'package:what_2_eat/features/favorites/domain/usecases/is_favorite_usecase.dart';
+import 'package:what_2_eat/features/favorites/domain/usecases/list_favorites_usecase.dart';
+import 'package:what_2_eat/features/favorites/domain/usecases/remove_favorite_usecase.dart';
 import 'package:what_2_eat/features/preferences/data/repositories/preference_repository_impl.dart';
 import 'package:what_2_eat/features/preferences/data/services/preference_api.dart';
 import 'package:what_2_eat/features/preferences/domain/repositories/preference_repository.dart';
@@ -114,5 +118,17 @@ Future<void> initializeDependencies() async {
     )
     ..registerLazySingleton<ListRecipesUseCase>(
       () => ListRecipesUseCase(getIt()),
+    )
+    ..registerLazySingleton<ListFavoritesUseCase>(
+      () => ListFavoritesUseCase(getIt()),
+    )
+    ..registerLazySingleton<AddFavoriteUseCase>(
+      () => AddFavoriteUseCase(getIt()),
+    )
+    ..registerLazySingleton<RemoveFavoriteUseCase>(
+      () => RemoveFavoriteUseCase(getIt()),
+    )
+    ..registerLazySingleton<IsFavoriteUseCase>(
+      () => IsFavoriteUseCase(getIt()),
     );
 }

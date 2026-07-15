@@ -745,6 +745,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{minutes} min total'**
   String totalTimeLabel(int minutes);
+
+  /// No description provided for @noFavoritesFound.
+  ///
+  /// In en, this message translates to:
+  /// **'No favorite recipes yet'**
+  String get noFavoritesFound;
+
+  /// No description provided for @addToFavorites.
+  ///
+  /// In en, this message translates to:
+  /// **'Add to favorites'**
+  String get addToFavorites;
+
+  /// No description provided for @removeFromFavorites.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove from favorites'**
+  String get removeFromFavorites;
 }
 
 class _AppLocalizationsDelegate
