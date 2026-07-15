@@ -36,6 +36,20 @@ final class AiProviderFailure extends Failure {
   ]);
 }
 
+/// Recipe moderation rejection from `POST /api/recipes/generate` (HTTP 422).
+final class ModerationFailure extends Failure {
+  const ModerationFailure({
+    required String message,
+    required this.code,
+  }) : super(message);
+
+  final String code;
+
+  bool get isNonPersianText => code == 'NON_PERSIAN_TEXT';
+
+  bool get isForbiddenIngredients => code == 'FORBIDDEN_INGREDIENTS';
+}
+
 final class CacheFailure extends Failure {
   const CacheFailure([super.message = 'Local storage error']);
 }

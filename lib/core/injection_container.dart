@@ -58,6 +58,7 @@ Future<void> initializeDependencies() async {
       () => createDio(
         tokenStorage: getIt(),
         deviceIdService: getIt(),
+        logger: getIt(),
       ),
     )
     ..registerLazySingleton<AuthApi>(() => AuthApi(getIt()))

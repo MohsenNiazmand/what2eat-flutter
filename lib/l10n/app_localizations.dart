@@ -626,6 +626,30 @@ abstract class AppLocalizations {
   /// **'AI service is temporarily unavailable. Please try again.'**
   String get aiProviderFailure;
 
+  /// No description provided for @persianOnlyAllowed.
+  ///
+  /// In en, this message translates to:
+  /// **'Only Persian letters are allowed'**
+  String get persianOnlyAllowed;
+
+  /// No description provided for @moderationNonPersianTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Write in Persian only'**
+  String get moderationNonPersianTitle;
+
+  /// No description provided for @moderationForbiddenTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Inappropriate ingredient'**
+  String get moderationForbiddenTitle;
+
+  /// No description provided for @editIngredientsButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit ingredients'**
+  String get editIngredientsButton;
+
   /// No description provided for @recipeDetailTitle.
   ///
   /// In en, this message translates to:

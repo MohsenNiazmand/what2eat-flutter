@@ -287,6 +287,18 @@ class AppLocalizationsEn extends AppLocalizations {
       'AI service is temporarily unavailable. Please try again.';
 
   @override
+  String get persianOnlyAllowed => 'Only Persian letters are allowed';
+
+  @override
+  String get moderationNonPersianTitle => 'Write in Persian only';
+
+  @override
+  String get moderationForbiddenTitle => 'Inappropriate ingredient';
+
+  @override
+  String get editIngredientsButton => 'Edit ingredients';
+
+  @override
   String get recipeDetailTitle => 'Recipe';
 
   @override

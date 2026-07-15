@@ -1,6 +1,8 @@
 import 'package:curl_logger_dio_interceptor/curl_logger_dio_interceptor.dart';
 import 'package:dio/dio.dart';
+import 'package:logger/logger.dart';
 import 'package:what_2_eat/core/constants/app_config.dart';
+import 'package:what_2_eat/core/network/api_response_logger_interceptor.dart';
 import 'package:what_2_eat/core/network/auth_interceptor.dart';
 import 'package:what_2_eat/core/storage/device_id_service.dart';
 import 'package:what_2_eat/core/storage/token_storage.dart';
@@ -8,6 +10,7 @@ import 'package:what_2_eat/core/storage/token_storage.dart';
 Dio createDio({
   required TokenStorage tokenStorage,
   required DeviceIdService deviceIdService,
+  Logger? logger,
 }) {
   final dio = Dio(
     BaseOptions(
@@ -33,6 +36,9 @@ Dio createDio({
     dio.interceptors.add(
       CurlLoggerDioInterceptor(printOnSuccess: true),
     );
+    if (logger != null) {
+      dio.interceptors.add(ApiResponseLoggerInterceptor(logger));
+    }
   }
 
   return dio;

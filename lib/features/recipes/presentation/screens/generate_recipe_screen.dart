@@ -6,9 +6,11 @@ import 'package:what_2_eat/config/router/routes.dart';
 import 'package:what_2_eat/core/constants/colors.dart';
 import 'package:what_2_eat/core/error/failures.dart';
 import 'package:what_2_eat/core/extensions/context_extensions.dart';
+import 'package:what_2_eat/core/utils/persian_input.dart';
 import 'package:what_2_eat/features/recipes/presentation/providers/generate_recipe_provider.dart';
 import 'package:what_2_eat/features/recipes/presentation/widgets/dynamic_text_field_list.dart';
 import 'package:what_2_eat/shared/presentation/utils/toast_utils.dart';
+import 'package:what_2_eat/shared/presentation/widgets/moderation_warning_view.dart';
 
 class GenerateRecipeScreen extends HookConsumerWidget {
   const GenerateRecipeScreen({super.key});
@@ -22,7 +24,13 @@ class GenerateRecipeScreen extends HookConsumerWidget {
     final showOptional = useState(false);
     final calorieController = useTextEditingController();
     final servingsController = useTextEditingController();
+    final moderationFailure = useState<ModerationFailure?>(null);
     final isGenerating = generateState.isLoading;
+    final persianFormatter = useMemoized(
+      () => createPersianIngredientFormatter(
+        onRejected: () => showMessageToast(context.tr.persianOnlyAllowed),
+      ),
+    );
 
     int? parseOptionalInt(String value) {
       final trimmed = value.trim();
@@ -37,8 +45,30 @@ class GenerateRecipeScreen extends HookConsumerWidget {
           .toList();
     }
 
+    bool hasInvalidPersianText(List<String> values) {
+      for (final value in values) {
+        final trimmed = value.trim();
+        if (trimmed.isEmpty) continue;
+        if (!isValidPersianIngredientText(trimmed)) {
+          return true;
+        }
+      }
+      return false;
+    }
+
     Future<void> submit() async {
+      moderationFailure.value = null;
+
       if (formKey.currentState?.validate() != true) return;
+
+      if (hasInvalidPersianText(ingredients.value) ||
+          hasInvalidPersianText(tools.value)) {
+        showFailureToast(
+          context,
+          ValidationFailure(context.tr.persianOnlyAllowed),
+        );
+        return;
+      }
 
       final ingredientList = nonEmptyValues(ingredients.value);
       if (ingredientList.isEmpty) {
@@ -77,6 +107,10 @@ class GenerateRecipeScreen extends HookConsumerWidget {
       if (recipe == null) {
         final failure =
             ref.read(generateRecipeNotifierProvider.notifier).lastFailure;
+        if (failure is ModerationFailure) {
+          moderationFailure.value = failure;
+          return;
+        }
         if (failure != null) {
           showFailureToast(context, failure);
         }
@@ -89,7 +123,12 @@ class GenerateRecipeScreen extends HookConsumerWidget {
     return Scaffold(
       appBar: AppBar(title: Text(context.tr.generateTabTitle)),
       body: SafeArea(
-        child: Form(
+        child: moderationFailure.value != null
+            ? ModerationWarningView(
+                failure: moderationFailure.value!,
+                onDismiss: () => moderationFailure.value = null,
+              )
+            : Form(
           key: formKey,
           child: Column(
             children: [
@@ -117,6 +156,7 @@ class GenerateRecipeScreen extends HookConsumerWidget {
                       DynamicTextFieldList(
                         values: ingredients.value,
                         enabled: !isGenerating,
+                        inputFormatters: [persianFormatter],
                         itemLabel: (index) =>
                             context.tr.ingredientFieldLabel(index + 1),
                         itemHint: context.tr.ingredientHint,
@@ -157,6 +197,7 @@ class GenerateRecipeScreen extends HookConsumerWidget {
                           values: tools.value.isEmpty ? [''] : tools.value,
                           enabled: !isGenerating,
                           minItems: 0,
+                          inputFormatters: [persianFormatter],
                           itemLabel: (index) =>
                               context.tr.toolFieldLabel(index + 1),
                           itemHint: context.tr.toolHint,

@@ -288,6 +288,18 @@ class AppLocalizationsFa extends AppLocalizations {
       'سرویس هوش مصنوعی موقتاً در دسترس نیست. لطفاً دوباره تلاش کنید.';
 
   @override
+  String get persianOnlyAllowed => 'فقط حروف فارسی مجاز است';
+
+  @override
+  String get moderationNonPersianTitle => 'فقط فارسی بنویس';
+
+  @override
+  String get moderationForbiddenTitle => 'ماده نامناسب';
+
+  @override
+  String get editIngredientsButton => 'ویرایش مواد';
+
+  @override
   String get recipeDetailTitle => 'دستور پخت';
 
   @override

@@ -11,6 +11,10 @@ void showSuccessToast(String message) {
   BotToast.showText(text: message);
 }
 
+void showMessageToast(String message) {
+  BotToast.showText(text: message);
+}
+
 void showSessionExpiredToast(BuildContext context) {
   BotToast.showText(
     text: failureMessage(context, const UnauthorizedFailure()),

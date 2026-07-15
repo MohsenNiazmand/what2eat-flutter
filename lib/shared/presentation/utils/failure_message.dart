@@ -7,6 +7,7 @@ String failureMessage(BuildContext context, Failure failure) {
     NetworkFailure() => context.tr.networkError,
     UnauthorizedFailure() => context.tr.sessionExpired,
     AiProviderFailure() => context.tr.aiProviderFailure,
+    ModerationFailure() => failure.message,
     ValidationFailure() => failure.message,
     ConflictFailure() => failure.message,
     NotFoundFailure() => failure.message,

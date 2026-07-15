@@ -64,6 +64,9 @@ class ExceptionMapper {
     if (statusCode == 409) {
       return ConflictFailure(message ?? 'Resource already exists');
     }
+    if (statusCode == 422) {
+      return _mapUnprocessableEntity(message, data);
+    }
     if (statusCode == 502) {
       return AiProviderFailure(
         message ?? 'AI service temporarily unavailable',
@@ -81,5 +84,24 @@ class ExceptionMapper {
       if (message is String) return message;
     }
     return null;
+  }
+
+  static String? _extractCode(dynamic data) {
+    if (data is Map<String, dynamic>) {
+      final code = data['code'];
+      if (code is String) return code;
+    }
+    return null;
+  }
+
+  static Failure _mapUnprocessableEntity(String? message, dynamic data) {
+    final code = _extractCode(data);
+    if (code == 'NON_PERSIAN_TEXT' || code == 'FORBIDDEN_INGREDIENTS') {
+      return ModerationFailure(
+        message: message ?? 'Request rejected',
+        code: code!,
+      );
+    }
+    return ValidationFailure(message ?? 'Invalid input');
   }
 }

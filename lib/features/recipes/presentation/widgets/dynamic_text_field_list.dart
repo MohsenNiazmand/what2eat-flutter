@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:what_2_eat/core/extensions/context_extensions.dart';
 
 class DynamicTextFieldList extends StatelessWidget {
@@ -12,6 +13,7 @@ class DynamicTextFieldList extends StatelessWidget {
     required this.addButtonLabel,
     required this.enabled,
     this.minItems = 1,
+    this.inputFormatters = const [],
     super.key,
   });
 
@@ -24,6 +26,7 @@ class DynamicTextFieldList extends StatelessWidget {
   final String addButtonLabel;
   final bool enabled;
   final int minItems;
+  final List<TextInputFormatter> inputFormatters;
 
   @override
   Widget build(BuildContext context) {
@@ -40,6 +43,7 @@ class DynamicTextFieldList extends StatelessWidget {
                   initialValue: values[index],
                   enabled: enabled,
                   textInputAction: TextInputAction.next,
+                  inputFormatters: inputFormatters,
                   decoration: InputDecoration(
                     labelText: itemLabel(index),
                     hintText: itemHint,
