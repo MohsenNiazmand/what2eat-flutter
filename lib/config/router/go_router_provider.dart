@@ -9,6 +9,7 @@ import 'package:what_2_eat/features/auth/presentation/screens/login_screen.dart'
 import 'package:what_2_eat/features/auth/presentation/screens/otp_verification_screen.dart';
 import 'package:what_2_eat/features/main/presentation/screens/main_shell_screen.dart';
 import 'package:what_2_eat/features/main/presentation/screens/placeholder_tab_screen.dart';
+import 'package:what_2_eat/features/profile/presentation/screens/profile_screen.dart';
 import 'package:what_2_eat/features/splash/presentation/screens/splash_screen.dart';
 import 'package:what_2_eat/shared/domain/enums/placeholder_tab.dart';
 
@@ -117,10 +118,7 @@ GoRouter goRouter(GoRouterRef ref) {
             routes: [
               GoRoute(
                 path: AppRoutes.profile,
-                builder: (context, state) => const PlaceholderTabScreen(
-                  tab: PlaceholderTab.profile,
-                  icon: Icons.person,
-                ),
+                builder: (context, state) => const ProfileScreen(),
               ),
             ],
           ),

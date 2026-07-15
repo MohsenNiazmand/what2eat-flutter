@@ -27,6 +27,17 @@
   "favoritesTabDescription": "دستورهای مورد علاقه — Phase 10",
   "profileTabTitle": "پروفایل",
   "profileTabDescription": "پروفایل و تنظیمات — Phase 6",
+  "displayNameLabel": "نام نمایشی",
+  "displayNameHint": "نام خود را وارد کنید",
+  "displayNameRequired": "نام نمایشی الزامی است",
+  "noDisplayName": "نام ثبت نشده",
+  "saveProfile": "ذخیره تغییرات",
+  "profileUpdatedSuccess": "پروفایل با موفقیت به‌روزرسانی شد",
+  "logout": "خروج از حساب",
+  "logoutTitle": "خروج",
+  "logoutConfirmation": "آیا مطمئن هستید که می‌خواهید خارج شوید؟",
+  "confirm": "تأیید",
+  "cancel": "انصراف",
   "errorTitle": "خطا",
   "routeNotFound": "مسیر یافت نشد: {path}"
 }

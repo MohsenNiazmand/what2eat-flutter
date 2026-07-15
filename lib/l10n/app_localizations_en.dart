@@ -93,6 +93,39 @@ class AppLocalizationsEn extends AppLocalizations {
   String get profileTabDescription => 'Profile and settings — Phase 6';
 
   @override
+  String get displayNameLabel => 'Display name';
+
+  @override
+  String get displayNameHint => 'Enter your name';
+
+  @override
+  String get displayNameRequired => 'Display name is required';
+
+  @override
+  String get noDisplayName => 'No name set';
+
+  @override
+  String get saveProfile => 'Save changes';
+
+  @override
+  String get profileUpdatedSuccess => 'Profile updated successfully';
+
+  @override
+  String get logout => 'Log out';
+
+  @override
+  String get logoutTitle => 'Log out';
+
+  @override
+  String get logoutConfirmation => 'Are you sure you want to log out?';
+
+  @override
+  String get confirm => 'Confirm';
+
+  @override
+  String get cancel => 'Cancel';
+
+  @override
   String get errorTitle => 'Error';
 
   @override

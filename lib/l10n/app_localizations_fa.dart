@@ -94,6 +94,39 @@ class AppLocalizationsFa extends AppLocalizations {
   String get profileTabDescription => 'پروفایل و تنظیمات — Phase 6';
 
   @override
+  String get displayNameLabel => 'نام نمایشی';
+
+  @override
+  String get displayNameHint => 'نام خود را وارد کنید';
+
+  @override
+  String get displayNameRequired => 'نام نمایشی الزامی است';
+
+  @override
+  String get noDisplayName => 'نام ثبت نشده';
+
+  @override
+  String get saveProfile => 'ذخیره تغییرات';
+
+  @override
+  String get profileUpdatedSuccess => 'پروفایل با موفقیت به‌روزرسانی شد';
+
+  @override
+  String get logout => 'خروج از حساب';
+
+  @override
+  String get logoutTitle => 'خروج';
+
+  @override
+  String get logoutConfirmation => 'آیا مطمئن هستید که می‌خواهید خارج شوید؟';
+
+  @override
+  String get confirm => 'تأیید';
+
+  @override
+  String get cancel => 'انصراف';
+
+  @override
   String get errorTitle => 'خطا';
 
   @override

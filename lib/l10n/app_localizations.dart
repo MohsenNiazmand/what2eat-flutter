@@ -260,6 +260,72 @@ abstract class AppLocalizations {
   /// **'Profile and settings — Phase 6'**
   String get profileTabDescription;
 
+  /// No description provided for @displayNameLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Display name'**
+  String get displayNameLabel;
+
+  /// No description provided for @displayNameHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your name'**
+  String get displayNameHint;
+
+  /// No description provided for @displayNameRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Display name is required'**
+  String get displayNameRequired;
+
+  /// No description provided for @noDisplayName.
+  ///
+  /// In en, this message translates to:
+  /// **'No name set'**
+  String get noDisplayName;
+
+  /// No description provided for @saveProfile.
+  ///
+  /// In en, this message translates to:
+  /// **'Save changes'**
+  String get saveProfile;
+
+  /// No description provided for @profileUpdatedSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile updated successfully'**
+  String get profileUpdatedSuccess;
+
+  /// No description provided for @logout.
+  ///
+  /// In en, this message translates to:
+  /// **'Log out'**
+  String get logout;
+
+  /// No description provided for @logoutTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Log out'**
+  String get logoutTitle;
+
+  /// No description provided for @logoutConfirmation.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to log out?'**
+  String get logoutConfirmation;
+
+  /// No description provided for @confirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm'**
+  String get confirm;
+
+  /// No description provided for @cancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get cancel;
+
   /// No description provided for @errorTitle.
   ///
   /// In en, this message translates to:

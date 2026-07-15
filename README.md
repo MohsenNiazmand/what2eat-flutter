@@ -335,10 +335,14 @@ Development is **strictly phased**. Complete one phase, commit, update [Developm
 - Profile Riverpod providers and use case wiring
 - Placeholder screens for tabs not yet implemented
 
-**Acceptance criteria:**
-- Bottom nav switches between tabs
-- Profile update persists and reflects on screen
-- Logout from profile works
+**Deliverables:**
+- [x] `MainShellScreen` bottom navigation (from Phase 1, unchanged)
+- [x] `ProfileScreen` — display mobile/name, edit name, logout with confirmation
+- [x] `UpdateProfileNotifier` + `ProfileRefreshNotifier` providers
+- [x] Logout wired via `LogoutNotifier` with redirect to login
+- [x] Other tabs remain placeholders until Phases 8–10
+
+**Status:** ✅ Complete
 
 ---
 
@@ -469,29 +473,28 @@ Development is **strictly phased**. Complete one phase, commit, update [Developm
 
 | Field | Value |
 |-------|-------|
-| **Last Completed Phase** | Phase 5 — Authentication UI & Routing |
+| **Last Completed Phase** | Phase 6 — Main Shell & Profile |
 | **Completed At** | 2026-07-15 |
-| **Next Phase** | Phase 6 — Main Shell & Profile |
+| **Next Phase** | Phase 7 — Preferences Feature |
 | **Commit Scope** | `mobile/what_2_eat/` |
 
 ### What Has Been Done
 
-- Phase 0–4: Full foundation through domain layer
-- Phase 5: Authentication UI & routing
-  - Login + OTP verification screens with l10n and Pinput
-  - Auth Riverpod providers (state, login, verify, logout, current user)
-  - GoRouter redirect guards based on auth status
-  - Splash checks session and redirects automatically
+- Phase 0–5: Full foundation through OTP authentication
+- Phase 6: Profile feature
+  - `ProfileScreen` with mobile display, name edit, save, logout dialog
+  - `UpdateProfileNotifier` and `ProfileRefreshNotifier` providers
+  - Logout clears session and navigates to login
+  - Home / Generate / Favorites tabs still placeholders
   - `flutter analyze` and `flutter test` pass
 
-### What To Do Next (Phase 6)
+### What To Do Next (Phase 7)
 
-1. Replace profile placeholder with real profile screen
-2. Display mobile number and name from `currentUserProvider`
-3. Edit display name via `UpdateProfileUseCase`
-4. Wire logout button to `LogoutNotifier`
-5. Update **Development Progress** section to Phase 6 complete
-6. Provide English commit message to the user (do not run git commands)
+1. Create preferences use cases (Get, Save, Delete)
+2. Build preferences screen with dietary/cuisine multi-select
+3. Handle 404 when no preferences exist yet
+4. Update **Development Progress** section to Phase 7 complete
+5. Provide English commit message to the user (do not run git commands)
 
 ### Phase Completion Checklist
 
