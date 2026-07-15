@@ -251,10 +251,14 @@ Development is **strictly phased**. Complete one phase, commit, update [Developm
   - On refresh failure: clear tokens, redirect to login
 - Wire interceptor into Dio via GetIt
 
-**Acceptance criteria:**
-- Tokens persist across app restarts
-- Expired access token triggers transparent refresh
-- Failed refresh clears session
+**Deliverables:**
+- [x] `TokenStorage` interface + `SecureTokenStorage` implementation
+- [x] `DeviceIdService` with UUID generation and persistence
+- [x] `AuthInterceptor` (Bearer header, 401 refresh + retry, session expiry redirect)
+- [x] Dedicated `_refreshDio` to avoid interceptor recursion
+- [x] Wired into `createDio()` and GetIt
+
+**Status:** ✅ Complete
 
 ---
 
@@ -454,33 +458,31 @@ Development is **strictly phased**. Complete one phase, commit, update [Developm
 
 | Field | Value |
 |-------|-------|
-| **Last Completed Phase** | Phase 2 — Networking Layer & Localization |
+| **Last Completed Phase** | Phase 3 — Auth Interceptor & Secure Storage |
 | **Completed At** | 2026-07-15 |
-| **Next Phase** | Phase 3 — Auth Interceptor & Secure Storage |
-| **Commit Scope** | `mobile/what_2_eat/` (full mobile app through Phase 2) |
+| **Next Phase** | Phase 4 — Domain Layer (Auth & Shared Entities) |
+| **Commit Scope** | `mobile/what_2_eat/` |
 
 ### What Has Been Done
 
-- Phase 0: README with full development roadmap and backend API mapping
-- Phase 1: Project scaffold (Clean Architecture folders, theme, router, GetIt, error handling)
-- Phase 2: Networking & localization
-  - l10n: `lib/l10n/app_en.arb`, `app_fa.arb`, generated `AppLocalizations`
-  - All UI strings use l10n (no hardcoded Persian/English in widgets)
-  - Dio client (`lib/core/network/dio_client.dart`) with curl logger in dev
-  - Retrofit services: `AuthApi`, `RecipeApi`, `PreferenceApi`, `FavoriteApi`
-  - JSON models for User, Recipe, Ingredient, Preference, Favorite, pagination, envelopes
-  - All API services registered in GetIt
-  - `dart run build_runner build` generates `.g.dart` files successfully
+- Phase 0–2: README, scaffold, l10n, Retrofit networking layer
+- Phase 3: Auth interceptor & secure storage
+  - `TokenStorage` / `SecureTokenStorage` — access & refresh tokens in secure storage
+  - `DeviceIdService` — persistent UUID for OTP/auth calls
+  - `AuthInterceptor` — Bearer header, 401 auto-refresh with retry, logout redirect
+  - GetIt registers `FlutterSecureStorage`, storage services, and wired Dio
+  - `context.tr` extension for l10n (`AppLocalizationHelper`)
   - `flutter analyze` and `flutter test` pass
 
-### What To Do Next (Phase 3)
+### What To Do Next (Phase 4)
 
-1. Implement `TokenStorage` with `flutter_secure_storage`
-2. Implement `DeviceIdService` (UUID persisted in secure storage)
-3. Implement `AuthInterceptor` on Dio (Bearer header, 401 refresh, retry)
-4. Wire interceptor into Dio via GetIt (replace bare Dio registration)
-5. Update **Development Progress** section to Phase 3 complete
-6. Provide English commit message to the user (do not run git commands)
+1. Create domain entities: `User`, `Recipe`, `Ingredient`, `Preference`, `Favorite`
+2. Define repository interfaces for auth, recipes, preferences, favorites
+3. Implement use cases (RequestOtp, VerifyOtp, Logout, GetCurrentUser, etc.)
+4. Implement repository classes mapping models ↔ entities
+5. Register repositories and use cases in GetIt
+6. Update **Development Progress** section to Phase 4 complete
+7. Provide English commit message to the user (do not run git commands)
 
 ### Phase Completion Checklist
 
