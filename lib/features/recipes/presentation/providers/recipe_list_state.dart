@@ -1,3 +1,4 @@
+import 'package:what_2_eat/core/error/failures.dart';
 import 'package:what_2_eat/shared/domain/entities/recipe.dart';
 
 class RecipeListUiState {
@@ -10,7 +11,7 @@ class RecipeListUiState {
     this.isLoadingInitial = false,
     this.isLoadingMore = false,
     this.isRefreshing = false,
-    this.errorMessage,
+    this.failure,
   });
 
   final List<Recipe> items;
@@ -21,7 +22,7 @@ class RecipeListUiState {
   final bool isLoadingInitial;
   final bool isLoadingMore;
   final bool isRefreshing;
-  final String? errorMessage;
+  final Failure? failure;
 
   bool get hasMore => currentPage < totalPages;
 
@@ -29,7 +30,7 @@ class RecipeListUiState {
     return items.isEmpty &&
         !isLoadingInitial &&
         !isRefreshing &&
-        errorMessage == null;
+        failure == null;
   }
 
   RecipeListUiState copyWith({
@@ -41,8 +42,8 @@ class RecipeListUiState {
     bool? isLoadingInitial,
     bool? isLoadingMore,
     bool? isRefreshing,
-    String? errorMessage,
-    bool clearError = false,
+    Failure? failure,
+    bool clearFailure = false,
     bool clearCategory = false,
   }) {
     return RecipeListUiState(
@@ -54,7 +55,7 @@ class RecipeListUiState {
       isLoadingInitial: isLoadingInitial ?? this.isLoadingInitial,
       isLoadingMore: isLoadingMore ?? this.isLoadingMore,
       isRefreshing: isRefreshing ?? this.isRefreshing,
-      errorMessage: clearError ? null : (errorMessage ?? this.errorMessage),
+      failure: clearFailure ? null : (failure ?? this.failure),
     );
   }
 }

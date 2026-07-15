@@ -5,6 +5,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:what_2_eat/core/constants/colors.dart';
 import 'package:what_2_eat/core/extensions/context_extensions.dart';
 import 'package:what_2_eat/features/auth/presentation/providers/auth_state_provider.dart';
+import 'package:what_2_eat/shared/presentation/widgets/app_loading_indicator.dart';
 
 class SplashScreen extends HookConsumerWidget {
   const SplashScreen({super.key});
@@ -47,7 +48,7 @@ class SplashScreen extends HookConsumerWidget {
                   ),
             ),
             const SizedBox(height: 32),
-            const CircularProgressIndicator(),
+            const AppLoadingIndicator(),
           ],
         ),
       ),

@@ -32,8 +32,8 @@ class FavoriteButton extends ConsumerWidget {
                     isCurrentlyFavorite: isFavorite,
                   );
 
-              if (failure != null) {
-                showFailureToast(failure);
+              if (failure != null && context.mounted) {
+                showFailureToast(context, failure);
               }
             },
       icon: isBusy

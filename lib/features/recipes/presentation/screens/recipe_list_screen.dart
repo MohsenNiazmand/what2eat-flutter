@@ -5,7 +5,6 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:what_2_eat/config/router/routes.dart';
-import 'package:what_2_eat/core/constants/colors.dart';
 import 'package:what_2_eat/core/extensions/context_extensions.dart';
 import 'package:what_2_eat/features/recipes/domain/constants/recipe_category_filters.dart';
 import 'package:what_2_eat/features/recipes/presentation/providers/recipe_list_provider.dart';
@@ -13,6 +12,10 @@ import 'package:what_2_eat/features/recipes/presentation/providers/recipe_list_s
 import 'package:what_2_eat/features/recipes/presentation/utils/recipe_category_labels.dart';
 import 'package:what_2_eat/features/recipes/presentation/widgets/recipe_list_tile.dart';
 import 'package:what_2_eat/shared/domain/entities/recipe.dart';
+import 'package:what_2_eat/shared/presentation/utils/failure_message.dart';
+import 'package:what_2_eat/shared/presentation/widgets/app_loading_indicator.dart';
+import 'package:what_2_eat/shared/presentation/widgets/empty_state_view.dart';
+import 'package:what_2_eat/shared/presentation/widgets/error_retry_view.dart';
 
 class RecipeListScreen extends HookConsumerWidget {
   const RecipeListScreen({super.key});
@@ -151,7 +154,9 @@ class RecipeListScreen extends HookConsumerWidget {
               listState: listState,
               scrollController: scrollController,
               onRefresh: onRefresh,
-              onRetry: onRefresh,
+              onRetry: () {
+                ref.read(recipeListNotifierProvider.notifier).refresh();
+              },
               onRecipeTap: openRecipe,
             ),
           ),
@@ -173,54 +178,26 @@ class _RecipeListBody extends StatelessWidget {
   final RecipeListUiState listState;
   final ScrollController scrollController;
   final Future<void> Function() onRefresh;
-  final Future<void> Function() onRetry;
+  final VoidCallback onRetry;
   final Future<void> Function(Recipe recipe) onRecipeTap;
 
   @override
   Widget build(BuildContext context) {
     if (listState.isLoadingInitial && listState.items.isEmpty) {
-      return const Center(child: CircularProgressIndicator());
+      return const AppLoadingIndicator();
     }
 
-    if (listState.errorMessage != null && listState.items.isEmpty) {
-      return Center(
-        child: Padding(
-          padding: const EdgeInsets.all(24),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                listState.errorMessage!,
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(height: 16),
-              ElevatedButton(
-                onPressed: onRetry,
-                child: Text(context.tr.retry),
-              ),
-            ],
-          ),
-        ),
+    if (listState.failure != null && listState.items.isEmpty) {
+      return ErrorRetryView(
+        message: failureMessage(context, listState.failure!),
+        onRetry: onRetry,
       );
     }
 
     if (listState.showEmptyState) {
-      return Center(
-        child: Padding(
-          padding: const EdgeInsets.all(32),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Icon(Icons.restaurant_menu, size: 64, color: cPrimary),
-              const SizedBox(height: 16),
-              Text(
-                context.tr.noRecipesFound,
-                style: Theme.of(context).textTheme.titleMedium,
-                textAlign: TextAlign.center,
-              ),
-            ],
-          ),
-        ),
+      return EmptyStateView(
+        icon: Icons.restaurant_menu,
+        message: context.tr.noRecipesFound,
       );
     }
 
@@ -232,10 +209,7 @@ class _RecipeListBody extends StatelessWidget {
         itemCount: listState.items.length + (listState.isLoadingMore ? 1 : 0),
         itemBuilder: (context, index) {
           if (index >= listState.items.length) {
-            return const Padding(
-              padding: EdgeInsets.all(24),
-              child: Center(child: CircularProgressIndicator()),
-            );
+            return const AppLoadingIndicator(padding: EdgeInsets.all(24));
           }
 
           final recipe = listState.items[index];

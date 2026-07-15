@@ -462,10 +462,14 @@ Development is **strictly phased**. Complete one phase, commit, update [Developm
   - Empty favorites / empty recipe list states
 - Final `flutter analyze` cleanup
 
-**Acceptance criteria:**
-- Consistent UI across all features
-- All primary user flows work end-to-end against backend
-- No analyzer warnings
+**Deliverables:**
+- [x] Shared widgets: `AppLoadingIndicator`, `EmptyStateView`, `ErrorRetryView`
+- [x] Localized failure messages via `failureMessage()` and updated toasts
+- [x] Session expiry clears auth state, shows toast, redirects to login
+- [x] Screens refactored to use shared loading/empty/error widgets
+- [x] Removed unused placeholder tab code
+
+**Status:** ✅ Complete
 
 ---
 
@@ -491,9 +495,9 @@ Development is **strictly phased**. Complete one phase, commit, update [Developm
 
 | Field | Value |
 |-------|-------|
-| **Last Completed Phase** | Phase 10 — Favorites Feature |
+| **Last Completed Phase** | Phase 11 — Polish & UX Finalization |
 | **Completed At** | 2026-07-15 |
-| **Next Phase** | Phase 11 — Polish & UX Finalization |
+| **Next Phase** | Phase 12 — Testing (Optional) |
 | **Commit Scope** | `mobile/what_2_eat/` |
 
 ### What Has Been Done
@@ -503,20 +507,19 @@ Development is **strictly phased**. Complete one phase, commit, update [Developm
 - Phase 7: Preferences feature (dietary/cuisine chips, CRUD)
 - Phase 8: Recipe generation (Generate tab, detail screen, 502 handling)
 - Phase 9: Recipe browse & search (Home tab, pagination, filters)
-- Phase 10: Favorites feature
-  - Add/Remove/List/IsFavorite use cases; 409 handled gracefully
-  - `FavoritesScreen` on Favorites tab
-  - Heart toggle on `RecipeDetailScreen`
+- Phase 10: Favorites feature (tab, heart toggle, 409 handling)
+- Phase 11: Polish & UX
+  - Shared loading, empty, and error-retry widgets
+  - Localized network/session error toasts
+  - Session expiry syncs auth state + redirect
   - `flutter analyze` and `flutter test` pass
 
-### What To Do Next (Phase 11)
+### What To Do Next (Phase 12 — Optional)
 
-1. Add shared loading, empty, and error-retry widgets
-2. Verify Persian/RTL layout across all screens
-3. Handle edge cases (no network, session expired, empty states)
-4. Final `flutter analyze` cleanup
-5. Update **Development Progress** section to Phase 11 complete
-6. Provide English commit message to the user (do not run git commands)
+1. Add unit tests for use cases (mock repositories)
+2. Add widget tests for auth and recipe detail screens
+3. Update **Development Progress** if tests are requested
+4. Provide English commit message to the user (do not run git commands)
 
 ### Phase Completion Checklist
 

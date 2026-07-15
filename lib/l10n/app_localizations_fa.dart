@@ -365,4 +365,15 @@ class AppLocalizationsFa extends AppLocalizations {
 
   @override
   String get removeFromFavorites => 'حذف از علاقه‌مندی‌ها';
+
+  @override
+  String get networkError =>
+      'اتصال اینترنت برقرار نیست. شبکه را بررسی و دوباره تلاش کنید.';
+
+  @override
+  String get sessionExpired =>
+      'نشست شما منقضی شده است. لطفاً دوباره وارد شوید.';
+
+  @override
+  String get genericError => 'خطایی رخ داد. لطفاً دوباره تلاش کنید.';
 }

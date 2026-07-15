@@ -364,4 +364,14 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get removeFromFavorites => 'Remove from favorites';
+
+  @override
+  String get networkError =>
+      'No internet connection. Check your network and try again.';
+
+  @override
+  String get sessionExpired => 'Your session has expired. Please log in again.';
+
+  @override
+  String get genericError => 'Something went wrong. Please try again.';
 }

@@ -173,5 +173,8 @@
   },
   "noFavoritesFound": "No favorite recipes yet",
   "addToFavorites": "Add to favorites",
-  "removeFromFavorites": "Remove from favorites"
+  "removeFromFavorites": "Remove from favorites",
+  "networkError": "No internet connection. Check your network and try again.",
+  "sessionExpired": "Your session has expired. Please log in again.",
+  "genericError": "Something went wrong. Please try again."
 }

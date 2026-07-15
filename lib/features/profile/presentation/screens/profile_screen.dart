@@ -10,6 +10,7 @@ import 'package:what_2_eat/features/auth/presentation/providers/current_user_pro
 import 'package:what_2_eat/features/auth/presentation/providers/logout_provider.dart';
 import 'package:what_2_eat/features/profile/presentation/providers/profile_providers.dart';
 import 'package:what_2_eat/shared/presentation/utils/toast_utils.dart';
+import 'package:what_2_eat/shared/presentation/widgets/app_loading_indicator.dart';
 
 class ProfileScreen extends HookConsumerWidget {
   const ProfileScreen({super.key});
@@ -51,7 +52,7 @@ class ProfileScreen extends HookConsumerWidget {
       if (!context.mounted) return;
 
       if (failure != null) {
-        showFailureToast(failure);
+        showFailureToast(context, failure);
         return;
       }
 
@@ -87,7 +88,7 @@ class ProfileScreen extends HookConsumerWidget {
       if (!context.mounted) return;
 
       if (failure != null) {
-        showFailureToast(failure);
+        showFailureToast(context, failure);
         return;
       }
 
@@ -97,7 +98,7 @@ class ProfileScreen extends HookConsumerWidget {
     return Scaffold(
       appBar: AppBar(title: Text(context.tr.profileTabTitle)),
       body: user == null
-          ? const Center(child: CircularProgressIndicator())
+          ? const AppLoadingIndicator()
           : SafeArea(
               child: Padding(
                 padding: const EdgeInsets.all(24),

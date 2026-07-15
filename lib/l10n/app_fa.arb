@@ -110,5 +110,8 @@
   "totalTimeLabel": "{minutes} دقیقه در مجموع",
   "noFavoritesFound": "هنوز دستور مورد علاقه‌ای ندارید",
   "addToFavorites": "افزودن به علاقه‌مندی‌ها",
-  "removeFromFavorites": "حذف از علاقه‌مندی‌ها"
+  "removeFromFavorites": "حذف از علاقه‌مندی‌ها",
+  "networkError": "اتصال اینترنت برقرار نیست. شبکه را بررسی و دوباره تلاش کنید.",
+  "sessionExpired": "نشست شما منقضی شده است. لطفاً دوباره وارد شوید.",
+  "genericError": "خطایی رخ داد. لطفاً دوباره تلاش کنید."
 }

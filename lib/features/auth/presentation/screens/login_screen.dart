@@ -31,7 +31,7 @@ class LoginScreen extends HookConsumerWidget {
       if (!context.mounted) return;
 
       if (failure != null) {
-        showFailureToast(failure);
+        showFailureToast(context, failure);
         return;
       }
 

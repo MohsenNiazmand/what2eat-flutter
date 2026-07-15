@@ -5,6 +5,8 @@ import 'package:what_2_eat/features/favorites/presentation/widgets/favorite_butt
 import 'package:what_2_eat/features/recipes/presentation/providers/recipe_detail_provider.dart';
 import 'package:what_2_eat/features/recipes/presentation/widgets/recipe_detail_content.dart';
 import 'package:what_2_eat/shared/domain/entities/recipe.dart';
+import 'package:what_2_eat/shared/presentation/widgets/app_loading_indicator.dart';
+import 'package:what_2_eat/shared/presentation/widgets/error_retry_view.dart';
 
 class RecipeDetailScreen extends ConsumerWidget {
   const RecipeDetailScreen({
@@ -27,31 +29,19 @@ class RecipeDetailScreen extends ConsumerWidget {
     return recipeAsync.when(
       loading: () => Scaffold(
         appBar: AppBar(title: Text(context.tr.recipeDetailTitle)),
-        body: const Center(child: CircularProgressIndicator()),
+        body: const AppLoadingIndicator(),
       ),
       error: (error, _) {
         final message =
-            error is StateError ? error.message : context.tr.errorTitle;
+            error is StateError ? error.message : context.tr.genericError;
 
         return Scaffold(
           appBar: AppBar(title: Text(context.tr.recipeDetailTitle)),
-          body: Center(
-            child: Padding(
-              padding: const EdgeInsets.all(24),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(message, textAlign: TextAlign.center),
-                  const SizedBox(height: 16),
-                  ElevatedButton(
-                    onPressed: () {
-                      ref.invalidate(recipeDetailProvider(recipeId));
-                    },
-                    child: Text(context.tr.retry),
-                  ),
-                ],
-              ),
-            ),
+          body: ErrorRetryView(
+            message: message,
+            onRetry: () {
+              ref.invalidate(recipeDetailProvider(recipeId));
+            },
           ),
         );
       },

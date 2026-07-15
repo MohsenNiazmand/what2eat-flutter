@@ -21,7 +21,7 @@ class RecipeListNotifier extends _$RecipeListNotifier {
       query: query,
       category: category,
       clearCategory: category == null,
-      clearError: true,
+      clearFailure: true,
       items: const [],
       currentPage: 0,
       totalPages: 0,
@@ -34,10 +34,10 @@ class RecipeListNotifier extends _$RecipeListNotifier {
     if (state.items.isEmpty) {
       state = state.copyWith(
         isLoadingInitial: true,
-        clearError: true,
+        clearFailure: true,
       );
     } else {
-      state = state.copyWith(isRefreshing: true, clearError: true);
+      state = state.copyWith(isRefreshing: true, clearFailure: true);
     }
 
     await _loadPage(page: 1, append: false);
@@ -72,7 +72,7 @@ class RecipeListNotifier extends _$RecipeListNotifier {
           isLoadingInitial: false,
           isLoadingMore: false,
           isRefreshing: false,
-          errorMessage: failure.message,
+          failure: failure,
         );
       },
       (paginated) {
@@ -87,7 +87,7 @@ class RecipeListNotifier extends _$RecipeListNotifier {
           isLoadingInitial: false,
           isLoadingMore: false,
           isRefreshing: false,
-          clearError: true,
+          clearFailure: true,
         );
       },
     );

@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:what_2_eat/core/constants/colors.dart';
-import 'package:what_2_eat/core/error/failures.dart';
 import 'package:what_2_eat/core/extensions/context_extensions.dart';
 import 'package:what_2_eat/features/preferences/presentation/providers/preferences_providers.dart';
 import 'package:what_2_eat/features/preferences/presentation/widgets/preference_chip_section.dart';
 import 'package:what_2_eat/shared/presentation/utils/toast_utils.dart';
+import 'package:what_2_eat/shared/presentation/widgets/app_loading_indicator.dart';
+import 'package:what_2_eat/shared/presentation/widgets/error_retry_view.dart';
 
 class PreferencesScreen extends HookConsumerWidget {
   const PreferencesScreen({super.key});
@@ -51,7 +52,7 @@ class PreferencesScreen extends HookConsumerWidget {
       if (!context.mounted) return;
 
       if (failure != null) {
-        showFailureToast(failure);
+        showFailureToast(context, failure);
         return;
       }
 
@@ -88,7 +89,7 @@ class PreferencesScreen extends HookConsumerWidget {
       if (!context.mounted) return;
 
       if (failure != null) {
-        showFailureToast(failure);
+        showFailureToast(context, failure);
         return;
       }
 
@@ -101,28 +102,16 @@ class PreferencesScreen extends HookConsumerWidget {
     return Scaffold(
       appBar: AppBar(title: Text(context.tr.preferencesTitle)),
       body: preferencesAsync.when(
-        loading: () => const Center(child: CircularProgressIndicator()),
+        loading: () => const AppLoadingIndicator(),
         error: (error, _) {
           final message =
-              error is Failure ? error.message : context.tr.errorTitle;
+              error is StateError ? error.message : context.tr.genericError;
 
-          return Center(
-            child: Padding(
-              padding: const EdgeInsets.all(24),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(message, textAlign: TextAlign.center),
-                  const SizedBox(height: 16),
-                  ElevatedButton(
-                    onPressed: () {
-                      ref.invalidate(preferencesLoadNotifierProvider);
-                    },
-                    child: Text(context.tr.retry),
-                  ),
-                ],
-              ),
-            ),
+          return ErrorRetryView(
+            message: message,
+            onRetry: () {
+              ref.invalidate(preferencesLoadNotifierProvider);
+            },
           );
         },
         data: (_) {

@@ -54,6 +54,7 @@ class OtpVerificationScreen extends HookConsumerWidget {
       final otp = pinController.text.trim();
       if (otp.length != Constants.otpLength) {
         showFailureToast(
+          context,
           ValidationFailure(context.tr.otpInvalid),
         );
         return;
@@ -68,7 +69,7 @@ class OtpVerificationScreen extends HookConsumerWidget {
       if (!context.mounted) return;
 
       if (result.failure != null) {
-        showFailureToast(result.failure!);
+        showFailureToast(context, result.failure!);
         return;
       }
 
@@ -83,7 +84,7 @@ class OtpVerificationScreen extends HookConsumerWidget {
       if (!context.mounted) return;
 
       if (failure != null) {
-        showFailureToast(failure);
+        showFailureToast(context, failure);
         return;
       }
 

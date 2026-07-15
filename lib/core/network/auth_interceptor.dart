@@ -3,10 +3,13 @@ import 'dart:async';
 import 'package:dio/dio.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:go_router/go_router.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:what_2_eat/config/router/go_router_provider.dart';
 import 'package:what_2_eat/config/router/routes.dart';
 import 'package:what_2_eat/core/storage/device_id_service.dart';
 import 'package:what_2_eat/core/storage/token_storage.dart';
+import 'package:what_2_eat/features/auth/presentation/providers/auth_state_provider.dart';
+import 'package:what_2_eat/shared/presentation/utils/toast_utils.dart';
 
 class AuthInterceptor extends QueuedInterceptor {
   AuthInterceptor({
@@ -143,6 +146,12 @@ class AuthInterceptor extends QueuedInterceptor {
     SchedulerBinding.instance.addPostFrameCallback((_) {
       final context = rootNavigatorKey.currentContext;
       if (context == null || !context.mounted) return;
+
+      ProviderScope.containerOf(context)
+          .read(authStateProvider.notifier)
+          .setUnauthenticated();
+
+      showSessionExpiredToast(context);
 
       final location = GoRouter.of(context)
           .routerDelegate

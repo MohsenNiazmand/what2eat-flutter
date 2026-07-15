@@ -42,7 +42,10 @@ class GenerateRecipeScreen extends HookConsumerWidget {
 
       final ingredientList = nonEmptyValues(ingredients.value);
       if (ingredientList.isEmpty) {
-        showFailureToast(ValidationFailure(context.tr.ingredientsRequired));
+        showFailureToast(
+          context,
+          ValidationFailure(context.tr.ingredientsRequired),
+        );
         return;
       }
 
@@ -51,12 +54,12 @@ class GenerateRecipeScreen extends HookConsumerWidget {
       final servings = parseOptionalInt(servingsController.text);
 
       if (calorieController.text.trim().isNotEmpty && calorieLimit == null) {
-        showFailureToast(ValidationFailure(context.tr.invalidNumber));
+        showFailureToast(context, ValidationFailure(context.tr.invalidNumber));
         return;
       }
 
       if (servingsController.text.trim().isNotEmpty && servings == null) {
-        showFailureToast(ValidationFailure(context.tr.invalidNumber));
+        showFailureToast(context, ValidationFailure(context.tr.invalidNumber));
         return;
       }
 
@@ -75,7 +78,7 @@ class GenerateRecipeScreen extends HookConsumerWidget {
         final failure =
             ref.read(generateRecipeNotifierProvider.notifier).lastFailure;
         if (failure != null) {
-          showFailureToast(_mapFailure(context, failure));
+          showFailureToast(context, failure);
         }
         return;
       }
@@ -228,11 +231,4 @@ class GenerateRecipeScreen extends HookConsumerWidget {
       ),
     );
   }
-}
-
-Failure _mapFailure(BuildContext context, Failure failure) {
-  if (failure is AiProviderFailure) {
-    return AiProviderFailure(context.tr.aiProviderFailure);
-  }
-  return failure;
 }
