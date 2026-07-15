@@ -9,4 +9,7 @@ class AppRoutes {
   static const String favorites = '/favorites';
   static const String profile = '/profile';
   static const String preferences = '/preferences';
+  static const String recipeDetail = '/recipes/:id';
+
+  static String recipeDetailPath(String id) => '/recipes/$id';
 }

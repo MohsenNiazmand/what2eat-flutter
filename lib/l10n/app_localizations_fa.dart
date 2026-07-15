@@ -220,4 +220,105 @@ class AppLocalizationsFa extends AppLocalizations {
 
   @override
   String get cuisineFrench => 'فرانسوی';
+
+  @override
+  String get generateSubtitle =>
+      'مواد اولیه‌ای که در اختیار دارید را وارد کنید. هوش مصنوعی یک دستور ایرانی پیشنهاد می‌دهد.';
+
+  @override
+  String get ingredientsSection => 'مواد اولیه';
+
+  @override
+  String get ingredientHint => 'مثلاً گوجه';
+
+  @override
+  String ingredientFieldLabel(int index) {
+    return 'ماده $index';
+  }
+
+  @override
+  String get addIngredient => 'افزودن ماده';
+
+  @override
+  String get removeItem => 'حذف';
+
+  @override
+  String get ingredientsRequired => 'حداقل یک ماده اولیه وارد کنید';
+
+  @override
+  String get showOptionalFields => 'محدودیت‌های اختیاری';
+
+  @override
+  String get toolsSection => 'ابزار در دسترس';
+
+  @override
+  String get toolHint => 'مثلاً تابه';
+
+  @override
+  String toolFieldLabel(int index) {
+    return 'ابزار $index';
+  }
+
+  @override
+  String get addTool => 'افزودن ابزار';
+
+  @override
+  String get calorieLimitLabel => 'حداکثر کالری';
+
+  @override
+  String get calorieLimitHint => 'حداکثر کالری کل غذا';
+
+  @override
+  String get servingsLabel => 'تعداد نفر';
+
+  @override
+  String get servingsHint => 'تعداد پرس';
+
+  @override
+  String get invalidNumber => 'عدد معتبر وارد کنید';
+
+  @override
+  String get generateRecipeButton => 'تولید دستور';
+
+  @override
+  String get generatingRecipe => 'در حال تولید دستور…';
+
+  @override
+  String get aiProviderFailure =>
+      'سرویس هوش مصنوعی موقتاً در دسترس نیست. لطفاً دوباره تلاش کنید.';
+
+  @override
+  String get recipeDetailTitle => 'دستور پخت';
+
+  @override
+  String get descriptionSection => 'توضیحات';
+
+  @override
+  String get instructionsSection => 'مراحل پخت';
+
+  @override
+  String get noIngredients => 'ماده‌ای ثبت نشده';
+
+  @override
+  String get noInstructions => 'مرحله‌ای ثبت نشده';
+
+  @override
+  String prepTimeLabel(int minutes) {
+    return 'آماده‌سازی: $minutes دقیقه';
+  }
+
+  @override
+  String cookTimeLabel(int minutes) {
+    return 'پخت: $minutes دقیقه';
+  }
+
+  @override
+  String servingsCountLabel(int count) {
+    return '$count نفر';
+  }
+
+  @override
+  String caloriesLabel(int calories) {
+    return '$calories کیلوکالری';
+  }
 }

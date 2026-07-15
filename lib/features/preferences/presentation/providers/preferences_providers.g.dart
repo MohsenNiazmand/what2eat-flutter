@@ -7,7 +7,7 @@ part of 'preferences_providers.dart';
 // **************************************************************************
 
 String _$preferencesLoadNotifierHash() =>
-    r'306199c920935850018b23e1056cfcb6aa751706';
+    r'59de92a493b92d5269991c0782a828bdf537330c';
 
 /// See also [PreferencesLoadNotifier].
 @ProviderFor(PreferencesLoadNotifier)

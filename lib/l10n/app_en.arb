@@ -81,5 +81,76 @@
   "cuisineChinese": "Chinese",
   "cuisineMexican": "Mexican",
   "cuisineTurkish": "Turkish",
-  "cuisineFrench": "French"
+  "cuisineFrench": "French",
+  "generateSubtitle": "Enter the ingredients you have available. AI will suggest a Persian recipe.",
+  "ingredientsSection": "Ingredients",
+  "ingredientHint": "e.g. tomato",
+  "ingredientFieldLabel": "Ingredient {index}",
+  "@ingredientFieldLabel": {
+    "placeholders": {
+      "index": {
+        "type": "int"
+      }
+    }
+  },
+  "addIngredient": "Add ingredient",
+  "removeItem": "Remove",
+  "ingredientsRequired": "Add at least one ingredient",
+  "showOptionalFields": "Optional constraints",
+  "toolsSection": "Available tools",
+  "toolHint": "e.g. pan",
+  "toolFieldLabel": "Tool {index}",
+  "@toolFieldLabel": {
+    "placeholders": {
+      "index": {
+        "type": "int"
+      }
+    }
+  },
+  "addTool": "Add tool",
+  "calorieLimitLabel": "Calorie limit",
+  "calorieLimitHint": "Max calories for the whole dish",
+  "servingsLabel": "Servings",
+  "servingsHint": "Number of portions",
+  "invalidNumber": "Enter a valid number",
+  "generateRecipeButton": "Generate recipe",
+  "generatingRecipe": "Generating recipe…",
+  "aiProviderFailure": "AI service is temporarily unavailable. Please try again.",
+  "recipeDetailTitle": "Recipe",
+  "descriptionSection": "Description",
+  "instructionsSection": "Instructions",
+  "noIngredients": "No ingredients listed",
+  "noInstructions": "No instructions listed",
+  "prepTimeLabel": "Prep: {minutes} min",
+  "@prepTimeLabel": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "cookTimeLabel": "Cook: {minutes} min",
+  "@cookTimeLabel": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "servingsCountLabel": "{count} servings",
+  "@servingsCountLabel": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "caloriesLabel": "{calories} kcal",
+  "@caloriesLabel": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  }
 }

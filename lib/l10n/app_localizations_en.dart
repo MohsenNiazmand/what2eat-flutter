@@ -219,4 +219,105 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get cuisineFrench => 'French';
+
+  @override
+  String get generateSubtitle =>
+      'Enter the ingredients you have available. AI will suggest a Persian recipe.';
+
+  @override
+  String get ingredientsSection => 'Ingredients';
+
+  @override
+  String get ingredientHint => 'e.g. tomato';
+
+  @override
+  String ingredientFieldLabel(int index) {
+    return 'Ingredient $index';
+  }
+
+  @override
+  String get addIngredient => 'Add ingredient';
+
+  @override
+  String get removeItem => 'Remove';
+
+  @override
+  String get ingredientsRequired => 'Add at least one ingredient';
+
+  @override
+  String get showOptionalFields => 'Optional constraints';
+
+  @override
+  String get toolsSection => 'Available tools';
+
+  @override
+  String get toolHint => 'e.g. pan';
+
+  @override
+  String toolFieldLabel(int index) {
+    return 'Tool $index';
+  }
+
+  @override
+  String get addTool => 'Add tool';
+
+  @override
+  String get calorieLimitLabel => 'Calorie limit';
+
+  @override
+  String get calorieLimitHint => 'Max calories for the whole dish';
+
+  @override
+  String get servingsLabel => 'Servings';
+
+  @override
+  String get servingsHint => 'Number of portions';
+
+  @override
+  String get invalidNumber => 'Enter a valid number';
+
+  @override
+  String get generateRecipeButton => 'Generate recipe';
+
+  @override
+  String get generatingRecipe => 'Generating recipe…';
+
+  @override
+  String get aiProviderFailure =>
+      'AI service is temporarily unavailable. Please try again.';
+
+  @override
+  String get recipeDetailTitle => 'Recipe';
+
+  @override
+  String get descriptionSection => 'Description';
+
+  @override
+  String get instructionsSection => 'Instructions';
+
+  @override
+  String get noIngredients => 'No ingredients listed';
+
+  @override
+  String get noInstructions => 'No instructions listed';
+
+  @override
+  String prepTimeLabel(int minutes) {
+    return 'Prep: $minutes min';
+  }
+
+  @override
+  String cookTimeLabel(int minutes) {
+    return 'Cook: $minutes min';
+  }
+
+  @override
+  String servingsCountLabel(int count) {
+    return '$count servings';
+  }
+
+  @override
+  String caloriesLabel(int calories) {
+    return '$calories kcal';
+  }
 }

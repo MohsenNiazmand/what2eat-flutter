@@ -505,6 +505,180 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'French'**
   String get cuisineFrench;
+
+  /// No description provided for @generateSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the ingredients you have available. AI will suggest a Persian recipe.'**
+  String get generateSubtitle;
+
+  /// No description provided for @ingredientsSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Ingredients'**
+  String get ingredientsSection;
+
+  /// No description provided for @ingredientHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. tomato'**
+  String get ingredientHint;
+
+  /// No description provided for @ingredientFieldLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Ingredient {index}'**
+  String ingredientFieldLabel(int index);
+
+  /// No description provided for @addIngredient.
+  ///
+  /// In en, this message translates to:
+  /// **'Add ingredient'**
+  String get addIngredient;
+
+  /// No description provided for @removeItem.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove'**
+  String get removeItem;
+
+  /// No description provided for @ingredientsRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Add at least one ingredient'**
+  String get ingredientsRequired;
+
+  /// No description provided for @showOptionalFields.
+  ///
+  /// In en, this message translates to:
+  /// **'Optional constraints'**
+  String get showOptionalFields;
+
+  /// No description provided for @toolsSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Available tools'**
+  String get toolsSection;
+
+  /// No description provided for @toolHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. pan'**
+  String get toolHint;
+
+  /// No description provided for @toolFieldLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Tool {index}'**
+  String toolFieldLabel(int index);
+
+  /// No description provided for @addTool.
+  ///
+  /// In en, this message translates to:
+  /// **'Add tool'**
+  String get addTool;
+
+  /// No description provided for @calorieLimitLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Calorie limit'**
+  String get calorieLimitLabel;
+
+  /// No description provided for @calorieLimitHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Max calories for the whole dish'**
+  String get calorieLimitHint;
+
+  /// No description provided for @servingsLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Servings'**
+  String get servingsLabel;
+
+  /// No description provided for @servingsHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Number of portions'**
+  String get servingsHint;
+
+  /// No description provided for @invalidNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a valid number'**
+  String get invalidNumber;
+
+  /// No description provided for @generateRecipeButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Generate recipe'**
+  String get generateRecipeButton;
+
+  /// No description provided for @generatingRecipe.
+  ///
+  /// In en, this message translates to:
+  /// **'Generating recipe…'**
+  String get generatingRecipe;
+
+  /// No description provided for @aiProviderFailure.
+  ///
+  /// In en, this message translates to:
+  /// **'AI service is temporarily unavailable. Please try again.'**
+  String get aiProviderFailure;
+
+  /// No description provided for @recipeDetailTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Recipe'**
+  String get recipeDetailTitle;
+
+  /// No description provided for @descriptionSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Description'**
+  String get descriptionSection;
+
+  /// No description provided for @instructionsSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Instructions'**
+  String get instructionsSection;
+
+  /// No description provided for @noIngredients.
+  ///
+  /// In en, this message translates to:
+  /// **'No ingredients listed'**
+  String get noIngredients;
+
+  /// No description provided for @noInstructions.
+  ///
+  /// In en, this message translates to:
+  /// **'No instructions listed'**
+  String get noInstructions;
+
+  /// No description provided for @prepTimeLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Prep: {minutes} min'**
+  String prepTimeLabel(int minutes);
+
+  /// No description provided for @cookTimeLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cook: {minutes} min'**
+  String cookTimeLabel(int minutes);
+
+  /// No description provided for @servingsCountLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} servings'**
+  String servingsCountLabel(int count);
+
+  /// No description provided for @caloriesLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'{calories} kcal'**
+  String caloriesLabel(int calories);
 }
 
 class _AppLocalizationsDelegate

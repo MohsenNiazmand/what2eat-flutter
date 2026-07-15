@@ -28,6 +28,8 @@ import 'package:what_2_eat/features/preferences/domain/usecases/save_preferences
 import 'package:what_2_eat/features/recipes/data/repositories/recipe_repository_impl.dart';
 import 'package:what_2_eat/features/recipes/data/services/recipe_api.dart';
 import 'package:what_2_eat/features/recipes/domain/repositories/recipe_repository.dart';
+import 'package:what_2_eat/features/recipes/domain/usecases/generate_recipe_usecase.dart';
+import 'package:what_2_eat/features/recipes/domain/usecases/get_recipe_by_id_usecase.dart';
 
 final GetIt getIt = GetIt.instance;
 
@@ -102,5 +104,11 @@ Future<void> initializeDependencies() async {
     )
     ..registerLazySingleton<DeletePreferencesUseCase>(
       () => DeletePreferencesUseCase(getIt()),
+    )
+    ..registerLazySingleton<GenerateRecipeUseCase>(
+      () => GenerateRecipeUseCase(getIt()),
+    )
+    ..registerLazySingleton<GetRecipeByIdUseCase>(
+      () => GetRecipeByIdUseCase(getIt()),
     );
 }

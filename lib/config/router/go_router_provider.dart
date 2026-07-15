@@ -11,7 +11,10 @@ import 'package:what_2_eat/features/main/presentation/screens/main_shell_screen.
 import 'package:what_2_eat/features/main/presentation/screens/placeholder_tab_screen.dart';
 import 'package:what_2_eat/features/preferences/presentation/screens/preferences_screen.dart';
 import 'package:what_2_eat/features/profile/presentation/screens/profile_screen.dart';
+import 'package:what_2_eat/features/recipes/presentation/screens/generate_recipe_screen.dart';
+import 'package:what_2_eat/features/recipes/presentation/screens/recipe_detail_screen.dart';
 import 'package:what_2_eat/features/splash/presentation/screens/splash_screen.dart';
+import 'package:what_2_eat/shared/domain/entities/recipe.dart';
 import 'package:what_2_eat/shared/domain/enums/placeholder_tab.dart';
 
 part 'go_router_provider.g.dart';
@@ -81,6 +84,17 @@ GoRouter goRouter(GoRouterRef ref) {
         path: AppRoutes.preferences,
         builder: (context, state) => const PreferencesScreen(),
       ),
+      GoRoute(
+        path: AppRoutes.recipeDetail,
+        builder: (context, state) {
+          final id = state.pathParameters['id']!;
+          final initialRecipe = state.extra as Recipe?;
+          return RecipeDetailScreen(
+            recipeId: id,
+            initialRecipe: initialRecipe,
+          );
+        },
+      ),
       StatefulShellRoute.indexedStack(
         builder: (context, state, navigationShell) {
           return MainShellScreen(navigationShell: navigationShell);
@@ -101,10 +115,7 @@ GoRouter goRouter(GoRouterRef ref) {
             routes: [
               GoRoute(
                 path: AppRoutes.generate,
-                builder: (context, state) => const PlaceholderTabScreen(
-                  tab: PlaceholderTab.generate,
-                  icon: Icons.auto_awesome,
-                ),
+                builder: (context, state) => const GenerateRecipeScreen(),
               ),
             ],
           ),

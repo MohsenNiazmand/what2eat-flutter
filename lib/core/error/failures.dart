@@ -26,6 +26,12 @@ final class NotFoundFailure extends Failure {
   const NotFoundFailure([super.message = 'Resource not found']);
 }
 
+final class AiProviderFailure extends Failure {
+  const AiProviderFailure([
+    super.message = 'AI service temporarily unavailable',
+  ]);
+}
+
 final class CacheFailure extends Failure {
   const CacheFailure([super.message = 'Local storage error']);
 }

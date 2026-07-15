@@ -61,6 +61,11 @@ class ExceptionMapper {
     if (statusCode == 404) {
       return NotFoundFailure(message ?? 'Not found');
     }
+    if (statusCode == 502) {
+      return AiProviderFailure(
+        message ?? 'AI service temporarily unavailable',
+      );
+    }
     if (statusCode != null && statusCode >= 500 && statusCode < 600) {
       return ServerFailure(message ?? 'Server error');
     }
