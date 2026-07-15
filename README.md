@@ -195,10 +195,16 @@ Development is **strictly phased**. Complete one phase, commit, update [Developm
 - Add `.env` or flavor-based config for API base URL (dev/staging/prod)
 - Remove default counter demo from `main.dart`
 
-**Acceptance criteria:**
-- App launches with themed shell and placeholder navigation
-- `flutter analyze` passes
-- Folder structure matches target layout (empty feature folders OK)
+**Deliverables:**
+- [x] Dependencies added to `pubspec.yaml`
+- [x] Clean Architecture folder structure under `lib/`
+- [x] Core constants, errors, GetIt injection container
+- [x] Material 3 theme with RTL support
+- [x] GoRouter with splash, login placeholder, and bottom-nav shell
+- [x] `AppConfig` via `--dart-define=API_BASE_URL=...`
+- [x] Counter demo removed; `flutter analyze` passes
+
+**Status:** ✅ Complete
 
 ---
 
@@ -441,27 +447,31 @@ Development is **strictly phased**. Complete one phase, commit, update [Developm
 
 | Field | Value |
 |-------|-------|
-| **Last Completed Phase** | Phase 0 — Documentation & Development Plan |
+| **Last Completed Phase** | Phase 1 — Project Scaffold & Core Infrastructure |
 | **Completed At** | 2026-07-15 |
-| **Next Phase** | Phase 1 — Project Scaffold & Core Infrastructure |
-| **Commit Scope** | `mobile/what_2_eat/README.md` only |
+| **Next Phase** | Phase 2 — Networking Layer |
+| **Commit Scope** | `mobile/what_2_eat/` (pubspec, lib/, analysis_options, test/) |
 
 ### What Has Been Done
 
-- Backend fully reviewed and API surface documented in this README
-- Development phases 0–12 defined with tasks and acceptance criteria
-- Target folder structure and tech stack documented
-- Flutter project remains default template (`lib/main.dart` counter demo)
-- No dependencies added yet (`pubspec.yaml` is vanilla)
+- Phase 0: README with full development roadmap and backend API mapping
+- Phase 1: Project scaffold complete
+  - Dependencies: Riverpod, GoRouter, Dio, Retrofit, GetIt, fpdart, bot_toast, etc.
+  - `lib/core/` — constants (`AppConfig`, `Constants`, `StorageKeys`, colors), error handling (`Failure`, `ExceptionMapper`), GetIt injection
+  - `lib/config/` — Material 3 theme (RTL), GoRouter with `StatefulShellRoute` bottom nav
+  - `lib/features/` — splash, auth login placeholder, main shell with 4 tab placeholders
+  - `lib/app.dart` — `What2EatApp` with Persian locale and BotToast
+  - `flutter analyze` passes with zero issues
 
-### What To Do Next (Phase 1)
+### What To Do Next (Phase 2)
 
-1. Add dependencies listed in [Tech Stack](#tech-stack) to `pubspec.yaml`
-2. Create `lib/` folder structure per [Project Structure](#project-structure)
-3. Implement core infrastructure (constants, errors, GetIt, theme, router skeleton)
-4. Replace counter demo with `ProviderScope` + themed app shell
-5. Update this **Development Progress** section to Phase 1 complete
-6. Provide English commit message to the user (do not run git commands)
+1. Configure Dio with base URL, timeouts, logging interceptor
+2. Create `ApiResponse<T>` wrapper and pagination models
+3. Define Retrofit services: `AuthApi`, `RecipeApi`, `PreferenceApi`, `FavoriteApi`
+4. Create JSON models for all request/response bodies
+5. Run `dart run build_runner build --delete-conflicting-outputs`
+6. Update this **Development Progress** section to Phase 2 complete
+7. Provide English commit message to the user (do not run git commands)
 
 ### Phase Completion Checklist
 
