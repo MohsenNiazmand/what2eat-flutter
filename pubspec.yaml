@@ -25,7 +25,7 @@ dependencies:
   intl: ^0.20.2
   json_annotation: ^4.9.0
   logger: ^2.5.0
-  retrofit: ^4.4.2
+  retrofit: 4.4.2
   riverpod_annotation: ^2.6.1
   shared_preferences: ^2.5.3
   uuid: ^4.5.1
@@ -35,10 +35,11 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   json_serializable: ^6.9.4
-  retrofit_generator: ^9.1.9
+  retrofit_generator: 9.1.9
   riverpod_generator: ^2.6.4
   riverpod_lint: ^2.6.4
   very_good_analysis: ^7.0.0
 
 flutter:
+  generate: true
   uses-material-design: true

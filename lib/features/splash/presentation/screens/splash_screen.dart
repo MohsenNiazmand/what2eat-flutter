@@ -5,7 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:what_2_eat/config/router/routes.dart';
 import 'package:what_2_eat/core/constants/colors.dart';
-import 'package:what_2_eat/core/constants/constants.dart';
+import 'package:what_2_eat/core/extensions/context_extensions.dart';
 
 class SplashScreen extends HookConsumerWidget {
   const SplashScreen({super.key});
@@ -37,7 +37,7 @@ class SplashScreen extends HookConsumerWidget {
             ),
             const SizedBox(height: 24),
             Text(
-              Constants.appNamePersian,
+              context.tr.appNamePersian,
               style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                     fontWeight: FontWeight.bold,
                     color: cTextPrimary,
@@ -45,7 +45,7 @@ class SplashScreen extends HookConsumerWidget {
             ),
             const SizedBox(height: 8),
             Text(
-              Constants.appName,
+              context.tr.appName,
               style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                     color: cTextSecondary,
                   ),

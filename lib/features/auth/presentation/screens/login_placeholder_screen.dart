@@ -3,13 +3,15 @@ import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:what_2_eat/config/router/routes.dart';
 import 'package:what_2_eat/core/constants/colors.dart';
+import 'package:what_2_eat/core/extensions/context_extensions.dart';
+
 class LoginPlaceholderScreen extends HookConsumerWidget {
   const LoginPlaceholderScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
-      appBar: AppBar(title: const Text('ورود')),
+      appBar: AppBar(title: Text(context.tr.loginTitle)),
       body: Padding(
         padding: const EdgeInsets.all(24),
         child: Column(
@@ -23,7 +25,7 @@ class LoginPlaceholderScreen extends HookConsumerWidget {
             ),
             const SizedBox(height: 24),
             Text(
-              'ورود با شماره موبایل',
+              context.tr.loginWithMobile,
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                     fontWeight: FontWeight.bold,
@@ -32,7 +34,7 @@ class LoginPlaceholderScreen extends HookConsumerWidget {
             ),
             const SizedBox(height: 8),
             Text(
-              'صفحه ورود OTP در Phase 5 پیاده‌سازی می‌شود',
+              context.tr.loginPlaceholderHint,
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                     color: cTextSecondary,
@@ -41,7 +43,7 @@ class LoginPlaceholderScreen extends HookConsumerWidget {
             const Spacer(),
             ElevatedButton(
               onPressed: () => context.go(AppRoutes.home),
-              child: const Text('ادامه (موقت)'),
+              child: Text(context.tr.continueTemporary),
             ),
             const SizedBox(height: 16),
           ],

@@ -1,0 +1,23 @@
+{
+  "@@locale": "fa",
+  "appName": "What2Eat",
+  "appNamePersian": "چی بخورم",
+  "loginTitle": "ورود",
+  "loginWithMobile": "ورود با شماره موبایل",
+  "loginPlaceholderHint": "صفحه ورود OTP در Phase 5 پیاده‌سازی می‌شود",
+  "continueTemporary": "ادامه (موقت)",
+  "navRecipes": "دستورها",
+  "navGenerate": "تولید",
+  "navFavorites": "علاقه‌مندی",
+  "navProfile": "پروفایل",
+  "recipesTabTitle": "دستورهای پخت",
+  "recipesTabDescription": "لیست و جستجوی دستور پخت — Phase 9",
+  "generateTabTitle": "تولید دستور",
+  "generateTabDescription": "تولید دستور با هوش مصنوعی — Phase 8",
+  "favoritesTabTitle": "علاقه‌مندی‌ها",
+  "favoritesTabDescription": "دستورهای مورد علاقه — Phase 10",
+  "profileTabTitle": "پروفایل",
+  "profileTabDescription": "پروفایل و تنظیمات — Phase 6",
+  "errorTitle": "خطا",
+  "routeNotFound": "مسیر یافت نشد: {path}"
+}

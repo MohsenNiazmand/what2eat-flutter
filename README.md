@@ -208,26 +208,33 @@ Development is **strictly phased**. Complete one phase, commit, update [Developm
 
 ---
 
-### Phase 2 — Networking Layer
+### Phase 2 — Networking Layer & Localization
 
-**Goal:** Type-safe HTTP client wired to the What2Eat backend.
+**Goal:** Type-safe HTTP client wired to the What2Eat backend, plus l10n for all UI strings.
 
 **Tasks:**
+- Set up l10n (`l10n.yaml`, `app_en.arb`, `app_fa.arb`) and migrate all hardcoded UI strings
 - Configure Dio with base URL, timeouts, logging interceptor
-- Create `ApiResponse<T>` wrapper model matching backend envelope
-- Create pagination model (`page`, `limit`, `total`, `totalPages`)
+- Create envelope/pagination models matching backend response shape
 - Define Retrofit services:
   - `AuthApi` — otp/request, otp/verify, refresh, logout, me (GET/PATCH)
   - `RecipeApi` — generate, list, getById
   - `PreferenceApi` — get, put, delete
   - `FavoriteApi` — list, add, remove
 - Create JSON models for all request/response bodies (User, Recipe, Ingredient, Preference, Favorite)
+- Register Dio and API services in GetIt
 - Run `build_runner` and verify generated code compiles
 
-**Acceptance criteria:**
-- All Retrofit clients compile
-- Models correctly map backend JSON (including `mobileNumber` field naming)
-- Manual smoke test possible via a debug call (optional debug screen)
+**Deliverables:**
+- [x] l10n setup with Persian (fa) and English (en) ARB files
+- [x] All UI strings migrated to `AppLocalizations`
+- [x] Dio client with dev logging interceptor
+- [x] Retrofit APIs: Auth, Recipe, Preference, Favorite
+- [x] JSON models with `json_serializable` code generation
+- [x] GetIt registration for Dio and all API services
+- [x] `flutter analyze` and `flutter test` pass
+
+**Status:** ✅ Complete
 
 ---
 
@@ -447,31 +454,33 @@ Development is **strictly phased**. Complete one phase, commit, update [Developm
 
 | Field | Value |
 |-------|-------|
-| **Last Completed Phase** | Phase 1 — Project Scaffold & Core Infrastructure |
+| **Last Completed Phase** | Phase 2 — Networking Layer & Localization |
 | **Completed At** | 2026-07-15 |
-| **Next Phase** | Phase 2 — Networking Layer |
-| **Commit Scope** | `mobile/what_2_eat/` (pubspec, lib/, analysis_options, test/) |
+| **Next Phase** | Phase 3 — Auth Interceptor & Secure Storage |
+| **Commit Scope** | `mobile/what_2_eat/` (full mobile app through Phase 2) |
 
 ### What Has Been Done
 
 - Phase 0: README with full development roadmap and backend API mapping
-- Phase 1: Project scaffold complete
-  - Dependencies: Riverpod, GoRouter, Dio, Retrofit, GetIt, fpdart, bot_toast, etc.
-  - `lib/core/` — constants (`AppConfig`, `Constants`, `StorageKeys`, colors), error handling (`Failure`, `ExceptionMapper`), GetIt injection
-  - `lib/config/` — Material 3 theme (RTL), GoRouter with `StatefulShellRoute` bottom nav
-  - `lib/features/` — splash, auth login placeholder, main shell with 4 tab placeholders
-  - `lib/app.dart` — `What2EatApp` with Persian locale and BotToast
-  - `flutter analyze` passes with zero issues
+- Phase 1: Project scaffold (Clean Architecture folders, theme, router, GetIt, error handling)
+- Phase 2: Networking & localization
+  - l10n: `lib/l10n/app_en.arb`, `app_fa.arb`, generated `AppLocalizations`
+  - All UI strings use l10n (no hardcoded Persian/English in widgets)
+  - Dio client (`lib/core/network/dio_client.dart`) with curl logger in dev
+  - Retrofit services: `AuthApi`, `RecipeApi`, `PreferenceApi`, `FavoriteApi`
+  - JSON models for User, Recipe, Ingredient, Preference, Favorite, pagination, envelopes
+  - All API services registered in GetIt
+  - `dart run build_runner build` generates `.g.dart` files successfully
+  - `flutter analyze` and `flutter test` pass
 
-### What To Do Next (Phase 2)
+### What To Do Next (Phase 3)
 
-1. Configure Dio with base URL, timeouts, logging interceptor
-2. Create `ApiResponse<T>` wrapper and pagination models
-3. Define Retrofit services: `AuthApi`, `RecipeApi`, `PreferenceApi`, `FavoriteApi`
-4. Create JSON models for all request/response bodies
-5. Run `dart run build_runner build --delete-conflicting-outputs`
-6. Update this **Development Progress** section to Phase 2 complete
-7. Provide English commit message to the user (do not run git commands)
+1. Implement `TokenStorage` with `flutter_secure_storage`
+2. Implement `DeviceIdService` (UUID persisted in secure storage)
+3. Implement `AuthInterceptor` on Dio (Bearer header, 401 refresh, retry)
+4. Wire interceptor into Dio via GetIt (replace bare Dio registration)
+5. Update **Development Progress** section to Phase 3 complete
+6. Provide English commit message to the user (do not run git commands)
 
 ### Phase Completion Checklist
 
@@ -498,7 +507,8 @@ When finishing any phase, the agent must:
 ```bash
 cd mobile/what_2_eat
 flutter pub get
-dart run build_runner build --delete-conflicting-outputs   # after Phase 2
+flutter gen-l10n
+dart run build_runner build --delete-conflicting-outputs
 flutter run -d android   # or -d ios
 ```
 
@@ -541,8 +551,9 @@ dart run build_runner watch --delete-conflicting-outputs
 
 1. **Clean Architecture** — no API calls from widgets; always go through providers → use cases → repositories
 2. **Feature-first folders** — each feature owns its data/domain/presentation layers
-3. **Persian UI, English code** — user-facing strings in Persian; code identifiers and comments in English
-4. **No Persian comments in code**
+3. **Persian UI, English code** — user-facing strings via l10n ARB files (`lib/l10n/`); code identifiers and comments in English
+4. **No hardcoded UI strings** — always use `context.tr` via `AppLocalizationHelper`
+5. **No Persian comments in code**
 5. **Mobile only** — no responsive breakpoints, no web/desktop targets
 6. **RTL** — enable RTL support in MaterialApp; test layouts with Persian text
 7. **Phased commits** — one phase per commit unless the user requests otherwise

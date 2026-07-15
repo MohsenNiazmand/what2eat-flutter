@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:what_2_eat/config/router/routes.dart';
+import 'package:what_2_eat/core/extensions/context_extensions.dart';
 import 'package:what_2_eat/features/auth/presentation/screens/login_placeholder_screen.dart';
 import 'package:what_2_eat/features/main/presentation/screens/main_shell_screen.dart';
 import 'package:what_2_eat/features/main/presentation/screens/placeholder_tab_screen.dart';
 import 'package:what_2_eat/features/splash/presentation/screens/splash_screen.dart';
+import 'package:what_2_eat/shared/domain/enums/placeholder_tab.dart';
 
 final GlobalKey<NavigatorState> rootNavigatorKey =
     GlobalKey<NavigatorState>(debugLabel: 'root');
@@ -35,9 +37,8 @@ class AppRouter {
               GoRoute(
                 path: AppRoutes.home,
                 builder: (context, state) => const PlaceholderTabScreen(
-                  title: 'دستورهای پخت',
+                  tab: PlaceholderTab.recipes,
                   icon: Icons.restaurant_menu,
-                  description: 'لیست و جستجوی دستور پخت — Phase 9',
                 ),
               ),
             ],
@@ -47,9 +48,8 @@ class AppRouter {
               GoRoute(
                 path: AppRoutes.generate,
                 builder: (context, state) => const PlaceholderTabScreen(
-                  title: 'تولید دستور',
+                  tab: PlaceholderTab.generate,
                   icon: Icons.auto_awesome,
-                  description: 'تولید دستور با هوش مصنوعی — Phase 8',
                 ),
               ),
             ],
@@ -59,9 +59,8 @@ class AppRouter {
               GoRoute(
                 path: AppRoutes.favorites,
                 builder: (context, state) => const PlaceholderTabScreen(
-                  title: 'علاقه‌مندی‌ها',
+                  tab: PlaceholderTab.favorites,
                   icon: Icons.favorite,
-                  description: 'دستورهای مورد علاقه — Phase 10',
                 ),
               ),
             ],
@@ -71,9 +70,8 @@ class AppRouter {
               GoRoute(
                 path: AppRoutes.profile,
                 builder: (context, state) => const PlaceholderTabScreen(
-                  title: 'پروفایل',
+                  tab: PlaceholderTab.profile,
                   icon: Icons.person,
-                  description: 'پروفایل و تنظیمات — Phase 6',
                 ),
               ),
             ],
@@ -81,11 +79,13 @@ class AppRouter {
         ],
       ),
     ],
-    errorBuilder: (context, state) => Scaffold(
-      appBar: AppBar(title: const Text('خطا')),
-      body: Center(
-        child: Text('Route not found: ${state.uri}'),
-      ),
-    ),
+    errorBuilder: (context, state) {
+      return Scaffold(
+        appBar: AppBar(title: Text(context.tr.errorTitle)),
+        body: Center(
+          child: Text(context.tr.routeNotFound(state.uri.toString())),
+        ),
+      );
+    },
   );
 }

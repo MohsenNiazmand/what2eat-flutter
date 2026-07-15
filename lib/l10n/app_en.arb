@@ -1,0 +1,30 @@
+{
+  "@@locale": "en",
+  "appName": "What2Eat",
+  "appNamePersian": "What2Eat",
+  "loginTitle": "Login",
+  "loginWithMobile": "Login with mobile number",
+  "loginPlaceholderHint": "OTP login screen will be implemented in Phase 5",
+  "continueTemporary": "Continue (temporary)",
+  "navRecipes": "Recipes",
+  "navGenerate": "Generate",
+  "navFavorites": "Favorites",
+  "navProfile": "Profile",
+  "recipesTabTitle": "Recipes",
+  "recipesTabDescription": "Recipe list and search — Phase 9",
+  "generateTabTitle": "Generate Recipe",
+  "generateTabDescription": "AI recipe generation — Phase 8",
+  "favoritesTabTitle": "Favorites",
+  "favoritesTabDescription": "Favorite recipes — Phase 10",
+  "profileTabTitle": "Profile",
+  "profileTabDescription": "Profile and settings — Phase 6",
+  "errorTitle": "Error",
+  "routeNotFound": "Route not found: {path}",
+  "@routeNotFound": {
+    "placeholders": {
+      "path": {
+        "type": "String"
+      }
+    }
+  }
+}
