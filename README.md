@@ -279,9 +279,15 @@ Development is **strictly phased**. Complete one phase, commit, update [Developm
 - Repository implementations in `data/` layer mapping models ↔ entities
 - Register all in GetIt
 
-**Acceptance criteria:**
-- Use cases callable from providers without UI
-- Entity mapping covers all backend fields (including optional recipe fields)
+**Deliverables:**
+- [x] Domain entities in `shared/domain/entities/`
+- [x] Model → entity mappers in `shared/data/mappers/entity_mappers.dart`
+- [x] Repository interfaces + implementations for all 4 features
+- [x] Auth use cases with `Either<Failure, T>` via fpdart
+- [x] `UseCase` base + `guard()` helper for repository error mapping
+- [x] All repositories and use cases registered in GetIt
+
+**Status:** ✅ Complete
 
 ---
 
@@ -458,31 +464,31 @@ Development is **strictly phased**. Complete one phase, commit, update [Developm
 
 | Field | Value |
 |-------|-------|
-| **Last Completed Phase** | Phase 3 — Auth Interceptor & Secure Storage |
+| **Last Completed Phase** | Phase 4 — Domain Layer (Auth & Shared Entities) |
 | **Completed At** | 2026-07-15 |
-| **Next Phase** | Phase 4 — Domain Layer (Auth & Shared Entities) |
+| **Next Phase** | Phase 5 — Authentication UI & Routing |
 | **Commit Scope** | `mobile/what_2_eat/` |
 
 ### What Has Been Done
 
-- Phase 0–2: README, scaffold, l10n, Retrofit networking layer
-- Phase 3: Auth interceptor & secure storage
-  - `TokenStorage` / `SecureTokenStorage` — access & refresh tokens in secure storage
-  - `DeviceIdService` — persistent UUID for OTP/auth calls
-  - `AuthInterceptor` — Bearer header, 401 auto-refresh with retry, logout redirect
-  - GetIt registers `FlutterSecureStorage`, storage services, and wired Dio
-  - `context.tr` extension for l10n (`AppLocalizationHelper`)
+- Phase 0–3: README, scaffold, l10n, networking, auth interceptor, secure storage
+- Phase 4: Domain layer
+  - Entities: `User`, `Recipe`, `Ingredient`, `Preference`, `Favorite`, `PaginatedResult`
+  - Repositories: auth, recipe, preference, favorite (interface + impl)
+  - Auth use cases: RequestOtp, VerifyOtp, RefreshToken, Logout, GetCurrentUser,
+    IsLoggedIn, UpdateProfile
+  - `guard()` maps exceptions to `Failure`; models mapped via `entity_mappers.dart`
+  - All registered in GetIt
   - `flutter analyze` and `flutter test` pass
 
-### What To Do Next (Phase 4)
+### What To Do Next (Phase 5)
 
-1. Create domain entities: `User`, `Recipe`, `Ingredient`, `Preference`, `Favorite`
-2. Define repository interfaces for auth, recipes, preferences, favorites
-3. Implement use cases (RequestOtp, VerifyOtp, Logout, GetCurrentUser, etc.)
-4. Implement repository classes mapping models ↔ entities
-5. Register repositories and use cases in GetIt
-6. Update **Development Progress** section to Phase 4 complete
-7. Provide English commit message to the user (do not run git commands)
+1. Build Login and OTP verification screens (replace placeholders)
+2. Add Riverpod providers for auth state and OTP flow
+3. Wire splash screen to `IsLoggedInUseCase`
+4. Add GoRouter redirect guards (unauthenticated → login, authenticated → home)
+5. Update **Development Progress** section to Phase 5 complete
+6. Provide English commit message to the user (do not run git commands)
 
 ### Phase Completion Checklist
 
