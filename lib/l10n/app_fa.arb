@@ -68,10 +68,10 @@
   "cuisineMexican": "مکزیکی",
   "cuisineTurkish": "ترکی",
   "cuisineFrench": "فرانسوی",
-  "generateSubtitle": "حداقل یک محدودیت انتخاب کنید: کشور، رژیم غذایی، مواد، کالری، تعداد نفر یا یادداشت.",
+  "generateSubtitle": "حداقل یک مورد یا یک ویژگی انتخاب کنید: کشور، رژیم غذایی، مواد، کالری، تعداد نفر یا یادداشت.",
   "countriesSection": "کشور / سبک آشپزی",
   "dietaryPreferencesSection": "ترجیحات غذایی",
-  "generateConstraintRequired": "حداقل یک محدودیت برای تولید دستور انتخاب کنید",
+  "generateConstraintRequired": "حداقل یک مورد یا یک ویژگی انتخاب کنید",
   "exclusionsSection": "غذاهای مستثنی",
   "exclusionHint": "مثلاً چلو مرغ",
   "exclusionFieldLabel": "مورد {index}",
@@ -132,6 +132,7 @@
   "addToFavorites": "افزودن به علاقه‌مندی‌ها",
   "removeFromFavorites": "حذف از علاقه‌مندی‌ها",
   "networkError": "اتصال اینترنت برقرار نیست. شبکه را بررسی و دوباره تلاش کنید.",
+  "pressBackAgainToExit": "برای خروج دوباره دکمه بازگشت را بزنید",
   "sessionExpired": "نشست شما منقضی شده است. لطفاً دوباره وارد شوید.",
   "genericError": "خطایی رخ داد. لطفاً دوباره تلاش کنید."
 }

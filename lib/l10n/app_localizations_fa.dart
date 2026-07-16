@@ -223,7 +223,7 @@ class AppLocalizationsFa extends AppLocalizations {
 
   @override
   String get generateSubtitle =>
-      'حداقل یک محدودیت انتخاب کنید: کشور، رژیم غذایی، مواد، کالری، تعداد نفر یا یادداشت.';
+      'حداقل یک مورد یا یک ویژگی انتخاب کنید: کشور، رژیم غذایی، مواد، کالری، تعداد نفر یا یادداشت.';
 
   @override
   String get countriesSection => 'کشور / سبک آشپزی';
@@ -233,7 +233,7 @@ class AppLocalizationsFa extends AppLocalizations {
 
   @override
   String get generateConstraintRequired =>
-      'حداقل یک محدودیت برای تولید دستور انتخاب کنید';
+      'حداقل یک مورد یا یک ویژگی انتخاب کنید';
 
   @override
   String get exclusionsSection => 'غذاهای مستثنی';
@@ -412,6 +412,9 @@ class AppLocalizationsFa extends AppLocalizations {
   @override
   String get networkError =>
       'اتصال اینترنت برقرار نیست. شبکه را بررسی و دوباره تلاش کنید.';
+
+  @override
+  String get pressBackAgainToExit => 'برای خروج دوباره دکمه بازگشت را بزنید';
 
   @override
   String get sessionExpired =>

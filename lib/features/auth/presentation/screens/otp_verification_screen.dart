@@ -119,6 +119,7 @@ class OtpVerificationScreen extends HookConsumerWidget {
                   child: Pinput(
                     controller: pinController,
                     length: Constants.otpLength,
+                    autofocus: true,
                     defaultPinTheme: defaultPinTheme,
                     focusedPinTheme: defaultPinTheme.copyWith(
                       decoration: defaultPinTheme.decoration?.copyWith(

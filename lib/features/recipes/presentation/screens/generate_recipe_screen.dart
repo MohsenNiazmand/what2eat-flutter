@@ -12,6 +12,7 @@ import 'package:what_2_eat/features/auth/presentation/providers/current_user_pro
 import 'package:what_2_eat/features/profile/presentation/providers/profile_providers.dart';
 import 'package:what_2_eat/features/recipes/presentation/models/recipe_detail_navigation.dart';
 import 'package:what_2_eat/features/recipes/presentation/providers/generate_recipe_provider.dart';
+import 'package:what_2_eat/features/recipes/presentation/providers/recipe_list_provider.dart';
 import 'package:what_2_eat/features/recipes/presentation/widgets/dynamic_text_field_list.dart';
 import 'package:what_2_eat/features/recipes/presentation/widgets/recipe_option_chip_section.dart';
 import 'package:what_2_eat/shared/presentation/utils/toast_utils.dart';
@@ -29,8 +30,8 @@ class GenerateRecipeScreen extends HookConsumerWidget {
     final selectedCountries = useState<Set<String>>({});
     final selectedDietary = useState<Set<String>>({});
     final ingredients = useState<List<String>>(['']);
-    final tools = useState<List<String>>([]);
-    final exclusions = useState<List<String>>([]);
+    final tools = useState<List<String>>(['']);
+    final exclusions = useState<List<String>>(['']);
     final calorieController = useTextEditingController();
     final servingsController = useTextEditingController();
     final notesController = useTextEditingController();
@@ -170,6 +171,11 @@ class GenerateRecipeScreen extends HookConsumerWidget {
         return;
       }
 
+      context.go(AppRoutes.home);
+      await ref.read(recipeListNotifierProvider.notifier).refresh();
+
+      if (!context.mounted) return;
+
       await context.push(
         AppRoutes.recipeDetailPath(recipe.id),
         extra: RecipeDetailNavigation.fromGenerate(recipe),
@@ -272,31 +278,26 @@ class GenerateRecipeScreen extends HookConsumerWidget {
                             ),
                             const SizedBox(height: 12),
                             DynamicTextFieldList(
-                              values: tools.value.isEmpty ? [''] : tools.value,
+                              values: tools.value,
                               enabled: !isGenerating,
-                              minItems: 0,
                               inputFormatters: [persianFormatter],
                               itemLabel: (index) =>
                                   context.tr.toolFieldLabel(index + 1),
                               itemHint: context.tr.toolHint,
                               addButtonLabel: context.tr.addTool,
                               onChanged: (index, value) {
-                                final current = tools.value.isEmpty
-                                    ? ['']
-                                    : [...tools.value];
-                                current[index] = value;
-                                tools.value = current;
+                                final updated = [...tools.value];
+                                updated[index] = value;
+                                tools.value = updated;
                               },
                               onAdd: () {
-                                final current = tools.value.isEmpty
-                                    ? ['']
-                                    : [...tools.value];
-                                tools.value = [...current, ''];
+                                tools.value = [...tools.value, ''];
                               },
                               onRemove: (index) {
-                                final current = [...tools.value]
+                                if (tools.value.length <= 1) return;
+                                final updated = [...tools.value]
                                   ..removeAt(index);
-                                tools.value = current;
+                                tools.value = updated;
                               },
                             ),
                             const SizedBox(height: 24),
@@ -333,33 +334,26 @@ class GenerateRecipeScreen extends HookConsumerWidget {
                             ),
                             const SizedBox(height: 12),
                             DynamicTextFieldList(
-                              values: exclusions.value.isEmpty
-                                  ? ['']
-                                  : exclusions.value,
+                              values: exclusions.value,
                               enabled: !isGenerating,
-                              minItems: 0,
                               inputFormatters: [persianFormatter],
                               itemLabel: (index) =>
                                   context.tr.exclusionFieldLabel(index + 1),
                               itemHint: context.tr.exclusionHint,
                               addButtonLabel: context.tr.addExclusion,
                               onChanged: (index, value) {
-                                final current = exclusions.value.isEmpty
-                                    ? ['']
-                                    : [...exclusions.value];
-                                current[index] = value;
-                                exclusions.value = current;
+                                final updated = [...exclusions.value];
+                                updated[index] = value;
+                                exclusions.value = updated;
                               },
                               onAdd: () {
-                                final current = exclusions.value.isEmpty
-                                    ? ['']
-                                    : [...exclusions.value];
-                                exclusions.value = [...current, ''];
+                                exclusions.value = [...exclusions.value, ''];
                               },
                               onRemove: (index) {
-                                final current = [...exclusions.value]
+                                if (exclusions.value.length <= 1) return;
+                                final updated = [...exclusions.value]
                                   ..removeAt(index);
-                                exclusions.value = current;
+                                exclusions.value = updated;
                               },
                             ),
                             const SizedBox(height: 24),

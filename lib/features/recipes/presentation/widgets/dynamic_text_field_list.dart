@@ -51,7 +51,7 @@ class DynamicTextFieldList extends StatelessWidget {
                   onChanged: (value) => onChanged(index, value),
                 ),
               ),
-              if (values.length > minItems) ...[
+              if (index > 0) ...[
                 const SizedBox(width: 8),
                 IconButton(
                   onPressed: enabled ? () => onRemove(index) : null,

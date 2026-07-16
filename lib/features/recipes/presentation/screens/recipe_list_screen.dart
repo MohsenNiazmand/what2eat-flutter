@@ -85,6 +85,10 @@ class RecipeListScreen extends HookConsumerWidget {
         AppRoutes.recipeDetailPath(recipe.id),
         extra: recipe,
       );
+
+      if (context.mounted) {
+        await ref.read(recipeListNotifierProvider.notifier).refresh();
+      }
     }
 
     return Scaffold(

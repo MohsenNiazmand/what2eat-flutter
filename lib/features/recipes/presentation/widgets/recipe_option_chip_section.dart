@@ -17,11 +17,19 @@ class RecipeOptionChipSection extends StatelessWidget {
   final ValueChanged<Set<String>> onSelectionChanged;
   final bool enabled;
 
+  static List<RecipeOptionItem> sortedOptions(List<RecipeOptionItem> options) {
+    final available = options.where((option) => option.isAvailable).toList();
+    final locked = options.where((option) => !option.isAvailable).toList();
+    return [...available, ...locked];
+  }
+
   @override
   Widget build(BuildContext context) {
     if (options.isEmpty) {
       return const SizedBox.shrink();
     }
+
+    final sorted = sortedOptions(options);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -33,12 +41,15 @@ class RecipeOptionChipSection extends StatelessWidget {
               ),
         ),
         const SizedBox(height: 12),
-        Wrap(
-          spacing: 8,
-          runSpacing: 8,
-          children: [
-            for (final option in options)
-              FilterChip(
+        SizedBox(
+          height: 48,
+          child: ListView.separated(
+            scrollDirection: Axis.horizontal,
+            itemCount: sorted.length,
+            separatorBuilder: (_, __) => const SizedBox(width: 8),
+            itemBuilder: (context, index) {
+              final option = sorted[index];
+              return FilterChip(
                 label: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
@@ -65,8 +76,9 @@ class RecipeOptionChipSection extends StatelessWidget {
                         onSelectionChanged(updated);
                       }
                     : null,
-              ),
-          ],
+              );
+            },
+          ),
         ),
       ],
     );

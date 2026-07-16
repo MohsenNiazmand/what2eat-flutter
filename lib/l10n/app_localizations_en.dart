@@ -222,7 +222,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get generateSubtitle =>
-      'Choose at least one constraint: country, diet, ingredients, calories, servings, or notes.';
+      'Choose at least one item or feature: country, diet, ingredients, calories, servings, or notes.';
 
   @override
   String get countriesSection => 'Country / cuisine';
@@ -232,7 +232,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get generateConstraintRequired =>
-      'Select at least one constraint to generate a recipe';
+      'Select at least one item or feature to generate a recipe';
 
   @override
   String get exclusionsSection => 'Exclusions';
@@ -411,6 +411,9 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get networkError =>
       'No internet connection. Check your network and try again.';
+
+  @override
+  String get pressBackAgainToExit => 'Press back again to exit';
 
   @override
   String get sessionExpired => 'Your session has expired. Please log in again.';

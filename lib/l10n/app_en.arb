@@ -82,10 +82,10 @@
   "cuisineMexican": "Mexican",
   "cuisineTurkish": "Turkish",
   "cuisineFrench": "French",
-  "generateSubtitle": "Choose at least one constraint: country, diet, ingredients, calories, servings, or notes.",
+  "generateSubtitle": "Choose at least one item or feature: country, diet, ingredients, calories, servings, or notes.",
   "countriesSection": "Country / cuisine",
   "dietaryPreferencesSection": "Dietary preferences",
-  "generateConstraintRequired": "Select at least one constraint to generate a recipe",
+  "generateConstraintRequired": "Select at least one item or feature to generate a recipe",
   "exclusionsSection": "Exclusions",
   "exclusionHint": "e.g. chicken rice",
   "exclusionFieldLabel": "Item {index}",
@@ -195,6 +195,7 @@
   "addToFavorites": "Add to favorites",
   "removeFromFavorites": "Remove from favorites",
   "networkError": "No internet connection. Check your network and try again.",
+  "pressBackAgainToExit": "Press back again to exit",
   "sessionExpired": "Your session has expired. Please log in again.",
   "genericError": "Something went wrong. Please try again."
 }

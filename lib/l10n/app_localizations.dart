@@ -509,7 +509,7 @@ abstract class AppLocalizations {
   /// No description provided for @generateSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Choose at least one constraint: country, diet, ingredients, calories, servings, or notes.'**
+  /// **'Choose at least one item or feature: country, diet, ingredients, calories, servings, or notes.'**
   String get generateSubtitle;
 
   /// No description provided for @countriesSection.
@@ -527,7 +527,7 @@ abstract class AppLocalizations {
   /// No description provided for @generateConstraintRequired.
   ///
   /// In en, this message translates to:
-  /// **'Select at least one constraint to generate a recipe'**
+  /// **'Select at least one item or feature to generate a recipe'**
   String get generateConstraintRequired;
 
   /// No description provided for @exclusionsSection.
@@ -847,6 +847,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'No internet connection. Check your network and try again.'**
   String get networkError;
+
+  /// No description provided for @pressBackAgainToExit.
+  ///
+  /// In en, this message translates to:
+  /// **'Press back again to exit'**
+  String get pressBackAgainToExit;
 
   /// No description provided for @sessionExpired.
   ///

@@ -101,99 +101,108 @@ class ProfileScreen extends HookConsumerWidget {
       body: user == null
           ? const AppLoadingIndicator()
           : SafeArea(
-              child: SingleChildScrollView(
-                padding: EdgeInsets.fromLTRB(
-                  24,
-                  24,
-                  24,
-                  24 + MediaQuery.viewInsetsOf(context).bottom,
-                ),
-                child: Form(
-                  key: formKey,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      const SizedBox(height: 16),
-                      CircleAvatar(
-                        radius: 40,
-                        backgroundColor: cPrimary.withValues(alpha: 0.12),
-                        child: Icon(
-                          Icons.person,
-                          size: 40,
-                          color: Theme.of(context).colorScheme.primary,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Expanded(
+                    child: SingleChildScrollView(
+                      padding: EdgeInsets.fromLTRB(
+                        24,
+                        24,
+                        24,
+                        24 + MediaQuery.viewInsetsOf(context).bottom,
+                      ),
+                      child: Form(
+                        key: formKey,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            const SizedBox(height: 16),
+                            CircleAvatar(
+                              radius: 40,
+                              backgroundColor: cPrimary.withValues(alpha: 0.12),
+                              child: Icon(
+                                Icons.person,
+                                size: 40,
+                                color: Theme.of(context).colorScheme.primary,
+                              ),
+                            ),
+                            const SizedBox(height: 24),
+                            Text(
+                              user.name?.isNotEmpty ?? false
+                                  ? user.name!
+                                  : context.tr.noDisplayName,
+                              textAlign: TextAlign.center,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleLarge
+                                  ?.copyWith(fontWeight: FontWeight.bold),
+                            ),
+                            const SizedBox(height: 8),
+                            Text(
+                              user.mobileNumber,
+                              textAlign: TextAlign.center,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyLarge
+                                  ?.copyWith(color: cTextSecondary),
+                            ),
+                            const SizedBox(height: 32),
+                            TextFormField(
+                              controller: nameController,
+                              enabled: !isBusy,
+                              textInputAction: TextInputAction.done,
+                              decoration: InputDecoration(
+                                labelText: context.tr.displayNameLabel,
+                                hintText: context.tr.displayNameHint,
+                                prefixIcon: const Icon(Icons.badge_outlined),
+                              ),
+                              validator: (value) {
+                                if (value == null || value.trim().isEmpty) {
+                                  return context.tr.displayNameRequired;
+                                }
+                                return null;
+                              },
+                              onFieldSubmitted: (_) => saveProfile(),
+                            ),
+                            const SizedBox(height: 16),
+                            ElevatedButton(
+                              onPressed: isBusy ? null : saveProfile,
+                              child: updateState.isLoading
+                                  ? const SizedBox(
+                                      height: 24,
+                                      width: 24,
+                                      child: CircularProgressIndicator(
+                                        strokeWidth: 2,
+                                      ),
+                                    )
+                                  : Text(context.tr.saveProfile),
+                            ),
+                          ],
                         ),
                       ),
-                      const SizedBox(height: 24),
-                      Text(
-                        user.name?.isNotEmpty ?? false
-                            ? user.name!
-                            : context.tr.noDisplayName,
-                        textAlign: TextAlign.center,
-                        style:
-                            Theme.of(context).textTheme.titleLarge?.copyWith(
-                                  fontWeight: FontWeight.bold,
-                                ),
-                      ),
-                      const SizedBox(height: 8),
-                      Text(
-                        user.mobileNumber,
-                        textAlign: TextAlign.center,
-                        style:
-                            Theme.of(context).textTheme.bodyLarge?.copyWith(
-                                  color: cTextSecondary,
-                                ),
-                      ),
-                      const SizedBox(height: 32),
-                      TextFormField(
-                        controller: nameController,
-                        enabled: !isBusy,
-                        textInputAction: TextInputAction.done,
-                        decoration: InputDecoration(
-                          labelText: context.tr.displayNameLabel,
-                          hintText: context.tr.displayNameHint,
-                          prefixIcon: const Icon(Icons.badge_outlined),
-                        ),
-                        validator: (value) {
-                          if (value == null || value.trim().isEmpty) {
-                            return context.tr.displayNameRequired;
-                          }
-                          return null;
-                        },
-                        onFieldSubmitted: (_) => saveProfile(),
-                      ),
-                      const SizedBox(height: 16),
-                      ElevatedButton(
-                        onPressed: isBusy ? null : saveProfile,
-                        child: updateState.isLoading
-                            ? const SizedBox(
-                                height: 24,
-                                width: 24,
-                                child:
-                                    CircularProgressIndicator(strokeWidth: 2),
-                              )
-                            : Text(context.tr.saveProfile),
-                      ),
-                      const SizedBox(height: 32),
-                      OutlinedButton.icon(
-                        onPressed: isBusy ? null : confirmLogout,
-                        icon: logoutState.isLoading
-                            ? const SizedBox(
-                                height: 18,
-                                width: 18,
-                                child:
-                                    CircularProgressIndicator(strokeWidth: 2),
-                              )
-                            : const Icon(Icons.logout),
-                        label: Text(context.tr.logout),
-                        style: OutlinedButton.styleFrom(
-                          foregroundColor: cError,
-                          side: const BorderSide(color: cError),
-                          minimumSize: const Size(double.infinity, 52),
-                        ),
-                      ),
-                    ],
+                    ),
                   ),
-                ),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(24, 0, 24, 24),
+                    child: OutlinedButton.icon(
+                      onPressed: isBusy ? null : confirmLogout,
+                      icon: logoutState.isLoading
+                          ? const SizedBox(
+                              height: 18,
+                              width: 18,
+                              child: CircularProgressIndicator(strokeWidth: 2),
+                            )
+                          : const Icon(Icons.logout),
+                      label: Text(context.tr.logout),
+                      style: OutlinedButton.styleFrom(
+                        foregroundColor: cError,
+                        side: const BorderSide(color: cError),
+                        minimumSize: const Size(double.infinity, 52),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
     );
