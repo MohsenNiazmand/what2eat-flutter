@@ -1,4 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:what_2_eat/shared/data/models/recipe_options_model.dart';
 
 part 'user_model.g.dart';
 
@@ -8,6 +9,7 @@ class UserModel {
     required this.id,
     required this.mobileNumber,
     this.name,
+    this.recipeOptions,
   });
 
   factory UserModel.fromJson(Map<String, dynamic> json) =>
@@ -16,6 +18,7 @@ class UserModel {
   final String id;
   final String mobileNumber;
   final String? name;
+  final RecipeOptionsModel? recipeOptions;
 
   Map<String, dynamic> toJson() => _$UserModelToJson(this);
 }

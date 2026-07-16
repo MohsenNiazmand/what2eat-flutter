@@ -144,18 +144,6 @@ class ProfileScreen extends HookConsumerWidget {
                                 ),
                       ),
                       const SizedBox(height: 32),
-                      Card(
-                        margin: EdgeInsets.zero,
-                        child: ListTile(
-                          leading: const Icon(Icons.tune_outlined),
-                          title: Text(context.tr.managePreferences),
-                          trailing: const Icon(Icons.chevron_right),
-                          onTap: isBusy
-                              ? null
-                              : () => context.push(AppRoutes.preferences),
-                        ),
-                      ),
-                      const SizedBox(height: 24),
                       TextFormField(
                         controller: nameController,
                         enabled: !isBusy,

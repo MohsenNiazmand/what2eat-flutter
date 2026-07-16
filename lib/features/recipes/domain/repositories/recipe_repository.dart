@@ -5,10 +5,14 @@ import 'package:what_2_eat/shared/domain/entities/recipe.dart';
 
 abstract class RecipeRepository {
   Future<Either<Failure, Recipe>> generateRecipe({
-    required List<String> ingredients,
+    List<String>? countries,
+    List<String>? dietaryPreferences,
+    List<String>? ingredients,
     List<String>? tools,
+    List<String>? exclusions,
     int? calorieLimit,
     int? servings,
+    String? notes,
   });
 
   Future<Either<Failure, PaginatedResult<Recipe>>> listRecipes({

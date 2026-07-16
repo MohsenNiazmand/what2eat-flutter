@@ -1,16 +1,17 @@
 import 'package:flutter/services.dart';
 
-const _persianInputPattern = r'[\u0600-\u06FF\s\u200c]';
+const _persianTextPattern =
+    r'[\u0600-\u06FF\u0660-\u0669\u06F0-\u06F90-9\s\u200c.,،؛:\-()]';
 
-final _persianLetterPattern = RegExp(r'[\u0600-\u06FF]');
+final _latinLetterPattern = RegExp('[a-zA-Z]');
 
-/// Creates a formatter that allows Persian letters, spaces, and ZWNJ.
+/// Creates a formatter for user-facing Persian text fields.
 /// Calls [onRejected] when the user enters disallowed characters.
-TextInputFormatter createPersianIngredientFormatter({
+TextInputFormatter createPersianTextFormatter({
   VoidCallback? onRejected,
 }) {
   final filter = FilteringTextInputFormatter.allow(
-    RegExp(_persianInputPattern),
+    RegExp(_persianTextPattern),
   );
 
   return TextInputFormatter.withFunction((oldValue, newValue) {
@@ -22,9 +23,9 @@ TextInputFormatter createPersianIngredientFormatter({
   });
 }
 
-/// Returns true when [value] contains at least one Persian letter after trim.
-bool isValidPersianIngredientText(String value) {
+/// Returns true when [value] has no Latin letters after trim.
+bool isValidPersianText(String value) {
   final trimmed = value.trim();
   if (trimmed.isEmpty) return false;
-  return _persianLetterPattern.hasMatch(trimmed);
+  return !_latinLetterPattern.hasMatch(trimmed);
 }

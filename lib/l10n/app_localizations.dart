@@ -509,8 +509,62 @@ abstract class AppLocalizations {
   /// No description provided for @generateSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Enter the ingredients you have available. AI will suggest a Persian recipe.'**
+  /// **'Choose at least one constraint: country, diet, ingredients, calories, servings, or notes.'**
   String get generateSubtitle;
+
+  /// No description provided for @countriesSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Country / cuisine'**
+  String get countriesSection;
+
+  /// No description provided for @dietaryPreferencesSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Dietary preferences'**
+  String get dietaryPreferencesSection;
+
+  /// No description provided for @generateConstraintRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Select at least one constraint to generate a recipe'**
+  String get generateConstraintRequired;
+
+  /// No description provided for @exclusionsSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Exclusions'**
+  String get exclusionsSection;
+
+  /// No description provided for @exclusionHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. chicken rice'**
+  String get exclusionHint;
+
+  /// No description provided for @exclusionFieldLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Item {index}'**
+  String exclusionFieldLabel(int index);
+
+  /// No description provided for @addExclusion.
+  ///
+  /// In en, this message translates to:
+  /// **'Add exclusion'**
+  String get addExclusion;
+
+  /// No description provided for @notesLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Notes'**
+  String get notesLabel;
+
+  /// No description provided for @notesHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. light meal, not spicy'**
+  String get notesHint;
 
   /// No description provided for @ingredientsSection.
   ///
@@ -629,7 +683,7 @@ abstract class AppLocalizations {
   /// No description provided for @persianOnlyAllowed.
   ///
   /// In en, this message translates to:
-  /// **'Only Persian letters are allowed'**
+  /// **'Only Persian text is allowed (Persian or English digits are OK)'**
   String get persianOnlyAllowed;
 
   /// No description provided for @moderationNonPersianTitle.

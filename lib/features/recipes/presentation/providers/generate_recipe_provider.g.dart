@@ -7,7 +7,7 @@ part of 'generate_recipe_provider.dart';
 // **************************************************************************
 
 String _$generateRecipeNotifierHash() =>
-    r'e739afc590e977572c7c457ca9d2eb96e4315243';
+    r'e38abc358b487f0488ce6402693294a64cea6120';
 
 /// See also [GenerateRecipeNotifier].
 @ProviderFor(GenerateRecipeNotifier)

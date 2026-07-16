@@ -4,6 +4,7 @@ import 'package:what_2_eat/features/preferences/data/models/preference_model.dar
 import 'package:what_2_eat/shared/data/models/ingredient_model.dart';
 import 'package:what_2_eat/shared/data/models/pagination_model.dart';
 import 'package:what_2_eat/shared/data/models/recipe_model.dart';
+import 'package:what_2_eat/shared/data/models/recipe_options_model.dart';
 import 'package:what_2_eat/shared/domain/entities/favorite.dart';
 import 'package:what_2_eat/shared/domain/entities/ingredient.dart';
 import 'package:what_2_eat/shared/domain/entities/paginated_result.dart';
@@ -17,6 +18,7 @@ extension UserModelX on UserModel {
       id: id,
       mobileNumber: mobileNumber,
       name: name,
+      recipeOptions: recipeOptions?.toEntity(),
     );
   }
 }

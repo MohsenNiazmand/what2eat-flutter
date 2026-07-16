@@ -222,7 +222,37 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get generateSubtitle =>
-      'Enter the ingredients you have available. AI will suggest a Persian recipe.';
+      'Choose at least one constraint: country, diet, ingredients, calories, servings, or notes.';
+
+  @override
+  String get countriesSection => 'Country / cuisine';
+
+  @override
+  String get dietaryPreferencesSection => 'Dietary preferences';
+
+  @override
+  String get generateConstraintRequired =>
+      'Select at least one constraint to generate a recipe';
+
+  @override
+  String get exclusionsSection => 'Exclusions';
+
+  @override
+  String get exclusionHint => 'e.g. chicken rice';
+
+  @override
+  String exclusionFieldLabel(int index) {
+    return 'Item $index';
+  }
+
+  @override
+  String get addExclusion => 'Add exclusion';
+
+  @override
+  String get notesLabel => 'Notes';
+
+  @override
+  String get notesHint => 'e.g. light meal, not spicy';
 
   @override
   String get ingredientsSection => 'Ingredients';
@@ -287,7 +317,8 @@ class AppLocalizationsEn extends AppLocalizations {
       'AI service is temporarily unavailable. Please try again.';
 
   @override
-  String get persianOnlyAllowed => 'Only Persian letters are allowed';
+  String get persianOnlyAllowed =>
+      'Only Persian text is allowed (Persian or English digits are OK)';
 
   @override
   String get moderationNonPersianTitle => 'Write in Persian only';

@@ -12,19 +12,27 @@ class GenerateRecipeNotifier extends _$GenerateRecipeNotifier {
   AsyncValue<void> build() => const AsyncValue.data(null);
 
   Future<Recipe?> generate({
-    required List<String> ingredients,
+    List<String>? countries,
+    List<String>? dietaryPreferences,
+    List<String>? ingredients,
     List<String>? tools,
+    List<String>? exclusions,
     int? calorieLimit,
     int? servings,
+    String? notes,
   }) async {
     state = const AsyncValue.loading();
 
     final result = await getIt<GenerateRecipeUseCase>()(
       GenerateRecipeParams(
+        countries: countries,
+        dietaryPreferences: dietaryPreferences,
         ingredients: ingredients,
         tools: tools,
+        exclusions: exclusions,
         calorieLimit: calorieLimit,
         servings: servings,
+        notes: notes,
       ),
     );
 

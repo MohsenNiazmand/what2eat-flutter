@@ -15,18 +15,26 @@ class RecipeRepositoryImpl implements RecipeRepository {
 
   @override
   Future<Either<Failure, Recipe>> generateRecipe({
-    required List<String> ingredients,
+    List<String>? countries,
+    List<String>? dietaryPreferences,
+    List<String>? ingredients,
     List<String>? tools,
+    List<String>? exclusions,
     int? calorieLimit,
     int? servings,
+    String? notes,
   }) {
     return guard(() async {
       final response = await _recipeApi.generateRecipe(
         GenerateRecipeRequest(
+          countries: countries,
+          dietaryPreferences: dietaryPreferences,
           ingredients: ingredients,
           tools: tools,
+          exclusions: exclusions,
           calorieLimit: calorieLimit,
           servings: servings,
+          notes: notes,
         ),
       );
       return response.data.toEntity();

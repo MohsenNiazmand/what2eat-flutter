@@ -223,7 +223,37 @@ class AppLocalizationsFa extends AppLocalizations {
 
   @override
   String get generateSubtitle =>
-      'مواد اولیه‌ای که در اختیار دارید را وارد کنید. هوش مصنوعی یک دستور ایرانی پیشنهاد می‌دهد.';
+      'حداقل یک محدودیت انتخاب کنید: کشور، رژیم غذایی، مواد، کالری، تعداد نفر یا یادداشت.';
+
+  @override
+  String get countriesSection => 'کشور / سبک آشپزی';
+
+  @override
+  String get dietaryPreferencesSection => 'ترجیحات غذایی';
+
+  @override
+  String get generateConstraintRequired =>
+      'حداقل یک محدودیت برای تولید دستور انتخاب کنید';
+
+  @override
+  String get exclusionsSection => 'غذاهای مستثنی';
+
+  @override
+  String get exclusionHint => 'مثلاً چلو مرغ';
+
+  @override
+  String exclusionFieldLabel(int index) {
+    return 'مورد $index';
+  }
+
+  @override
+  String get addExclusion => 'افزودن مورد';
+
+  @override
+  String get notesLabel => 'یادداشت';
+
+  @override
+  String get notesHint => 'مثلاً غذای سبک، تند نباشد';
 
   @override
   String get ingredientsSection => 'مواد اولیه';
@@ -288,7 +318,8 @@ class AppLocalizationsFa extends AppLocalizations {
       'سرویس هوش مصنوعی موقتاً در دسترس نیست. لطفاً دوباره تلاش کنید.';
 
   @override
-  String get persianOnlyAllowed => 'فقط حروف فارسی مجاز است';
+  String get persianOnlyAllowed =>
+      'فقط متن فارسی مجاز است (عدد فارسی یا انگلیسی مشکلی ندارد)';
 
   @override
   String get moderationNonPersianTitle => 'فقط فارسی بنویس';

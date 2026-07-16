@@ -10,12 +10,18 @@ UserModel _$UserModelFromJson(Map<String, dynamic> json) => UserModel(
   id: json['id'] as String,
   mobileNumber: json['mobileNumber'] as String,
   name: json['name'] as String?,
+  recipeOptions: json['recipeOptions'] == null
+      ? null
+      : RecipeOptionsModel.fromJson(
+          json['recipeOptions'] as Map<String, dynamic>,
+        ),
 );
 
 Map<String, dynamic> _$UserModelToJson(UserModel instance) => <String, dynamic>{
   'id': instance.id,
   'mobileNumber': instance.mobileNumber,
   'name': instance.name,
+  'recipeOptions': instance.recipeOptions,
 };
 
 UserEnvelope _$UserEnvelopeFromJson(Map<String, dynamic> json) => UserEnvelope(

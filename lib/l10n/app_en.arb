@@ -82,7 +82,23 @@
   "cuisineMexican": "Mexican",
   "cuisineTurkish": "Turkish",
   "cuisineFrench": "French",
-  "generateSubtitle": "Enter the ingredients you have available. AI will suggest a Persian recipe.",
+  "generateSubtitle": "Choose at least one constraint: country, diet, ingredients, calories, servings, or notes.",
+  "countriesSection": "Country / cuisine",
+  "dietaryPreferencesSection": "Dietary preferences",
+  "generateConstraintRequired": "Select at least one constraint to generate a recipe",
+  "exclusionsSection": "Exclusions",
+  "exclusionHint": "e.g. chicken rice",
+  "exclusionFieldLabel": "Item {index}",
+  "@exclusionFieldLabel": {
+    "placeholders": {
+      "index": {
+        "type": "int"
+      }
+    }
+  },
+  "addExclusion": "Add exclusion",
+  "notesLabel": "Notes",
+  "notesHint": "e.g. light meal, not spicy",
   "ingredientsSection": "Ingredients",
   "ingredientHint": "e.g. tomato",
   "ingredientFieldLabel": "Ingredient {index}",
@@ -116,7 +132,7 @@
   "generateRecipeButton": "Generate recipe",
   "generatingRecipe": "Generating recipe…",
   "aiProviderFailure": "AI service is temporarily unavailable. Please try again.",
-  "persianOnlyAllowed": "Only Persian letters are allowed",
+  "persianOnlyAllowed": "Only Persian text is allowed (Persian or English digits are OK)",
   "moderationNonPersianTitle": "Write in Persian only",
   "moderationForbiddenTitle": "Inappropriate ingredient",
   "editIngredientsButton": "Edit ingredients",
