@@ -97,11 +97,17 @@ class ProfileScreen extends HookConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(title: Text(context.tr.profileTabTitle)),
+      resizeToAvoidBottomInset: true,
       body: user == null
           ? const AppLoadingIndicator()
           : SafeArea(
-              child: Padding(
-                padding: const EdgeInsets.all(24),
+              child: SingleChildScrollView(
+                padding: EdgeInsets.fromLTRB(
+                  24,
+                  24,
+                  24,
+                  24 + MediaQuery.viewInsetsOf(context).bottom,
+                ),
                 child: Form(
                   key: formKey,
                   child: Column(
@@ -179,7 +185,7 @@ class ProfileScreen extends HookConsumerWidget {
                               )
                             : Text(context.tr.saveProfile),
                       ),
-                      const Spacer(),
+                      const SizedBox(height: 32),
                       OutlinedButton.icon(
                         onPressed: isBusy ? null : confirmLogout,
                         icon: logoutState.isLoading

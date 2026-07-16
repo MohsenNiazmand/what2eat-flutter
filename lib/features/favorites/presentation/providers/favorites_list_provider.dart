@@ -6,6 +6,41 @@ import 'package:what_2_eat/shared/domain/entities/favorite.dart';
 
 part 'favorites_list_provider.g.dart';
 
+@Riverpod(keepAlive: true)
+class FavoriteRecipeIdsNotifier extends _$FavoriteRecipeIdsNotifier {
+  bool _loaded = false;
+
+  @override
+  Set<String> build() => {};
+
+  Future<void> loadIfNeeded() async {
+    if (_loaded) return;
+
+    final result = await getIt<ListFavoritesUseCase>()(const NoParams());
+
+    result.fold(
+      (_) {},
+      (favorites) {
+        _loaded = true;
+        state = favorites.map((favorite) => favorite.recipeId).toSet();
+      },
+    );
+  }
+
+  void replaceAll(Set<String> ids) {
+    _loaded = true;
+    state = ids;
+  }
+
+  void add(String recipeId) {
+    state = {...state, recipeId};
+  }
+
+  void remove(String recipeId) {
+    state = {...state}..remove(recipeId);
+  }
+}
+
 @riverpod
 class FavoritesListNotifier extends _$FavoritesListNotifier {
   @override
@@ -14,7 +49,12 @@ class FavoritesListNotifier extends _$FavoritesListNotifier {
 
     return result.fold(
       (failure) => throw StateError(failure.message),
-      (favorites) => favorites,
+      (favorites) {
+        ref
+            .read(favoriteRecipeIdsNotifierProvider.notifier)
+            .replaceAll(favorites.map((favorite) => favorite.recipeId).toSet());
+        return favorites;
+      },
     );
   }
 
@@ -26,10 +66,5 @@ class FavoritesListNotifier extends _$FavoritesListNotifier {
 
 @riverpod
 Set<String> favoriteRecipeIds(FavoriteRecipeIdsRef ref) {
-  final favoritesAsync = ref.watch(favoritesListNotifierProvider);
-
-  return favoritesAsync.maybeWhen(
-    data: (favorites) => favorites.map((favorite) => favorite.recipeId).toSet(),
-    orElse: () => {},
-  );
+  return ref.watch(favoriteRecipeIdsNotifierProvider);
 }

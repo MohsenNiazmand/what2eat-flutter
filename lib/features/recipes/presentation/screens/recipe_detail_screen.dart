@@ -12,16 +12,21 @@ class RecipeDetailScreen extends ConsumerWidget {
   const RecipeDetailScreen({
     required this.recipeId,
     this.initialRecipe,
+    this.resolveFavoriteStatus = true,
     super.key,
   });
 
   final String recipeId;
   final Recipe? initialRecipe;
+  final bool resolveFavoriteStatus;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     if (initialRecipe != null) {
-      return _RecipeDetailScaffold(recipe: initialRecipe!);
+      return _RecipeDetailScaffold(
+        recipe: initialRecipe!,
+        resolveFavoriteStatus: resolveFavoriteStatus,
+      );
     }
 
     final recipeAsync = ref.watch(recipeDetailProvider(recipeId));
@@ -45,15 +50,22 @@ class RecipeDetailScreen extends ConsumerWidget {
           ),
         );
       },
-      data: (recipe) => _RecipeDetailScaffold(recipe: recipe),
+      data: (recipe) => _RecipeDetailScaffold(
+        recipe: recipe,
+        resolveFavoriteStatus: resolveFavoriteStatus,
+      ),
     );
   }
 }
 
 class _RecipeDetailScaffold extends StatelessWidget {
-  const _RecipeDetailScaffold({required this.recipe});
+  const _RecipeDetailScaffold({
+    required this.recipe,
+    required this.resolveFavoriteStatus,
+  });
 
   final Recipe recipe;
+  final bool resolveFavoriteStatus;
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +73,10 @@ class _RecipeDetailScaffold extends StatelessWidget {
       appBar: AppBar(
         title: Text(recipe.title),
         actions: [
-          FavoriteButton(recipeId: recipe.id),
+          FavoriteButton(
+            recipeId: recipe.id,
+            resolveFavoriteStatus: resolveFavoriteStatus,
+          ),
         ],
       ),
       body: RecipeDetailContent(recipe: recipe),

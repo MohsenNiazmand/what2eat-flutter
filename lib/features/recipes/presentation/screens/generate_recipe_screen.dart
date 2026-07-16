@@ -7,6 +7,7 @@ import 'package:what_2_eat/core/constants/colors.dart';
 import 'package:what_2_eat/core/error/failures.dart';
 import 'package:what_2_eat/core/extensions/context_extensions.dart';
 import 'package:what_2_eat/core/utils/persian_input.dart';
+import 'package:what_2_eat/features/recipes/presentation/models/recipe_detail_navigation.dart';
 import 'package:what_2_eat/features/recipes/presentation/providers/generate_recipe_provider.dart';
 import 'package:what_2_eat/features/recipes/presentation/widgets/dynamic_text_field_list.dart';
 import 'package:what_2_eat/shared/presentation/utils/toast_utils.dart';
@@ -117,7 +118,10 @@ class GenerateRecipeScreen extends HookConsumerWidget {
         return;
       }
 
-      await context.push(AppRoutes.recipeDetailPath(recipe.id), extra: recipe);
+      await context.push(
+        AppRoutes.recipeDetailPath(recipe.id),
+        extra: RecipeDetailNavigation.fromGenerate(recipe),
+      );
     }
 
     return Scaffold(

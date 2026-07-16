@@ -32,6 +32,11 @@ class FavoriteToggleNotifier extends _$FavoriteToggleNotifier {
         return failure;
       },
       (_) {
+        if (isCurrentlyFavorite) {
+          ref.read(favoriteRecipeIdsNotifierProvider.notifier).remove(recipeId);
+        } else {
+          ref.read(favoriteRecipeIdsNotifierProvider.notifier).add(recipeId);
+        }
         ref.invalidate(favoritesListNotifierProvider);
         state = const AsyncValue.data(null);
         return null;

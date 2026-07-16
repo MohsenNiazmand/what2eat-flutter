@@ -11,6 +11,7 @@ import 'package:what_2_eat/features/favorites/presentation/screens/favorites_scr
 import 'package:what_2_eat/features/main/presentation/screens/main_shell_screen.dart';
 import 'package:what_2_eat/features/preferences/presentation/screens/preferences_screen.dart';
 import 'package:what_2_eat/features/profile/presentation/screens/profile_screen.dart';
+import 'package:what_2_eat/features/recipes/presentation/models/recipe_detail_navigation.dart';
 import 'package:what_2_eat/features/recipes/presentation/screens/generate_recipe_screen.dart';
 import 'package:what_2_eat/features/recipes/presentation/screens/recipe_detail_screen.dart';
 import 'package:what_2_eat/features/recipes/presentation/screens/recipe_list_screen.dart';
@@ -88,10 +89,21 @@ GoRouter goRouter(GoRouterRef ref) {
         path: AppRoutes.recipeDetail,
         builder: (context, state) {
           final id = state.pathParameters['id']!;
-          final initialRecipe = state.extra as Recipe?;
+          final extra = state.extra;
+          Recipe? initialRecipe;
+          var resolveFavoriteStatus = true;
+
+          if (extra is RecipeDetailNavigation) {
+            initialRecipe = extra.recipe;
+            resolveFavoriteStatus = extra.resolveFavoriteStatus;
+          } else if (extra is Recipe) {
+            initialRecipe = extra;
+          }
+
           return RecipeDetailScreen(
             recipeId: id,
             initialRecipe: initialRecipe,
+            resolveFavoriteStatus: resolveFavoriteStatus,
           );
         },
       ),
