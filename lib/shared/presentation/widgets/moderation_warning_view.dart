@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:what_2_eat/core/constants/colors.dart';
 import 'package:what_2_eat/core/error/failures.dart';
 import 'package:what_2_eat/core/extensions/context_extensions.dart';
+import 'package:what_2_eat/shared/presentation/widgets/app_primary_button.dart';
+import 'package:what_2_eat/shared/presentation/widgets/gap.dart';
 
 class ModerationWarningView extends StatelessWidget {
   const ModerationWarningView({
@@ -15,6 +16,7 @@ class ModerationWarningView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     final title = failure.isNonPersianText
         ? context.tr.moderationNonPersianTitle
         : context.tr.moderationForbiddenTitle;
@@ -28,31 +30,26 @@ class ModerationWarningView extends StatelessWidget {
             Icon(
               Icons.warning_amber_rounded,
               size: 64,
-              color: Theme.of(context).colorScheme.tertiary,
+              color: theme.colorScheme.tertiary,
             ),
-            const SizedBox(height: 24),
+            Gap.v24(),
             Text(
               title,
               textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                    fontWeight: FontWeight.w600,
-                  ),
+              style: theme.textTheme.headlineSmall,
             ),
-            const SizedBox(height: 12),
+            Gap.v12(),
             Text(
               failure.message,
               textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                    color: cTextSecondary,
-                  ),
-            ),
-            const SizedBox(height: 32),
-            ElevatedButton(
-              onPressed: onDismiss,
-              style: ElevatedButton.styleFrom(
-                minimumSize: const Size(double.infinity, 48),
+              style: theme.textTheme.bodyLarge?.copyWith(
+                color: theme.colorScheme.onSurfaceVariant,
               ),
-              child: Text(context.tr.editIngredientsButton),
+            ),
+            Gap.v32(),
+            AppPrimaryButton(
+              label: context.tr.editIngredientsButton,
+              onPressed: onDismiss,
             ),
           ],
         ),

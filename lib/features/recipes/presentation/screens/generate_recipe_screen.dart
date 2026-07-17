@@ -4,9 +4,9 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:what_2_eat/config/router/routes.dart';
-import 'package:what_2_eat/core/constants/colors.dart';
 import 'package:what_2_eat/core/error/failures.dart';
 import 'package:what_2_eat/core/extensions/context_extensions.dart';
+import 'package:what_2_eat/core/utils/persian_digits.dart';
 import 'package:what_2_eat/core/utils/persian_input.dart';
 import 'package:what_2_eat/features/auth/presentation/providers/current_user_provider.dart';
 import 'package:what_2_eat/features/profile/presentation/providers/profile_providers.dart';
@@ -17,6 +17,9 @@ import 'package:what_2_eat/features/recipes/presentation/widgets/dynamic_text_fi
 import 'package:what_2_eat/features/recipes/presentation/widgets/recipe_option_chip_section.dart';
 import 'package:what_2_eat/shared/presentation/utils/toast_utils.dart';
 import 'package:what_2_eat/shared/presentation/widgets/app_loading_indicator.dart';
+import 'package:what_2_eat/shared/presentation/widgets/app_primary_button.dart';
+import 'package:what_2_eat/shared/presentation/widgets/app_text_field.dart';
+import 'package:what_2_eat/shared/presentation/widgets/gap.dart';
 import 'package:what_2_eat/shared/presentation/widgets/moderation_warning_view.dart';
 
 class GenerateRecipeScreen extends HookConsumerWidget {
@@ -37,6 +40,7 @@ class GenerateRecipeScreen extends HookConsumerWidget {
     final notesController = useTextEditingController();
     final moderationFailure = useState<ModerationFailure?>(null);
     final isGenerating = generateState.isLoading;
+    final theme = Theme.of(context);
     final persianFormatter = useMemoized(
       () => createPersianTextFormatter(
         onRejected: () => showMessageToast(context.tr.persianOnlyAllowed),
@@ -55,7 +59,7 @@ class GenerateRecipeScreen extends HookConsumerWidget {
     );
 
     int? parseOptionalInt(String value) {
-      final trimmed = value.trim();
+      final trimmed = PersianDigits.toLatin(value.trim());
       if (trimmed.isEmpty) return null;
       return int.tryParse(trimmed);
     }
@@ -147,8 +151,7 @@ class GenerateRecipeScreen extends HookConsumerWidget {
             dietaryPreferences: selectedDietary.value.isEmpty
                 ? null
                 : selectedDietary.value.toList(),
-            ingredients:
-                ingredientList.isEmpty ? null : ingredientList,
+            ingredients: ingredientList.isEmpty ? null : ingredientList,
             tools: toolList.isEmpty ? null : toolList,
             exclusions: exclusionList.isEmpty ? null : exclusionList,
             calorieLimit: calorieLimit,
@@ -211,12 +214,11 @@ class GenerateRecipeScreen extends HookConsumerWidget {
                           children: [
                             Text(
                               context.tr.generateSubtitle,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyLarge
-                                  ?.copyWith(color: cTextSecondary),
+                              style: theme.textTheme.bodyLarge?.copyWith(
+                                color: theme.colorScheme.onSurfaceVariant,
+                              ),
                             ),
-                            const SizedBox(height: 24),
+                            Gap.v24(),
                             RecipeOptionChipSection(
                               title: context.tr.countriesSection,
                               options: recipeOptions.countries,
@@ -226,7 +228,7 @@ class GenerateRecipeScreen extends HookConsumerWidget {
                                 selectedCountries.value = value;
                               },
                             ),
-                            const SizedBox(height: 24),
+                            Gap.v24(),
                             RecipeOptionChipSection(
                               title: context.tr.dietaryPreferencesSection,
                               options: recipeOptions.dietaryPreferences,
@@ -236,15 +238,12 @@ class GenerateRecipeScreen extends HookConsumerWidget {
                                 selectedDietary.value = value;
                               },
                             ),
-                            const SizedBox(height: 24),
+                            Gap.v24(),
                             Text(
                               context.tr.ingredientsSection,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .titleMedium
-                                  ?.copyWith(fontWeight: FontWeight.w600),
+                              style: theme.textTheme.titleMedium,
                             ),
-                            const SizedBox(height: 12),
+                            Gap.v12(),
                             DynamicTextFieldList(
                               values: ingredients.value,
                               enabled: !isGenerating,
@@ -268,15 +267,12 @@ class GenerateRecipeScreen extends HookConsumerWidget {
                                 ingredients.value = updated;
                               },
                             ),
-                            const SizedBox(height: 24),
+                            Gap.v24(),
                             Text(
                               context.tr.toolsSection,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .titleMedium
-                                  ?.copyWith(fontWeight: FontWeight.w600),
+                              style: theme.textTheme.titleMedium,
                             ),
-                            const SizedBox(height: 12),
+                            Gap.v12(),
                             DynamicTextFieldList(
                               values: tools.value,
                               enabled: !isGenerating,
@@ -300,39 +296,31 @@ class GenerateRecipeScreen extends HookConsumerWidget {
                                 tools.value = updated;
                               },
                             ),
-                            const SizedBox(height: 24),
-                            TextFormField(
+                            Gap.v24(),
+                            AppTextField(
                               controller: calorieController,
                               enabled: !isGenerating,
                               keyboardType: TextInputType.number,
-                              decoration: InputDecoration(
-                                labelText: context.tr.calorieLimitLabel,
-                                hintText: context.tr.calorieLimitHint,
-                                prefixIcon:
-                                    const Icon(Icons.local_dining_outlined),
-                              ),
+                              labelText: context.tr.calorieLimitLabel,
+                              hintText: context.tr.calorieLimitHint,
+                              prefixIcon:
+                                  const Icon(Icons.local_dining_outlined),
                             ),
-                            const SizedBox(height: 16),
-                            TextFormField(
+                            Gap.v16(),
+                            AppTextField(
                               controller: servingsController,
                               enabled: !isGenerating,
                               keyboardType: TextInputType.number,
-                              decoration: InputDecoration(
-                                labelText: context.tr.servingsLabel,
-                                hintText: context.tr.servingsHint,
-                                prefixIcon:
-                                    const Icon(Icons.restaurant_outlined),
-                              ),
+                              labelText: context.tr.servingsLabel,
+                              hintText: context.tr.servingsHint,
+                              prefixIcon: const Icon(Icons.restaurant_outlined),
                             ),
-                            const SizedBox(height: 24),
+                            Gap.v24(),
                             Text(
                               context.tr.exclusionsSection,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .titleMedium
-                                  ?.copyWith(fontWeight: FontWeight.w600),
+                              style: theme.textTheme.titleMedium,
                             ),
-                            const SizedBox(height: 12),
+                            Gap.v12(),
                             DynamicTextFieldList(
                               values: exclusions.value,
                               enabled: !isGenerating,
@@ -356,17 +344,15 @@ class GenerateRecipeScreen extends HookConsumerWidget {
                                 exclusions.value = updated;
                               },
                             ),
-                            const SizedBox(height: 24),
-                            TextFormField(
+                            Gap.v24(),
+                            AppTextField(
                               controller: notesController,
                               enabled: !isGenerating,
                               maxLines: 3,
                               inputFormatters: [persianFormatter],
-                              decoration: InputDecoration(
-                                labelText: context.tr.notesLabel,
-                                hintText: context.tr.notesHint,
-                                alignLabelWithHint: true,
-                              ),
+                              labelText: context.tr.notesLabel,
+                              hintText: context.tr.notesHint,
+                              alignLabelWithHint: true,
                             ),
                           ],
                         ),
@@ -374,24 +360,13 @@ class GenerateRecipeScreen extends HookConsumerWidget {
                     ),
                     Padding(
                       padding: const EdgeInsets.fromLTRB(24, 0, 24, 24),
-                      child: ElevatedButton.icon(
-                        onPressed: isGenerating ? null : submit,
-                        icon: isGenerating
-                            ? const SizedBox(
-                                height: 20,
-                                width: 20,
-                                child:
-                                    CircularProgressIndicator(strokeWidth: 2),
-                              )
-                            : const Icon(Icons.auto_awesome),
-                        label: Text(
-                          isGenerating
-                              ? context.tr.generatingRecipe
-                              : context.tr.generateRecipeButton,
-                        ),
-                        style: ElevatedButton.styleFrom(
-                          minimumSize: const Size(double.infinity, 52),
-                        ),
+                      child: AppPrimaryButton(
+                        label: isGenerating
+                            ? context.tr.generatingRecipe
+                            : context.tr.generateRecipeButton,
+                        icon: Icons.auto_awesome_rounded,
+                        isLoading: isGenerating,
+                        onPressed: submit,
                       ),
                     ),
                   ],

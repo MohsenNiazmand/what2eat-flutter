@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:what_2_eat/core/constants/colors.dart';
+import 'package:what_2_eat/shared/presentation/widgets/app_icon_badge.dart';
+import 'package:what_2_eat/shared/presentation/widgets/gap.dart';
 
 class EmptyStateView extends StatelessWidget {
   const EmptyStateView({
@@ -15,26 +16,28 @@ class EmptyStateView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return Center(
       child: Padding(
         padding: const EdgeInsets.all(32),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(icon, size: 64, color: cPrimary),
-            const SizedBox(height: 16),
+            AppIconBadge(icon: icon, size: 80),
+            Gap.v16(),
             Text(
               message,
-              style: Theme.of(context).textTheme.titleMedium,
+              style: theme.textTheme.titleMedium,
               textAlign: TextAlign.center,
             ),
             if (subtitle != null && subtitle!.isNotEmpty) ...[
-              const SizedBox(height: 8),
+              Gap.v8(),
               Text(
                 subtitle!,
-                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      color: cTextSecondary,
-                    ),
+                style: theme.textTheme.bodyMedium?.copyWith(
+                  color: theme.colorScheme.onSurfaceVariant,
+                ),
                 textAlign: TextAlign.center,
               ),
             ],

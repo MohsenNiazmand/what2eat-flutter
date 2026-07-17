@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:what_2_eat/core/extensions/context_extensions.dart';
+import 'package:what_2_eat/shared/presentation/widgets/app_primary_button.dart';
+import 'package:what_2_eat/shared/presentation/widgets/gap.dart';
 
 class ErrorRetryView extends StatelessWidget {
   const ErrorRetryView({
@@ -13,6 +15,8 @@ class ErrorRetryView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return Center(
       child: Padding(
         padding: const EdgeInsets.all(24),
@@ -20,20 +24,20 @@ class ErrorRetryView extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(
-              Icons.error_outline,
+              Icons.error_outline_rounded,
               size: 48,
-              color: Theme.of(context).colorScheme.error,
+              color: theme.colorScheme.error,
             ),
-            const SizedBox(height: 16),
+            Gap.v16(),
             Text(
               message,
               textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.bodyLarge,
+              style: theme.textTheme.bodyLarge,
             ),
-            const SizedBox(height: 16),
-            ElevatedButton(
+            Gap.v16(),
+            AppPrimaryButton(
+              label: context.tr.retry,
               onPressed: onRetry,
-              child: Text(context.tr.retry),
             ),
           ],
         ),

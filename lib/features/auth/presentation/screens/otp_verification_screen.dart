@@ -5,13 +5,16 @@ import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:pinput/pinput.dart';
 import 'package:what_2_eat/config/router/routes.dart';
-import 'package:what_2_eat/core/constants/colors.dart';
+import 'package:what_2_eat/config/theme/app_radius.dart';
 import 'package:what_2_eat/core/constants/constants.dart';
 import 'package:what_2_eat/core/error/failures.dart';
 import 'package:what_2_eat/core/extensions/context_extensions.dart';
+import 'package:what_2_eat/core/utils/persian_digits.dart';
 import 'package:what_2_eat/features/auth/presentation/providers/login_provider.dart';
 import 'package:what_2_eat/features/auth/presentation/providers/verify_otp_provider.dart';
 import 'package:what_2_eat/shared/presentation/utils/toast_utils.dart';
+import 'package:what_2_eat/shared/presentation/widgets/app_primary_button.dart';
+import 'package:what_2_eat/shared/presentation/widgets/gap.dart';
 
 class OtpVerificationScreen extends HookConsumerWidget {
   const OtpVerificationScreen({
@@ -27,6 +30,8 @@ class OtpVerificationScreen extends HookConsumerWidget {
     final verifyState = ref.watch(verifyOtpNotifierProvider);
     final loginState = ref.watch(loginNotifierProvider);
     final isLoading = verifyState.isLoading || loginState.isLoading;
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
 
     useEffect(
       () {
@@ -43,10 +48,13 @@ class OtpVerificationScreen extends HookConsumerWidget {
     final defaultPinTheme = PinTheme(
       width: 48,
       height: 56,
-      textStyle: Theme.of(context).textTheme.titleLarge,
+      textStyle: theme.textTheme.titleLarge?.copyWith(
+        fontWeight: FontWeight.w600,
+      ),
       decoration: BoxDecoration(
-        border: Border.all(color: cBorder),
-        borderRadius: BorderRadius.circular(12),
+        color: colorScheme.surface,
+        border: Border.all(color: colorScheme.outline),
+        borderRadius: AppRadius.input,
       ),
     );
 
@@ -105,15 +113,16 @@ class OtpVerificationScreen extends HookConsumerWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                const SizedBox(height: 24),
+                Gap.v24(),
                 Text(
-                  context.tr.otpSubtitle(mobileNumber),
+                  context.tr.otpSubtitle(PersianDigits.toPersian(mobileNumber)),
                   textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                        color: cTextSecondary,
-                      ),
+                  style: theme.textTheme.bodyLarge?.copyWith(
+                    color: colorScheme.onSurfaceVariant,
+                    height: 1.7,
+                  ),
                 ),
-                const SizedBox(height: 32),
+                Gap.v32(),
                 Directionality(
                   textDirection: TextDirection.ltr,
                   child: Pinput(
@@ -123,29 +132,27 @@ class OtpVerificationScreen extends HookConsumerWidget {
                     defaultPinTheme: defaultPinTheme,
                     focusedPinTheme: defaultPinTheme.copyWith(
                       decoration: defaultPinTheme.decoration?.copyWith(
-                        border: Border.all(color: cPrimary, width: 2),
+                        border: Border.all(
+                          color: colorScheme.primary,
+                          width: 2,
+                        ),
                       ),
                     ),
                     onCompleted: (_) => verify(),
                   ),
                 ),
-                const SizedBox(height: 24),
+                Gap.v24(),
                 TextButton(
                   onPressed: isLoading ? null : resend,
                   child: Text(context.tr.resendOtp),
                 ),
                 const Spacer(),
-                ElevatedButton(
-                  onPressed: isLoading ? null : verify,
-                  child: isLoading
-                      ? const SizedBox(
-                          height: 24,
-                          width: 24,
-                          child: CircularProgressIndicator(strokeWidth: 2),
-                        )
-                      : Text(context.tr.verifyOtp),
+                AppPrimaryButton(
+                  label: context.tr.verifyOtp,
+                  isLoading: isLoading,
+                  onPressed: verify,
                 ),
-                const SizedBox(height: 16),
+                Gap.v16(),
               ],
             ),
           ),

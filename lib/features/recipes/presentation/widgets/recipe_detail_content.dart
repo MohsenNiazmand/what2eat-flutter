@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:what_2_eat/core/constants/colors.dart';
+import 'package:what_2_eat/config/theme/app_radius.dart';
 import 'package:what_2_eat/core/extensions/context_extensions.dart';
+import 'package:what_2_eat/core/utils/persian_digits.dart';
 import 'package:what_2_eat/shared/domain/entities/recipe.dart';
+import 'package:what_2_eat/shared/presentation/widgets/gap.dart';
 
 class RecipeDetailContent extends StatelessWidget {
   const RecipeDetailContent({
@@ -13,6 +15,9 @@ class RecipeDetailContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+
     return SingleChildScrollView(
       padding: const EdgeInsets.all(24),
       child: Column(
@@ -21,39 +26,41 @@ class RecipeDetailContent extends StatelessWidget {
           if (recipe.category != null && recipe.category!.isNotEmpty) ...[
             Align(
               alignment: AlignmentDirectional.centerStart,
-              child: Chip(label: Text(recipe.category!)),
+              child: Chip(
+                label: Text(recipe.category!),
+                backgroundColor: colorScheme.primaryContainer,
+                side: BorderSide.none,
+              ),
             ),
-            const SizedBox(height: 12),
+            Gap.v12(),
           ],
           if (recipe.description != null && recipe.description!.isNotEmpty) ...[
             Text(
               context.tr.descriptionSection,
-              style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                    fontWeight: FontWeight.w600,
-                  ),
+              style: theme.textTheme.titleMedium,
             ),
-            const SizedBox(height: 8),
+            Gap.v8(),
             Text(
               recipe.description!,
-              style: Theme.of(context).textTheme.bodyLarge,
+              style: theme.textTheme.bodyLarge?.copyWith(
+                color: colorScheme.onSurfaceVariant,
+              ),
             ),
-            const SizedBox(height: 24),
+            Gap.v24(),
           ],
           _MetaRow(recipe: recipe),
-          const SizedBox(height: 24),
+          Gap.v24(),
           Text(
             context.tr.ingredientsSection,
-            style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                  fontWeight: FontWeight.w600,
-                ),
+            style: theme.textTheme.titleLarge,
           ),
-          const SizedBox(height: 12),
+          Gap.v12(),
           if (recipe.ingredients.isEmpty)
             Text(
               context.tr.noIngredients,
-              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    color: cTextSecondary,
-                  ),
+              style: theme.textTheme.bodyMedium?.copyWith(
+                color: colorScheme.onSurfaceVariant,
+              ),
             )
           else
             ...recipe.ingredients.map(
@@ -62,18 +69,29 @@ class RecipeDetailContent extends StatelessWidget {
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Icon(Icons.circle, size: 8),
-                    const SizedBox(width: 12),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 8),
+                      child: Icon(
+                        Icons.circle,
+                        size: 8,
+                        color: colorScheme.primary,
+                      ),
+                    ),
+                    Gap.h12(),
                     Expanded(
                       child: Text.rich(
                         TextSpan(
                           text: ingredient.name,
-                          style: const TextStyle(fontWeight: FontWeight.w600),
+                          style: theme.textTheme.bodyLarge?.copyWith(
+                            fontWeight: FontWeight.w600,
+                          ),
                           children: [
                             TextSpan(
-                              text: ' — ${ingredient.amount}',
-                              style: const TextStyle(
-                                fontWeight: FontWeight.normal,
+                              text:
+                                  ' — ${PersianDigits.toPersian(ingredient.amount)}',
+                              style: theme.textTheme.bodyLarge?.copyWith(
+                                fontWeight: FontWeight.w400,
+                                color: colorScheme.onSurfaceVariant,
                               ),
                             ),
                           ],
@@ -84,20 +102,18 @@ class RecipeDetailContent extends StatelessWidget {
                 ),
               ),
             ),
-          const SizedBox(height: 24),
+          Gap.v24(),
           Text(
             context.tr.instructionsSection,
-            style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                  fontWeight: FontWeight.w600,
-                ),
+            style: theme.textTheme.titleLarge,
           ),
-          const SizedBox(height: 12),
+          Gap.v12(),
           if (recipe.instructions.isEmpty)
             Text(
               context.tr.noInstructions,
-              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    color: cTextSecondary,
-                  ),
+              style: theme.textTheme.bodyMedium?.copyWith(
+                color: colorScheme.onSurfaceVariant,
+              ),
             )
           else
             ...recipe.instructions.asMap().entries.map(
@@ -107,26 +123,22 @@ class RecipeDetailContent extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         CircleAvatar(
-                          radius: 14,
-                          backgroundColor:
-                              Theme.of(context).colorScheme.primaryContainer,
+                          radius: 16,
+                          backgroundColor: colorScheme.primaryContainer,
                           child: Text(
-                            '${entry.key + 1}',
-                            style: Theme.of(context)
-                                .textTheme
-                                .labelMedium
-                                ?.copyWith(
-                                  color: Theme.of(context)
-                                      .colorScheme
-                                      .onPrimaryContainer,
-                                ),
+                            PersianDigits.formatInt(entry.key + 1),
+                            style: theme.textTheme.labelLarge?.copyWith(
+                              color: colorScheme.onPrimaryContainer,
+                            ),
                           ),
                         ),
-                        const SizedBox(width: 12),
+                        Gap.h12(),
                         Expanded(
                           child: Text(
                             entry.value,
-                            style: Theme.of(context).textTheme.bodyLarge,
+                            style: theme.textTheme.bodyLarge?.copyWith(
+                              height: 1.7,
+                            ),
                           ),
                         ),
                       ],
@@ -152,7 +164,9 @@ class _MetaRow extends StatelessWidget {
       items.add(
         _MetaChip(
           icon: Icons.schedule_outlined,
-          label: context.tr.prepTimeLabel(recipe.prepTime!),
+          label: PersianDigits.toPersian(
+            context.tr.prepTimeLabel(recipe.prepTime!),
+          ),
         ),
       );
     }
@@ -160,7 +174,9 @@ class _MetaRow extends StatelessWidget {
       items.add(
         _MetaChip(
           icon: Icons.local_fire_department_outlined,
-          label: context.tr.cookTimeLabel(recipe.cookTime!),
+          label: PersianDigits.toPersian(
+            context.tr.cookTimeLabel(recipe.cookTime!),
+          ),
         ),
       );
     }
@@ -168,7 +184,9 @@ class _MetaRow extends StatelessWidget {
       items.add(
         _MetaChip(
           icon: Icons.restaurant_outlined,
-          label: context.tr.servingsCountLabel(recipe.servings!),
+          label: PersianDigits.toPersian(
+            context.tr.servingsCountLabel(recipe.servings!),
+          ),
         ),
       );
     }
@@ -176,7 +194,9 @@ class _MetaRow extends StatelessWidget {
       items.add(
         _MetaChip(
           icon: Icons.local_dining_outlined,
-          label: context.tr.caloriesLabel(recipe.calories!),
+          label: PersianDigits.toPersian(
+            context.tr.caloriesLabel(recipe.calories!),
+          ),
         ),
       );
     }
@@ -204,18 +224,21 @@ class _MetaChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.surfaceContainerHighest,
-        borderRadius: BorderRadius.circular(20),
+        color: colorScheme.surfaceContainerHighest,
+        borderRadius: AppRadius.chip,
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(icon, size: 18, color: cTextSecondary),
-          const SizedBox(width: 6),
-          Text(label),
+          Icon(icon, size: 18, color: colorScheme.primary),
+          Gap.h8(),
+          Text(label, style: theme.textTheme.labelLarge),
         ],
       ),
     );

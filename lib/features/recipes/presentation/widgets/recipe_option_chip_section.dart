@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:what_2_eat/shared/domain/entities/recipe_options.dart';
+import 'package:what_2_eat/shared/presentation/widgets/gap.dart';
 
 class RecipeOptionChipSection extends StatelessWidget {
   const RecipeOptionChipSection({
@@ -29,53 +30,55 @@ class RecipeOptionChipSection extends StatelessWidget {
       return const SizedBox.shrink();
     }
 
+    final theme = Theme.of(context);
     final sorted = sortedOptions(options);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Text(
-          title,
-          style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                fontWeight: FontWeight.w600,
-              ),
-        ),
-        const SizedBox(height: 12),
+        Text(title, style: theme.textTheme.titleMedium),
+        Gap.v12(),
         SizedBox(
-          height: 48,
+          height: 52,
           child: ListView.separated(
             scrollDirection: Axis.horizontal,
             itemCount: sorted.length,
-            separatorBuilder: (_, __) => const SizedBox(width: 8),
+            separatorBuilder: (_, __) => Gap.h8(),
             itemBuilder: (context, index) {
               final option = sorted[index];
-              return FilterChip(
-                label: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(option.label),
-                    if (!option.isAvailable) ...[
-                      const SizedBox(width: 4),
-                      Icon(
-                        Icons.lock_outline,
-                        size: 16,
-                        color: Theme.of(context).disabledColor,
-                      ),
+              final selected = selectedIds.contains(option.id);
+
+              return AnimatedScale(
+                scale: selected ? 1.02 : 1,
+                duration: const Duration(milliseconds: 160),
+                child: FilterChip(
+                  label: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(option.label),
+                      if (!option.isAvailable) ...[
+                        Gap.h4(),
+                        Icon(
+                          Icons.lock_outline_rounded,
+                          size: 16,
+                          color: theme.disabledColor,
+                        ),
+                      ],
                     ],
-                  ],
-                ),
-                selected: selectedIds.contains(option.id),
-                onSelected: enabled && option.isAvailable
-                    ? (selected) {
-                        final updated = Set<String>.from(selectedIds);
-                        if (selected) {
-                          updated.add(option.id);
-                        } else {
-                          updated.remove(option.id);
+                  ),
+                  selected: selected,
+                  onSelected: enabled && option.isAvailable
+                      ? (isSelected) {
+                          final updated = Set<String>.from(selectedIds);
+                          if (isSelected) {
+                            updated.add(option.id);
+                          } else {
+                            updated.remove(option.id);
+                          }
+                          onSelectionChanged(updated);
                         }
-                        onSelectionChanged(updated);
-                      }
-                    : null,
+                      : null,
+                ),
               );
             },
           ),

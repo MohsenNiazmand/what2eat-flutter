@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:what_2_eat/core/constants/colors.dart';
 import 'package:what_2_eat/features/favorites/presentation/providers/favorite_toggle_provider.dart';
 import 'package:what_2_eat/features/favorites/presentation/providers/favorites_list_provider.dart';
 import 'package:what_2_eat/shared/presentation/utils/toast_utils.dart';
@@ -37,6 +36,7 @@ class _FavoriteButtonState extends ConsumerState<FavoriteButton> {
     final toggleState = ref.watch(favoriteToggleNotifierProvider);
     final isFavorite = favoriteIds.contains(widget.recipeId);
     final isBusy = toggleState.isLoading;
+    final colorScheme = Theme.of(context).colorScheme;
 
     return IconButton(
       onPressed: isBusy
@@ -53,16 +53,27 @@ class _FavoriteButtonState extends ConsumerState<FavoriteButton> {
                 showFailureToast(context, failure);
               }
             },
-      icon: isBusy
-          ? const SizedBox(
-              height: 20,
-              width: 20,
-              child: CircularProgressIndicator(strokeWidth: 2),
-            )
-          : Icon(
-              isFavorite ? Icons.favorite : Icons.favorite_border,
-              color: isFavorite ? cError : null,
-            ),
+      icon: AnimatedSwitcher(
+        // Design rationale: Cross-fade heart states for lightweight feedback.
+        duration: const Duration(milliseconds: 180),
+        child: isBusy
+            ? SizedBox(
+                key: const ValueKey('busy'),
+                height: 20,
+                width: 20,
+                child: CircularProgressIndicator(
+                  strokeWidth: 2,
+                  color: colorScheme.primary,
+                ),
+              )
+            : Icon(
+                key: ValueKey(isFavorite),
+                isFavorite
+                    ? Icons.favorite_rounded
+                    : Icons.favorite_border_rounded,
+                color: isFavorite ? colorScheme.error : colorScheme.onSurface,
+              ),
+      ),
     );
   }
 }

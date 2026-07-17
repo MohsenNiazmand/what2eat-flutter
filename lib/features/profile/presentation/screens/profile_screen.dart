@@ -4,13 +4,18 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:what_2_eat/config/router/routes.dart';
-import 'package:what_2_eat/core/constants/colors.dart';
 import 'package:what_2_eat/core/extensions/context_extensions.dart';
+import 'package:what_2_eat/core/utils/persian_digits.dart';
 import 'package:what_2_eat/features/auth/presentation/providers/current_user_provider.dart';
 import 'package:what_2_eat/features/auth/presentation/providers/logout_provider.dart';
 import 'package:what_2_eat/features/profile/presentation/providers/profile_providers.dart';
 import 'package:what_2_eat/shared/presentation/utils/toast_utils.dart';
+import 'package:what_2_eat/shared/presentation/widgets/app_icon_badge.dart';
 import 'package:what_2_eat/shared/presentation/widgets/app_loading_indicator.dart';
+import 'package:what_2_eat/shared/presentation/widgets/app_outlined_button.dart';
+import 'package:what_2_eat/shared/presentation/widgets/app_primary_button.dart';
+import 'package:what_2_eat/shared/presentation/widgets/app_text_field.dart';
+import 'package:what_2_eat/shared/presentation/widgets/gap.dart';
 
 class ProfileScreen extends HookConsumerWidget {
   const ProfileScreen({super.key});
@@ -23,6 +28,7 @@ class ProfileScreen extends HookConsumerWidget {
     final formKey = useMemoized(GlobalKey<FormState>.new);
     final nameController = useTextEditingController(text: user?.name ?? '');
     final isBusy = updateState.isLoading || logoutState.isLoading;
+    final theme = Theme.of(context);
 
     useEffect(
       () {
@@ -117,46 +123,35 @@ class ProfileScreen extends HookConsumerWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
-                            const SizedBox(height: 16),
-                            CircleAvatar(
-                              radius: 40,
-                              backgroundColor: cPrimary.withValues(alpha: 0.12),
-                              child: Icon(
-                                Icons.person,
-                                size: 40,
-                                color: Theme.of(context).colorScheme.primary,
-                              ),
+                            Gap.v16(),
+                            const Center(
+                              child: AppIconBadge(icon: Icons.person_rounded),
                             ),
-                            const SizedBox(height: 24),
+                            Gap.v24(),
                             Text(
                               user.name?.isNotEmpty ?? false
                                   ? user.name!
                                   : context.tr.noDisplayName,
                               textAlign: TextAlign.center,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .titleLarge
-                                  ?.copyWith(fontWeight: FontWeight.bold),
+                              style: theme.textTheme.headlineSmall,
                             ),
-                            const SizedBox(height: 8),
+                            Gap.v8(),
                             Text(
-                              user.mobileNumber,
+                              PersianDigits.toPersian(user.mobileNumber),
                               textAlign: TextAlign.center,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyLarge
-                                  ?.copyWith(color: cTextSecondary),
+                              textDirection: TextDirection.ltr,
+                              style: theme.textTheme.bodyLarge?.copyWith(
+                                color: theme.colorScheme.onSurfaceVariant,
+                              ),
                             ),
-                            const SizedBox(height: 32),
-                            TextFormField(
+                            Gap.v32(),
+                            AppTextField(
                               controller: nameController,
                               enabled: !isBusy,
                               textInputAction: TextInputAction.done,
-                              decoration: InputDecoration(
-                                labelText: context.tr.displayNameLabel,
-                                hintText: context.tr.displayNameHint,
-                                prefixIcon: const Icon(Icons.badge_outlined),
-                              ),
+                              labelText: context.tr.displayNameLabel,
+                              hintText: context.tr.displayNameHint,
+                              prefixIcon: const Icon(Icons.badge_outlined),
                               validator: (value) {
                                 if (value == null || value.trim().isEmpty) {
                                   return context.tr.displayNameRequired;
@@ -165,18 +160,11 @@ class ProfileScreen extends HookConsumerWidget {
                               },
                               onFieldSubmitted: (_) => saveProfile(),
                             ),
-                            const SizedBox(height: 16),
-                            ElevatedButton(
+                            Gap.v16(),
+                            AppPrimaryButton(
+                              label: context.tr.saveProfile,
+                              isLoading: updateState.isLoading,
                               onPressed: isBusy ? null : saveProfile,
-                              child: updateState.isLoading
-                                  ? const SizedBox(
-                                      height: 24,
-                                      width: 24,
-                                      child: CircularProgressIndicator(
-                                        strokeWidth: 2,
-                                      ),
-                                    )
-                                  : Text(context.tr.saveProfile),
                             ),
                           ],
                         ),
@@ -185,21 +173,12 @@ class ProfileScreen extends HookConsumerWidget {
                   ),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(24, 0, 24, 24),
-                    child: OutlinedButton.icon(
+                    child: AppOutlinedButton(
+                      label: context.tr.logout,
+                      icon: Icons.logout_rounded,
+                      isLoading: logoutState.isLoading,
+                      foregroundColor: theme.colorScheme.error,
                       onPressed: isBusy ? null : confirmLogout,
-                      icon: logoutState.isLoading
-                          ? const SizedBox(
-                              height: 18,
-                              width: 18,
-                              child: CircularProgressIndicator(strokeWidth: 2),
-                            )
-                          : const Icon(Icons.logout),
-                      label: Text(context.tr.logout),
-                      style: OutlinedButton.styleFrom(
-                        foregroundColor: cError,
-                        side: const BorderSide(color: cError),
-                        minimumSize: const Size(double.infinity, 52),
-                      ),
                     ),
                   ),
                 ],

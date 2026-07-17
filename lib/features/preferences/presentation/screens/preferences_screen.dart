@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:what_2_eat/core/constants/colors.dart';
 import 'package:what_2_eat/core/extensions/context_extensions.dart';
 import 'package:what_2_eat/features/preferences/presentation/providers/preferences_providers.dart';
 import 'package:what_2_eat/features/preferences/presentation/widgets/preference_chip_section.dart';
 import 'package:what_2_eat/shared/presentation/utils/toast_utils.dart';
 import 'package:what_2_eat/shared/presentation/widgets/app_loading_indicator.dart';
+import 'package:what_2_eat/shared/presentation/widgets/app_outlined_button.dart';
+import 'package:what_2_eat/shared/presentation/widgets/app_primary_button.dart';
 import 'package:what_2_eat/shared/presentation/widgets/error_retry_view.dart';
+import 'package:what_2_eat/shared/presentation/widgets/gap.dart';
 
 class PreferencesScreen extends HookConsumerWidget {
   const PreferencesScreen({super.key});
@@ -21,6 +23,7 @@ class PreferencesScreen extends HookConsumerWidget {
     final selectedCuisines = useState<Set<String>>({});
     final hasExistingPreferences = useState(false);
     final isBusy = saveState.isLoading || deleteState.isLoading;
+    final theme = Theme.of(context);
 
     useEffect(
       () {
@@ -126,24 +129,20 @@ class PreferencesScreen extends HookConsumerWidget {
                       children: [
                         Text(
                           context.tr.preferencesSubtitle,
-                          style:
-                              Theme.of(context).textTheme.bodyLarge?.copyWith(
-                                    color: cTextSecondary,
-                                  ),
+                          style: theme.textTheme.bodyLarge?.copyWith(
+                            color: theme.colorScheme.onSurfaceVariant,
+                          ),
                         ),
                         if (!hasExistingPreferences.value) ...[
-                          const SizedBox(height: 12),
+                          Gap.v12(),
                           Text(
                             context.tr.preferencesEmptyHint,
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyMedium
-                                ?.copyWith(
-                                  color: cTextSecondary,
-                                ),
+                            style: theme.textTheme.bodyMedium?.copyWith(
+                              color: theme.colorScheme.onSurfaceVariant,
+                            ),
                           ),
                         ],
-                        const SizedBox(height: 24),
+                        Gap.v24(),
                         PreferencesFormBody(
                           dietarySectionTitle:
                               context.tr.dietaryRestrictionsSection,
@@ -168,35 +167,18 @@ class PreferencesScreen extends HookConsumerWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      ElevatedButton(
+                      AppPrimaryButton(
+                        label: context.tr.savePreferences,
+                        isLoading: saveState.isLoading,
                         onPressed: isBusy ? null : savePreferences,
-                        child: saveState.isLoading
-                            ? const SizedBox(
-                                height: 24,
-                                width: 24,
-                                child: CircularProgressIndicator(
-                                  strokeWidth: 2,
-                                ),
-                              )
-                            : Text(context.tr.savePreferences),
                       ),
                       if (hasExistingPreferences.value) ...[
-                        const SizedBox(height: 12),
-                        OutlinedButton(
+                        Gap.v12(),
+                        AppOutlinedButton(
+                          label: context.tr.deletePreferences,
+                          isLoading: deleteState.isLoading,
+                          foregroundColor: theme.colorScheme.error,
                           onPressed: isBusy ? null : confirmDelete,
-                          style: OutlinedButton.styleFrom(
-                            foregroundColor: cError,
-                            side: const BorderSide(color: cError),
-                          ),
-                          child: deleteState.isLoading
-                              ? const SizedBox(
-                                  height: 24,
-                                  width: 24,
-                                  child: CircularProgressIndicator(
-                                    strokeWidth: 2,
-                                  ),
-                                )
-                              : Text(context.tr.deletePreferences),
                         ),
                       ],
                     ],

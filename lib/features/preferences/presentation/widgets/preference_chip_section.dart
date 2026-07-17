@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:what_2_eat/features/preferences/domain/constants/preference_options.dart';
 import 'package:what_2_eat/features/preferences/presentation/utils/preference_labels.dart';
+import 'package:what_2_eat/shared/presentation/widgets/gap.dart';
 
 class PreferenceChipSection extends StatelessWidget {
   const PreferenceChipSection({
@@ -25,13 +26,8 @@ class PreferenceChipSection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Text(
-          title,
-          style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                fontWeight: FontWeight.w600,
-              ),
-        ),
-        const SizedBox(height: 12),
+        Text(title, style: Theme.of(context).textTheme.titleMedium),
+        Gap.v12(),
         Wrap(
           spacing: 8,
           runSpacing: 8,
@@ -96,7 +92,7 @@ class PreferencesFormBody extends StatelessWidget {
           labelBuilder: dietaryLabel,
           enabled: enabled,
         ),
-        const SizedBox(height: 28),
+        Gap.v24(),
         PreferenceChipSection(
           title: cuisineSectionTitle,
           options: CuisineOptions.all,

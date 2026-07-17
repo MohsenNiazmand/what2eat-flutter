@@ -14,8 +14,10 @@ import 'package:what_2_eat/features/recipes/presentation/widgets/recipe_list_til
 import 'package:what_2_eat/shared/domain/entities/recipe.dart';
 import 'package:what_2_eat/shared/presentation/utils/failure_message.dart';
 import 'package:what_2_eat/shared/presentation/widgets/app_loading_indicator.dart';
+import 'package:what_2_eat/shared/presentation/widgets/app_text_field.dart';
 import 'package:what_2_eat/shared/presentation/widgets/empty_state_view.dart';
 import 'package:what_2_eat/shared/presentation/widgets/error_retry_view.dart';
+import 'package:what_2_eat/shared/presentation/widgets/gap.dart';
 
 class RecipeListScreen extends HookConsumerWidget {
   const RecipeListScreen({super.key});
@@ -99,28 +101,26 @@ class RecipeListScreen extends HookConsumerWidget {
             padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
             child: Column(
               children: [
-                TextField(
+                AppTextField(
                   controller: searchController,
                   textInputAction: TextInputAction.search,
-                  decoration: InputDecoration(
-                    hintText: context.tr.searchRecipesHint,
-                    prefixIcon: const Icon(Icons.search),
-                    suffixIcon: searchController.text.isNotEmpty
-                        ? IconButton(
-                            icon: const Icon(Icons.clear),
-                            onPressed: () {
-                              searchController.clear();
-                              ref
-                                  .read(recipeListNotifierProvider.notifier)
-                                  .updateFilters(
-                                    query: '',
-                                    category: selectedCategory.value,
-                                  );
-                            },
-                          )
-                        : null,
-                  ),
-                  onSubmitted: (value) {
+                  hintText: context.tr.searchRecipesHint,
+                  prefixIcon: const Icon(Icons.search_rounded),
+                  suffixIcon: searchController.text.isNotEmpty
+                      ? IconButton(
+                          icon: const Icon(Icons.clear_rounded),
+                          onPressed: () {
+                            searchController.clear();
+                            ref
+                                .read(recipeListNotifierProvider.notifier)
+                                .updateFilters(
+                                  query: '',
+                                  category: selectedCategory.value,
+                                );
+                          },
+                        )
+                      : null,
+                  onFieldSubmitted: (value) {
                     debounceTimer.value?.cancel();
                     ref.read(recipeListNotifierProvider.notifier).updateFilters(
                           query: value,
@@ -128,13 +128,13 @@ class RecipeListScreen extends HookConsumerWidget {
                         );
                   },
                 ),
-                const SizedBox(height: 12),
+                Gap.v12(),
                 DropdownButtonFormField<String?>(
                   key: ValueKey(selectedCategory.value),
                   initialValue: selectedCategory.value,
                   decoration: InputDecoration(
                     labelText: context.tr.categoryFilterLabel,
-                    prefixIcon: const Icon(Icons.filter_list),
+                    prefixIcon: const Icon(Icons.filter_list_rounded),
                   ),
                   items: [
                     DropdownMenuItem<String?>(
@@ -200,7 +200,7 @@ class _RecipeListBody extends StatelessWidget {
 
     if (listState.showEmptyState) {
       return EmptyStateView(
-        icon: Icons.restaurant_menu,
+        icon: Icons.restaurant_menu_rounded,
         message: context.tr.noRecipesFound,
       );
     }
@@ -210,10 +210,13 @@ class _RecipeListBody extends StatelessWidget {
       child: ListView.builder(
         controller: scrollController,
         physics: const AlwaysScrollableScrollPhysics(),
+        padding: const EdgeInsets.only(bottom: 16),
         itemCount: listState.items.length + (listState.isLoadingMore ? 1 : 0),
         itemBuilder: (context, index) {
           if (index >= listState.items.length) {
-            return const AppLoadingIndicator(padding: EdgeInsets.all(24));
+            return const AppLoadingIndicator(
+              padding: EdgeInsets.all(24),
+            );
           }
 
           final recipe = listState.items[index];

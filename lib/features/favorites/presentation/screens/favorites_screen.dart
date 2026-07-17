@@ -45,7 +45,7 @@ class FavoritesScreen extends ConsumerWidget {
         data: (favorites) {
           if (favorites.isEmpty) {
             return EmptyStateView(
-              icon: Icons.favorite_border,
+              icon: Icons.favorite_border_rounded,
               message: context.tr.noFavoritesFound,
             );
           }
@@ -54,6 +54,7 @@ class FavoritesScreen extends ConsumerWidget {
             onRefresh: onRefresh,
             child: ListView.builder(
               physics: const AlwaysScrollableScrollPhysics(),
+              padding: const EdgeInsets.only(bottom: 16),
               itemCount: favorites.length,
               itemBuilder: (context, index) {
                 final favorite = favorites[index];

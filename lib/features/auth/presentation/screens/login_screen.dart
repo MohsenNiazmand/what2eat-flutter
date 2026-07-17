@@ -4,11 +4,14 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:what_2_eat/config/router/routes.dart';
-import 'package:what_2_eat/core/constants/colors.dart';
 import 'package:what_2_eat/core/constants/constants.dart';
 import 'package:what_2_eat/core/extensions/context_extensions.dart';
 import 'package:what_2_eat/features/auth/presentation/providers/login_provider.dart';
 import 'package:what_2_eat/shared/presentation/utils/toast_utils.dart';
+import 'package:what_2_eat/shared/presentation/widgets/app_icon_badge.dart';
+import 'package:what_2_eat/shared/presentation/widgets/app_primary_button.dart';
+import 'package:what_2_eat/shared/presentation/widgets/app_text_field.dart';
+import 'package:what_2_eat/shared/presentation/widgets/gap.dart';
 
 class LoginScreen extends HookConsumerWidget {
   const LoginScreen({super.key});
@@ -19,6 +22,7 @@ class LoginScreen extends HookConsumerWidget {
     final mobileController = useTextEditingController();
     final loginState = ref.watch(loginNotifierProvider);
     final isLoading = loginState.isLoading;
+    final theme = Theme.of(context);
 
     Future<void> submit() async {
       if (formKey.currentState?.validate() != true) return;
@@ -49,43 +53,37 @@ class LoginScreen extends HookConsumerWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                const SizedBox(height: 24),
-                Icon(
-                  Icons.phone_android,
-                  size: 64,
-                  color: Theme.of(context).colorScheme.primary,
+                Gap.v24(),
+                const Center(
+                  child: AppIconBadge(icon: Icons.phone_android_rounded),
                 ),
-                const SizedBox(height: 24),
+                Gap.v24(),
                 Text(
                   context.tr.loginWithMobile,
                   textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                        fontWeight: FontWeight.bold,
-                        color: cTextPrimary,
-                      ),
+                  style: theme.textTheme.headlineSmall,
                 ),
-                const SizedBox(height: 8),
+                Gap.v8(),
                 Text(
                   context.tr.loginSubtitle,
                   textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        color: cTextSecondary,
-                      ),
+                  style: theme.textTheme.bodyLarge?.copyWith(
+                    color: theme.colorScheme.onSurfaceVariant,
+                  ),
                 ),
-                const SizedBox(height: 32),
-                TextFormField(
+                Gap.v32(),
+                AppTextField(
                   controller: mobileController,
                   keyboardType: TextInputType.phone,
                   textInputAction: TextInputAction.done,
+                  textDirection: TextDirection.ltr,
+                  labelText: context.tr.mobileNumberLabel,
+                  hintText: context.tr.mobileNumberHint,
+                  prefixIcon: const Icon(Icons.phone_outlined),
                   inputFormatters: [
                     FilteringTextInputFormatter.digitsOnly,
                     LengthLimitingTextInputFormatter(11),
                   ],
-                  decoration: InputDecoration(
-                    labelText: context.tr.mobileNumberLabel,
-                    hintText: context.tr.mobileNumberHint,
-                    prefixIcon: const Icon(Icons.phone),
-                  ),
                   validator: (value) {
                     final mobile = value?.trim() ?? '';
                     if (!Constants.mobileNumberPattern.hasMatch(mobile)) {
@@ -96,17 +94,12 @@ class LoginScreen extends HookConsumerWidget {
                   onFieldSubmitted: (_) => submit(),
                 ),
                 const Spacer(),
-                ElevatedButton(
-                  onPressed: isLoading ? null : submit,
-                  child: isLoading
-                      ? const SizedBox(
-                          height: 24,
-                          width: 24,
-                          child: CircularProgressIndicator(strokeWidth: 2),
-                        )
-                      : Text(context.tr.sendOtp),
+                AppPrimaryButton(
+                  label: context.tr.sendOtp,
+                  isLoading: isLoading,
+                  onPressed: submit,
                 ),
-                const SizedBox(height: 16),
+                Gap.v16(),
               ],
             ),
           ),

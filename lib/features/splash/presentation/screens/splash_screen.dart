@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:what_2_eat/core/constants/colors.dart';
 import 'package:what_2_eat/core/extensions/context_extensions.dart';
 import 'package:what_2_eat/features/auth/presentation/providers/auth_state_provider.dart';
+import 'package:what_2_eat/shared/presentation/widgets/app_icon_badge.dart';
 import 'package:what_2_eat/shared/presentation/widgets/app_loading_indicator.dart';
+import 'package:what_2_eat/shared/presentation/widgets/gap.dart';
 
 class SplashScreen extends HookConsumerWidget {
   const SplashScreen({super.key});
@@ -22,32 +23,27 @@ class SplashScreen extends HookConsumerWidget {
       const [],
     );
 
+    final theme = Theme.of(context);
+
     return Scaffold(
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(
-              Icons.restaurant_menu,
-              size: 72,
-              color: Theme.of(context).colorScheme.primary,
-            ),
-            const SizedBox(height: 24),
+            const AppIconBadge(icon: Icons.restaurant_menu_rounded, size: 96),
+            Gap.v24(),
             Text(
               context.tr.appNamePersian,
-              style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                    fontWeight: FontWeight.bold,
-                    color: cTextPrimary,
-                  ),
+              style: theme.textTheme.headlineMedium,
             ),
-            const SizedBox(height: 8),
+            Gap.v8(),
             Text(
               context.tr.appName,
-              style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                    color: cTextSecondary,
-                  ),
+              style: theme.textTheme.bodyLarge?.copyWith(
+                color: theme.colorScheme.onSurfaceVariant,
+              ),
             ),
-            const SizedBox(height: 32),
+            Gap.v32(),
             const AppLoadingIndicator(),
           ],
         ),

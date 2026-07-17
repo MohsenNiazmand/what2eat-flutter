@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:what_2_eat/core/extensions/context_extensions.dart';
+import 'package:what_2_eat/core/utils/persian_digits.dart';
+import 'package:what_2_eat/shared/presentation/widgets/app_text_field.dart';
+import 'package:what_2_eat/shared/presentation/widgets/gap.dart';
 
 class DynamicTextFieldList extends StatelessWidget {
   const DynamicTextFieldList({
@@ -38,36 +41,34 @@ class DynamicTextFieldList extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Expanded(
-                child: TextFormField(
+                child: AppTextField(
                   key: ValueKey('${itemHint}_$index'),
                   initialValue: values[index],
                   enabled: enabled,
                   textInputAction: TextInputAction.next,
                   inputFormatters: inputFormatters,
-                  decoration: InputDecoration(
-                    labelText: itemLabel(index),
-                    hintText: itemHint,
-                  ),
+                  labelText: PersianDigits.toPersian(itemLabel(index)),
+                  hintText: itemHint,
                   onChanged: (value) => onChanged(index, value),
                 ),
               ),
               if (index > 0) ...[
-                const SizedBox(width: 8),
+                Gap.h8(),
                 IconButton(
                   onPressed: enabled ? () => onRemove(index) : null,
-                  icon: const Icon(Icons.remove_circle_outline),
+                  icon: const Icon(Icons.remove_circle_outline_rounded),
                   tooltip: context.tr.removeItem,
                 ),
               ],
             ],
           ),
-          const SizedBox(height: 12),
+          Gap.v12(),
         ],
         Align(
           alignment: AlignmentDirectional.centerStart,
           child: TextButton.icon(
             onPressed: enabled ? onAdd : null,
-            icon: const Icon(Icons.add),
+            icon: const Icon(Icons.add_rounded),
             label: Text(addButtonLabel),
           ),
         ),
