@@ -182,6 +182,30 @@ abstract class AppLocalizations {
   /// **'Resend code in {time}'**
   String resendOtpCountdown(String time);
 
+  /// No description provided for @resendOtpCountdownPrefix.
+  ///
+  /// In en, this message translates to:
+  /// **'Resend code in'**
+  String get resendOtpCountdownPrefix;
+
+  /// No description provided for @resendOtpCountdownSuffix.
+  ///
+  /// In en, this message translates to:
+  /// **''**
+  String get resendOtpCountdownSuffix;
+
+  /// No description provided for @editMobileNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit number'**
+  String get editMobileNumber;
+
+  /// No description provided for @otpEnterInstruction.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the 6-digit verification code'**
+  String get otpEnterInstruction;
+
   /// No description provided for @otpSentSuccess.
   ///
   /// In en, this message translates to:
@@ -830,11 +854,47 @@ abstract class AppLocalizations {
   /// **'{minutes} min total'**
   String totalTimeLabel(int minutes);
 
+  /// No description provided for @minutesShortLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'{minutes} min'**
+  String minutesShortLabel(int minutes);
+
+  /// No description provided for @caloriesShortLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'{calories} cal'**
+  String caloriesShortLabel(int calories);
+
+  /// No description provided for @difficultyEasy.
+  ///
+  /// In en, this message translates to:
+  /// **'Easy'**
+  String get difficultyEasy;
+
+  /// No description provided for @difficultyMedium.
+  ///
+  /// In en, this message translates to:
+  /// **'Medium'**
+  String get difficultyMedium;
+
+  /// No description provided for @difficultyHard.
+  ///
+  /// In en, this message translates to:
+  /// **'Hard'**
+  String get difficultyHard;
+
   /// No description provided for @noFavoritesFound.
   ///
   /// In en, this message translates to:
   /// **'No favorite recipes yet'**
   String get noFavoritesFound;
+
+  /// No description provided for @browseRecipes.
+  ///
+  /// In en, this message translates to:
+  /// **'Browse Recipes'**
+  String get browseRecipes;
 
   /// No description provided for @addToFavorites.
   ///

@@ -13,6 +13,7 @@ import 'package:what_2_eat/features/recipes/presentation/utils/recipe_category_l
 import 'package:what_2_eat/features/recipes/presentation/widgets/recipe_list_tile.dart';
 import 'package:what_2_eat/shared/domain/entities/recipe.dart';
 import 'package:what_2_eat/shared/presentation/utils/failure_message.dart';
+import 'package:what_2_eat/shared/presentation/widgets/app_icon_badge.dart';
 import 'package:what_2_eat/shared/presentation/widgets/app_loading_indicator.dart';
 import 'package:what_2_eat/shared/presentation/widgets/app_text_field.dart';
 import 'package:what_2_eat/shared/presentation/widgets/empty_state_view.dart';
@@ -94,77 +95,91 @@ class RecipeListScreen extends HookConsumerWidget {
     }
 
     return Scaffold(
-      appBar: AppBar(title: Text(context.tr.recipesTabTitle)),
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
-            child: Column(
-              children: [
-                AppTextField(
-                  controller: searchController,
-                  textInputAction: TextInputAction.search,
-                  hintText: context.tr.searchRecipesHint,
-                  prefixIcon: const Icon(Icons.search_rounded),
-                  suffixIcon: searchController.text.isNotEmpty
-                      ? IconButton(
-                          icon: const Icon(Icons.clear_rounded),
-                          onPressed: () {
-                            searchController.clear();
-                            ref
-                                .read(recipeListNotifierProvider.notifier)
-                                .updateFilters(
-                                  query: '',
-                                  category: selectedCategory.value,
-                                );
-                          },
-                        )
-                      : null,
-                  onFieldSubmitted: (value) {
-                    debounceTimer.value?.cancel();
-                    ref.read(recipeListNotifierProvider.notifier).updateFilters(
-                          query: value,
-                          category: selectedCategory.value,
-                        );
-                  },
-                ),
-                Gap.v12(),
-                DropdownButtonFormField<String?>(
-                  key: ValueKey(selectedCategory.value),
-                  initialValue: selectedCategory.value,
-                  decoration: InputDecoration(
-                    labelText: context.tr.categoryFilterLabel,
-                    prefixIcon: const Icon(Icons.filter_list_rounded),
+      body: SafeArea(
+        bottom: false,
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.fromLTRB(16, 12, 16, 8),
+              child: Row(
+                children: [
+                  const AppIconBadge(
+                    icon: Icons.restaurant_menu_rounded,
+                    size: 40,
+                    iconSize: 22,
                   ),
-                  items: [
-                    DropdownMenuItem<String?>(
-                      child: Text(context.tr.categoryAll),
+                  Gap.h12(),
+                  Expanded(
+                    child: AppTextField(
+                      controller: searchController,
+                      textInputAction: TextInputAction.search,
+                      hintText: context.tr.searchRecipesHint,
+                      prefixIcon: const Icon(Icons.search_rounded),
+                      suffixIcon: searchController.text.isNotEmpty
+                          ? IconButton(
+                              icon: const Icon(Icons.clear_rounded),
+                              onPressed: () {
+                                searchController.clear();
+                                ref
+                                    .read(recipeListNotifierProvider.notifier)
+                                    .updateFilters(
+                                      query: '',
+                                      category: selectedCategory.value,
+                                    );
+                              },
+                            )
+                          : null,
+                      onFieldSubmitted: (value) {
+                        debounceTimer.value?.cancel();
+                        ref
+                            .read(recipeListNotifierProvider.notifier)
+                            .updateFilters(
+                              query: value,
+                              category: selectedCategory.value,
+                            );
+                      },
                     ),
-                    for (final option in RecipeCategoryFilters.all)
-                      DropdownMenuItem<String?>(
-                        value: option.apiValue,
-                        child: Text(
-                          recipeCategoryFilterLabel(context, option.apiValue),
-                        ),
-                      ),
-                  ],
-                  onChanged: onCategoryChanged,
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(16, 0, 16, 8),
+              child: DropdownButtonFormField<String?>(
+                key: ValueKey(selectedCategory.value),
+                initialValue: selectedCategory.value,
+                decoration: InputDecoration(
+                  labelText: context.tr.categoryFilterLabel,
+                  prefixIcon: const Icon(Icons.filter_list_rounded),
                 ),
-              ],
+                items: [
+                  DropdownMenuItem<String?>(
+                    child: Text(context.tr.categoryAll),
+                  ),
+                  for (final option in RecipeCategoryFilters.all)
+                    DropdownMenuItem<String?>(
+                      value: option.apiValue,
+                      child: Text(
+                        recipeCategoryFilterLabel(context, option.apiValue),
+                      ),
+                    ),
+                ],
+                onChanged: onCategoryChanged,
+              ),
             ),
-          ),
-          Expanded(
-            child: _RecipeListBody(
-              listState: listState,
-              scrollController: scrollController,
-              onRefresh: onRefresh,
-              onRetry: () {
-                ref.read(recipeListNotifierProvider.notifier).refresh();
-              },
-              onRecipeTap: openRecipe,
+            Expanded(
+              child: _RecipeListBody(
+                listState: listState,
+                scrollController: scrollController,
+                onRefresh: onRefresh,
+                onRetry: () {
+                  ref.read(recipeListNotifierProvider.notifier).refresh();
+                },
+                onRecipeTap: openRecipe,
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

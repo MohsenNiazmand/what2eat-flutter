@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:otp_autofill/otp_autofill.dart';
 import 'package:pinput/pinput.dart';
-import 'package:what_2_eat/config/theme/app_radius.dart';
+import 'package:what_2_eat/core/constants/colors.dart';
 import 'package:what_2_eat/core/constants/constants.dart';
 import 'package:what_2_eat/core/utils/persian_digits.dart';
 
@@ -94,17 +94,33 @@ class OtpPinFieldState extends State<OtpPinField> {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
 
+    const pinBorderRadius = BorderRadius.all(Radius.circular(14));
+
+    BoxDecoration pinDecoration({
+      required Color borderColor,
+      double borderWidth = 1,
+    }) {
+      return BoxDecoration(
+        color: colorScheme.surface,
+        borderRadius: pinBorderRadius,
+        border: Border.all(color: borderColor, width: borderWidth),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.07),
+            blurRadius: 10,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      );
+    }
+
     final defaultPinTheme = PinTheme(
       width: 48,
       height: 56,
       textStyle: theme.textTheme.titleLarge?.copyWith(
         fontWeight: FontWeight.w600,
       ),
-      decoration: BoxDecoration(
-        color: colorScheme.surface,
-        border: Border.all(color: colorScheme.outline),
-        borderRadius: AppRadius.input,
-      ),
+      decoration: pinDecoration(borderColor: colorScheme.outline),
     );
 
     return AutofillGroup(
@@ -120,11 +136,14 @@ class OtpPinFieldState extends State<OtpPinField> {
           inputFormatters: [FilteringTextInputFormatter.digitsOnly],
           defaultPinTheme: defaultPinTheme,
           focusedPinTheme: defaultPinTheme.copyWith(
-            decoration: defaultPinTheme.decoration?.copyWith(
-              border: Border.all(
-                color: colorScheme.primary,
-                width: 2,
-              ),
+            decoration: pinDecoration(
+              borderColor: colorScheme.primary,
+              borderWidth: 2.5,
+            ),
+          ),
+          submittedPinTheme: defaultPinTheme.copyWith(
+            decoration: pinDecoration(
+              borderColor: cPrimary.withValues(alpha: 0.45),
             ),
           ),
         ),

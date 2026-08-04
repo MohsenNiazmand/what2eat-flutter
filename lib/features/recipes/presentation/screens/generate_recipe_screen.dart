@@ -4,6 +4,9 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:what_2_eat/config/router/routes.dart';
+import 'package:what_2_eat/config/theme/app_radius.dart';
+import 'package:what_2_eat/core/constants/app_assets.dart';
+import 'package:what_2_eat/core/constants/colors.dart';
 import 'package:what_2_eat/core/error/failures.dart';
 import 'package:what_2_eat/core/extensions/context_extensions.dart';
 import 'package:what_2_eat/core/utils/persian_digits.dart';
@@ -16,6 +19,7 @@ import 'package:what_2_eat/features/recipes/presentation/providers/recipe_list_p
 import 'package:what_2_eat/features/recipes/presentation/widgets/dynamic_text_field_list.dart';
 import 'package:what_2_eat/features/recipes/presentation/widgets/recipe_option_chip_section.dart';
 import 'package:what_2_eat/shared/presentation/utils/toast_utils.dart';
+import 'package:what_2_eat/shared/presentation/widgets/app_image_cover.dart';
 import 'package:what_2_eat/shared/presentation/widgets/app_loading_indicator.dart';
 import 'package:what_2_eat/shared/presentation/widgets/app_primary_button.dart';
 import 'package:what_2_eat/shared/presentation/widgets/app_text_field.dart';
@@ -188,178 +192,389 @@ class GenerateRecipeScreen extends HookConsumerWidget {
     final recipeOptions = user?.recipeOptions;
 
     if (user == null || recipeOptions == null) {
+      return const Scaffold(
+        body: SafeArea(
+          bottom: false,
+          child: AppLoadingIndicator(),
+        ),
+      );
+    }
+
+    final headerHeight = MediaQuery.sizeOf(context).width * 0.38;
+
+    if (moderationFailure.value != null) {
       return Scaffold(
-        appBar: AppBar(title: Text(context.tr.generateTabTitle)),
-        body: const AppLoadingIndicator(),
+        body: SafeArea(
+          bottom: false,
+          child: ModerationWarningView(
+            failure: moderationFailure.value!,
+            onDismiss: () => moderationFailure.value = null,
+          ),
+        ),
       );
     }
 
     return Scaffold(
-      appBar: AppBar(title: Text(context.tr.generateTabTitle)),
       body: SafeArea(
-        child: moderationFailure.value != null
-            ? ModerationWarningView(
-                failure: moderationFailure.value!,
-                onDismiss: () => moderationFailure.value = null,
-              )
-            : Form(
-                key: formKey,
-                child: Column(
-                  children: [
-                    Expanded(
-                      child: SingleChildScrollView(
-                        padding: const EdgeInsets.all(24),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: [
-                            Text(
-                              context.tr.generateSubtitle,
-                              style: theme.textTheme.bodyLarge?.copyWith(
-                                color: theme.colorScheme.onSurfaceVariant,
+        bottom: false,
+        child: Form(
+          key: formKey,
+          child: Column(
+            children: [
+              Expanded(
+                child: NestedScrollView(
+                  headerSliverBuilder: (context, _) {
+                    return [
+                      SliverAppBar(
+                        expandedHeight: headerHeight,
+                        toolbarHeight: 0,
+                        collapsedHeight: 0,
+                        primary: false,
+                        pinned: false,
+                        floating: false,
+                        snap: false,
+                        stretch: true,
+                        elevation: 0,
+                        scrolledUnderElevation: 0,
+                        surfaceTintColor: Colors.transparent,
+                        backgroundColor: Colors.transparent,
+                        forceMaterialTransparency: true,
+                        flexibleSpace: FlexibleSpaceBar(
+                              collapseMode: CollapseMode.parallax,
+                              stretchModes: const [
+                                StretchMode.zoomBackground,
+                              ],
+                              background: Stack(
+                                fit: StackFit.expand,
+                                children: [
+                                  const AppImageCover(
+                                    assetPath: AppAssets.generationHeader,
+                                  ),
+                                  Positioned.fill(
+                                    child: DecoratedBox(
+                                      decoration: BoxDecoration(
+                                        gradient: LinearGradient(
+                                          begin: Alignment.topCenter,
+                                          end: Alignment.bottomCenter,
+                                          colors: [
+                                            Colors.transparent,
+                                            Color.lerp(
+                                              Colors.black,
+                                              cPrimaryDark,
+                                              0.45,
+                                            )!.withValues(alpha: 0.62),
+                                          ],
+                                          stops: const [0.35, 1],
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Align(
+                                    alignment: AlignmentDirectional.bottomStart,
+                                    child: Padding(
+                                      padding: const EdgeInsets.fromLTRB(
+                                        20,
+                                        0,
+                                        20,
+                                        16,
+                                      ),
+                                      child: Text(
+                                        context.tr.generateTabTitle,
+                                        style: theme.textTheme.headlineSmall
+                                            ?.copyWith(
+                                          fontWeight: FontWeight.w700,
+                                          color: Colors.white,
+                                          shadows: const [
+                                            Shadow(
+                                              blurRadius: 10,
+                                              color: Colors.black45,
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
-                            Gap.v24(),
-                            RecipeOptionChipSection(
-                              title: context.tr.countriesSection,
-                              options: recipeOptions.countries,
-                              selectedIds: selectedCountries.value,
-                              enabled: !isGenerating,
-                              onSelectionChanged: (value) {
-                                selectedCountries.value = value;
-                              },
+                          ),
+                        ];
+                      },
+                      body: Theme(
+                        data: theme.copyWith(
+                          inputDecorationTheme:
+                              _GenerateFormStyles.inputDecoration(theme),
+                        ),
+                        child: Opacity(
+                          opacity: isGenerating ? 0.55 : 1,
+                          child: IgnorePointer(
+                            ignoring: isGenerating,
+                            child: SingleChildScrollView(
+                              padding: const EdgeInsets.only(bottom: 24),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.stretch,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.fromLTRB(
+                                      24,
+                                      16,
+                                      24,
+                                      0,
+                                    ),
+                                    child: Text(
+                                      context.tr.generateSubtitle,
+                                      style: theme.textTheme.bodyLarge?.copyWith(
+                                        color:
+                                            theme.colorScheme.onSurfaceVariant,
+                                        height: 1.6,
+                                      ),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(20),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.stretch,
+                                      children: [
+                                        _GenerateSectionCard(
+                                          child: RecipeOptionChipSection(
+                                            title: context.tr.countriesSection,
+                                            icon: Icons.public_rounded,
+                                            options: recipeOptions.countries,
+                                            selectedIds:
+                                                selectedCountries.value,
+                                            enabled: !isGenerating,
+                                            onSelectionChanged: (value) {
+                                              selectedCountries.value = value;
+                                            },
+                                          ),
+                                        ),
+                                        Gap.v16(),
+                                        _GenerateSectionCard(
+                                          child: RecipeOptionChipSection(
+                                            title: context
+                                                .tr.dietaryPreferencesSection,
+                                            icon: Icons.eco_rounded,
+                                            options:
+                                                recipeOptions.dietaryPreferences,
+                                            selectedIds: selectedDietary.value,
+                                            enabled: !isGenerating,
+                                            onSelectionChanged: (value) {
+                                              selectedDietary.value = value;
+                                            },
+                                          ),
+                                        ),
+                                        Gap.v16(),
+                                        _GenerateSectionCard(
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.stretch,
+                                            children: [
+                                              _GenerateSectionHeader(
+                                                title: context
+                                                    .tr.ingredientsSection,
+                                                icon: Icons
+                                                    .shopping_basket_outlined,
+                                              ),
+                                              Gap.v12(),
+                                              DynamicTextFieldList(
+                                                values: ingredients.value,
+                                                enabled: !isGenerating,
+                                                inputFormatters: [
+                                                  persianFormatter,
+                                                ],
+                                                itemLabel: (index) => context.tr
+                                                    .ingredientFieldLabel(
+                                                  index + 1,
+                                                ),
+                                                itemHint:
+                                                    context.tr.ingredientHint,
+                                                addButtonLabel:
+                                                    context.tr.addIngredient,
+                                                onChanged: (index, value) {
+                                                  final updated = [
+                                                    ...ingredients.value,
+                                                  ];
+                                                  updated[index] = value;
+                                                  ingredients.value = updated;
+                                                },
+                                                onAdd: () {
+                                                  ingredients.value = [
+                                                    ...ingredients.value,
+                                                    '',
+                                                  ];
+                                                },
+                                                onRemove: (index) {
+                                                  if (ingredients.value.length <=
+                                                      1) {
+                                                    return;
+                                                  }
+                                                  final updated = [
+                                                    ...ingredients.value,
+                                                  ]..removeAt(index);
+                                                  ingredients.value = updated;
+                                                },
+                                              ),
+                                              Gap.v24(),
+                                              _GenerateSectionHeader(
+                                                title: context.tr.toolsSection,
+                                                icon: Icons.handyman_outlined,
+                                              ),
+                                              Gap.v12(),
+                                              DynamicTextFieldList(
+                                                values: tools.value,
+                                                enabled: !isGenerating,
+                                                inputFormatters: [
+                                                  persianFormatter,
+                                                ],
+                                                itemLabel: (index) => context.tr
+                                                    .toolFieldLabel(index + 1),
+                                                itemHint: context.tr.toolHint,
+                                                addButtonLabel:
+                                                    context.tr.addTool,
+                                                onChanged: (index, value) {
+                                                  final updated = [
+                                                    ...tools.value,
+                                                  ];
+                                                  updated[index] = value;
+                                                  tools.value = updated;
+                                                },
+                                                onAdd: () {
+                                                  tools.value = [
+                                                    ...tools.value,
+                                                    '',
+                                                  ];
+                                                },
+                                                onRemove: (index) {
+                                                  if (tools.value.length <= 1) {
+                                                    return;
+                                                  }
+                                                  final updated = [
+                                                    ...tools.value,
+                                                  ]..removeAt(index);
+                                                  tools.value = updated;
+                                                },
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        Gap.v16(),
+                                        _GenerateSectionCard(
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.stretch,
+                                            children: [
+                                              AppTextField(
+                                                controller: calorieController,
+                                                enabled: !isGenerating,
+                                                keyboardType:
+                                                    TextInputType.number,
+                                                labelText:
+                                                    context.tr.calorieLimitLabel,
+                                                hintText:
+                                                    context.tr.calorieLimitHint,
+                                                prefixIcon: const Icon(
+                                                  Icons.local_dining_outlined,
+                                                ),
+                                              ),
+                                              Gap.v16(),
+                                              AppTextField(
+                                                controller: servingsController,
+                                                enabled: !isGenerating,
+                                                keyboardType:
+                                                    TextInputType.number,
+                                                labelText:
+                                                    context.tr.servingsLabel,
+                                                hintText:
+                                                    context.tr.servingsHint,
+                                                prefixIcon: const Icon(
+                                                  Icons.restaurant_outlined,
+                                                ),
+                                              ),
+                                              Gap.v24(),
+                                              _GenerateSectionHeader(
+                                                title:
+                                                    context.tr.exclusionsSection,
+                                                icon: Icons.block_outlined,
+                                              ),
+                                              Gap.v12(),
+                                              DynamicTextFieldList(
+                                                values: exclusions.value,
+                                                enabled: !isGenerating,
+                                                inputFormatters: [
+                                                  persianFormatter,
+                                                ],
+                                                itemLabel: (index) => context.tr
+                                                    .exclusionFieldLabel(
+                                                  index + 1,
+                                                ),
+                                                itemHint:
+                                                    context.tr.exclusionHint,
+                                                addButtonLabel:
+                                                    context.tr.addExclusion,
+                                                onChanged: (index, value) {
+                                                  final updated = [
+                                                    ...exclusions.value,
+                                                  ];
+                                                  updated[index] = value;
+                                                  exclusions.value = updated;
+                                                },
+                                                onAdd: () {
+                                                  exclusions.value = [
+                                                    ...exclusions.value,
+                                                    '',
+                                                  ];
+                                                },
+                                                onRemove: (index) {
+                                                  if (exclusions.value.length <=
+                                                      1) {
+                                                    return;
+                                                  }
+                                                  final updated = [
+                                                    ...exclusions.value,
+                                                  ]..removeAt(index);
+                                                  exclusions.value = updated;
+                                                },
+                                              ),
+                                              Gap.v24(),
+                                              AppTextField(
+                                                controller: notesController,
+                                                enabled: !isGenerating,
+                                                maxLines: 3,
+                                                inputFormatters: [
+                                                  persianFormatter,
+                                                ],
+                                                labelText: context.tr.notesLabel,
+                                                hintText: context.tr.notesHint,
+                                                alignLabelWithHint: true,
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
-                            Gap.v24(),
-                            RecipeOptionChipSection(
-                              title: context.tr.dietaryPreferencesSection,
-                              options: recipeOptions.dietaryPreferences,
-                              selectedIds: selectedDietary.value,
-                              enabled: !isGenerating,
-                              onSelectionChanged: (value) {
-                                selectedDietary.value = value;
-                              },
-                            ),
-                            Gap.v24(),
-                            Text(
-                              context.tr.ingredientsSection,
-                              style: theme.textTheme.titleMedium,
-                            ),
-                            Gap.v12(),
-                            DynamicTextFieldList(
-                              values: ingredients.value,
-                              enabled: !isGenerating,
-                              inputFormatters: [persianFormatter],
-                              itemLabel: (index) =>
-                                  context.tr.ingredientFieldLabel(index + 1),
-                              itemHint: context.tr.ingredientHint,
-                              addButtonLabel: context.tr.addIngredient,
-                              onChanged: (index, value) {
-                                final updated = [...ingredients.value];
-                                updated[index] = value;
-                                ingredients.value = updated;
-                              },
-                              onAdd: () {
-                                ingredients.value = [...ingredients.value, ''];
-                              },
-                              onRemove: (index) {
-                                if (ingredients.value.length <= 1) return;
-                                final updated = [...ingredients.value]
-                                  ..removeAt(index);
-                                ingredients.value = updated;
-                              },
-                            ),
-                            Gap.v24(),
-                            Text(
-                              context.tr.toolsSection,
-                              style: theme.textTheme.titleMedium,
-                            ),
-                            Gap.v12(),
-                            DynamicTextFieldList(
-                              values: tools.value,
-                              enabled: !isGenerating,
-                              inputFormatters: [persianFormatter],
-                              itemLabel: (index) =>
-                                  context.tr.toolFieldLabel(index + 1),
-                              itemHint: context.tr.toolHint,
-                              addButtonLabel: context.tr.addTool,
-                              onChanged: (index, value) {
-                                final updated = [...tools.value];
-                                updated[index] = value;
-                                tools.value = updated;
-                              },
-                              onAdd: () {
-                                tools.value = [...tools.value, ''];
-                              },
-                              onRemove: (index) {
-                                if (tools.value.length <= 1) return;
-                                final updated = [...tools.value]
-                                  ..removeAt(index);
-                                tools.value = updated;
-                              },
-                            ),
-                            Gap.v24(),
-                            AppTextField(
-                              controller: calorieController,
-                              enabled: !isGenerating,
-                              keyboardType: TextInputType.number,
-                              labelText: context.tr.calorieLimitLabel,
-                              hintText: context.tr.calorieLimitHint,
-                              prefixIcon:
-                                  const Icon(Icons.local_dining_outlined),
-                            ),
-                            Gap.v16(),
-                            AppTextField(
-                              controller: servingsController,
-                              enabled: !isGenerating,
-                              keyboardType: TextInputType.number,
-                              labelText: context.tr.servingsLabel,
-                              hintText: context.tr.servingsHint,
-                              prefixIcon: const Icon(Icons.restaurant_outlined),
-                            ),
-                            Gap.v24(),
-                            Text(
-                              context.tr.exclusionsSection,
-                              style: theme.textTheme.titleMedium,
-                            ),
-                            Gap.v12(),
-                            DynamicTextFieldList(
-                              values: exclusions.value,
-                              enabled: !isGenerating,
-                              inputFormatters: [persianFormatter],
-                              itemLabel: (index) =>
-                                  context.tr.exclusionFieldLabel(index + 1),
-                              itemHint: context.tr.exclusionHint,
-                              addButtonLabel: context.tr.addExclusion,
-                              onChanged: (index, value) {
-                                final updated = [...exclusions.value];
-                                updated[index] = value;
-                                exclusions.value = updated;
-                              },
-                              onAdd: () {
-                                exclusions.value = [...exclusions.value, ''];
-                              },
-                              onRemove: (index) {
-                                if (exclusions.value.length <= 1) return;
-                                final updated = [...exclusions.value]
-                                  ..removeAt(index);
-                                exclusions.value = updated;
-                              },
-                            ),
-                            Gap.v24(),
-                            AppTextField(
-                              controller: notesController,
-                              enabled: !isGenerating,
-                              maxLines: 3,
-                              inputFormatters: [persianFormatter],
-                              labelText: context.tr.notesLabel,
-                              hintText: context.tr.notesHint,
-                              alignLabelWithHint: true,
-                            ),
-                          ],
+                          ),
                         ),
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(24, 0, 24, 24),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(24, 0, 24, 24),
+                    child: DecoratedBox(
+                      decoration: BoxDecoration(
+                        borderRadius: AppRadius.button,
+                        boxShadow: [
+                          BoxShadow(
+                            color: cPrimary.withValues(alpha: 0.22),
+                            blurRadius: 14,
+                            offset: const Offset(0, 6),
+                          ),
+                        ],
+                      ),
                       child: AppPrimaryButton(
                         label: isGenerating
                             ? context.tr.generatingRecipe
@@ -369,9 +584,101 @@ class GenerateRecipeScreen extends HookConsumerWidget {
                         onPressed: submit,
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
+            ),
+          ),
+    );
+  }
+}
+
+class _GenerateSectionCard extends StatelessWidget {
+  const _GenerateSectionCard({required this.child});
+
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        color: cSurface,
+        borderRadius: BorderRadius.circular(AppRadius.xl),
+        border: Border.all(color: cBorder.withValues(alpha: 0.85)),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.04),
+            blurRadius: 18,
+            offset: const Offset(0, 6),
+          ),
+        ],
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(20),
+        child: child,
+      ),
+    );
+  }
+}
+
+class _GenerateSectionHeader extends StatelessWidget {
+  const _GenerateSectionHeader({
+    required this.title,
+    required this.icon,
+  });
+
+  final String title;
+  final IconData icon;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
+    return Row(
+      children: [
+        Icon(
+          icon,
+          size: 22,
+          color: theme.colorScheme.primary,
+        ),
+        Gap.h8(),
+        Expanded(
+          child: Text(
+            title,
+            style: theme.textTheme.titleMedium?.copyWith(
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+abstract final class _GenerateFormStyles {
+  static InputDecorationTheme inputDecoration(ThemeData theme) {
+    final colorScheme = theme.colorScheme;
+
+    return InputDecorationTheme(
+      filled: true,
+      fillColor: cSurfaceElevated,
+      contentPadding: const EdgeInsets.symmetric(
+        horizontal: 20,
+        vertical: 18,
+      ),
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(16),
+        borderSide: const BorderSide(color: cBorder),
+      ),
+      enabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(16),
+        borderSide: BorderSide(color: cBorder.withValues(alpha: 0.9)),
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(16),
+        borderSide: BorderSide(
+          color: colorScheme.primary.withValues(alpha: 0.6),
+        ),
       ),
     );
   }

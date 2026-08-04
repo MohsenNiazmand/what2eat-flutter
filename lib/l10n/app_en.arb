@@ -28,6 +28,10 @@
       }
     }
   },
+  "resendOtpCountdownPrefix": "Resend code in",
+  "resendOtpCountdownSuffix": "",
+  "editMobileNumber": "Edit number",
+  "otpEnterInstruction": "Enter the 6-digit verification code",
   "otpSentSuccess": "Verification code sent",
   "otpInvalid": "Enter the 6-digit verification code",
   "navRecipes": "Recipes",
@@ -199,7 +203,27 @@
       }
     }
   },
+  "minutesShortLabel": "{minutes} min",
+  "@minutesShortLabel": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "caloriesShortLabel": "{calories} cal",
+  "@caloriesShortLabel": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "difficultyEasy": "Easy",
+  "difficultyMedium": "Medium",
+  "difficultyHard": "Hard",
   "noFavoritesFound": "No favorite recipes yet",
+  "browseRecipes": "Browse Recipes",
   "addToFavorites": "Add to favorites",
   "removeFromFavorites": "Remove from favorites",
   "networkError": "No internet connection. Check your network and try again.",

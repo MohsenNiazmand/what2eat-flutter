@@ -56,6 +56,18 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get resendOtpCountdownPrefix => 'Resend code in';
+
+  @override
+  String get resendOtpCountdownSuffix => '';
+
+  @override
+  String get editMobileNumber => 'Edit number';
+
+  @override
+  String get otpEnterInstruction => 'Enter the 6-digit verification code';
+
+  @override
   String get otpSentSuccess => 'Verification code sent';
 
   @override
@@ -405,7 +417,29 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String minutesShortLabel(int minutes) {
+    return '$minutes min';
+  }
+
+  @override
+  String caloriesShortLabel(int calories) {
+    return '$calories cal';
+  }
+
+  @override
+  String get difficultyEasy => 'Easy';
+
+  @override
+  String get difficultyMedium => 'Medium';
+
+  @override
+  String get difficultyHard => 'Hard';
+
+  @override
   String get noFavoritesFound => 'No favorite recipes yet';
+
+  @override
+  String get browseRecipes => 'Browse Recipes';
 
   @override
   String get addToFavorites => 'Add to favorites';

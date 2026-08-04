@@ -57,6 +57,18 @@ class AppLocalizationsFa extends AppLocalizations {
   }
 
   @override
+  String get resendOtpCountdownPrefix => 'ارسال مجدد تا';
+
+  @override
+  String get resendOtpCountdownSuffix => 'دیگر';
+
+  @override
+  String get editMobileNumber => 'ویرایش شماره';
+
+  @override
+  String get otpEnterInstruction => 'کد ۶ رقمی ارسال‌شده را وارد کنید';
+
+  @override
   String get otpSentSuccess => 'کد تأیید ارسال شد';
 
   @override
@@ -406,7 +418,29 @@ class AppLocalizationsFa extends AppLocalizations {
   }
 
   @override
+  String minutesShortLabel(int minutes) {
+    return '$minutes دقیقه';
+  }
+
+  @override
+  String caloriesShortLabel(int calories) {
+    return '$calories کالری';
+  }
+
+  @override
+  String get difficultyEasy => 'ساده';
+
+  @override
+  String get difficultyMedium => 'متوسط';
+
+  @override
+  String get difficultyHard => 'سخت';
+
+  @override
   String get noFavoritesFound => 'هنوز دستور مورد علاقه‌ای ندارید';
+
+  @override
+  String get browseRecipes => 'مشاهده دستورهای پخت';
 
   @override
   String get addToFavorites => 'افزودن به علاقه‌مندی‌ها';

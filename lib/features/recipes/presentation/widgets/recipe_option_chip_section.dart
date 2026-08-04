@@ -9,6 +9,7 @@ class RecipeOptionChipSection extends StatelessWidget {
     required this.selectedIds,
     required this.onSelectionChanged,
     required this.enabled,
+    this.icon,
     super.key,
   });
 
@@ -17,6 +18,7 @@ class RecipeOptionChipSection extends StatelessWidget {
   final Set<String> selectedIds;
   final ValueChanged<Set<String>> onSelectionChanged;
   final bool enabled;
+  final IconData? icon;
 
   static List<RecipeOptionItem> sortedOptions(List<RecipeOptionItem> options) {
     final available = options.where((option) => option.isAvailable).toList();
@@ -36,7 +38,26 @@ class RecipeOptionChipSection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Text(title, style: theme.textTheme.titleMedium),
+        Row(
+          children: [
+            if (icon != null) ...[
+              Icon(
+                icon,
+                size: 22,
+                color: theme.colorScheme.primary,
+              ),
+              Gap.h8(),
+            ],
+            Expanded(
+              child: Text(
+                title,
+                style: theme.textTheme.titleMedium?.copyWith(
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+            ),
+          ],
+        ),
         Gap.v12(),
         SizedBox(
           height: 52,

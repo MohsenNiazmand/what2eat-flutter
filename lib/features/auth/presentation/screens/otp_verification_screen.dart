@@ -6,12 +6,15 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:what_2_eat/config/router/routes.dart';
+import 'package:what_2_eat/config/theme/app_radius.dart';
+import 'package:what_2_eat/core/constants/colors.dart';
 import 'package:what_2_eat/core/constants/constants.dart';
 import 'package:what_2_eat/core/error/failures.dart';
 import 'package:what_2_eat/core/extensions/context_extensions.dart';
 import 'package:what_2_eat/core/utils/persian_digits.dart';
 import 'package:what_2_eat/features/auth/presentation/providers/login_provider.dart';
 import 'package:what_2_eat/features/auth/presentation/providers/verify_otp_provider.dart';
+import 'package:what_2_eat/features/auth/presentation/widgets/otp_background_pattern.dart';
 import 'package:what_2_eat/features/auth/presentation/widgets/otp_pin_field.dart';
 import 'package:what_2_eat/shared/presentation/utils/toast_utils.dart';
 import 'package:what_2_eat/shared/presentation/widgets/app_primary_button.dart';
@@ -135,52 +138,153 @@ class OtpVerificationScreen extends HookConsumerWidget {
             onPressed: () => context.go(AppRoutes.login),
           ),
         ),
-        body: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.all(24),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Gap.v24(),
-                Text(
-                  context.tr.otpSubtitle(PersianDigits.toPersian(mobileNumber)),
-                  textAlign: TextAlign.center,
-                  style: theme.textTheme.bodyLarge?.copyWith(
-                    color: colorScheme.onSurfaceVariant,
-                    height: 1.7,
-                  ),
-                ),
-                Gap.v32(),
-                OtpPinField(
-                  key: otpPinKey,
-                  onCompleted: verify,
-                ),
-                Gap.v24(),
-                if (resendSecondsRemaining.value > 0)
-                  Text(
-                    context.tr.resendOtpCountdown(
-                      _formatCountdown(resendSecondsRemaining.value),
+        body: Stack(
+          children: [
+            const Positioned.fill(child: OtpBackgroundPattern()),
+            SafeArea(
+              child: Padding(
+                padding: const EdgeInsets.all(24),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Gap.v16(),
+                    Center(
+                      child: Container(
+                        width: 72,
+                        height: 72,
+                        decoration: BoxDecoration(
+                          color: colorScheme.primaryContainer,
+                          shape: BoxShape.circle,
+                          boxShadow: [
+                            BoxShadow(
+                              color: cPrimary.withValues(alpha: 0.15),
+                              blurRadius: 16,
+                              offset: const Offset(0, 6),
+                            ),
+                          ],
+                        ),
+                        child: Icon(
+                          Icons.mark_email_read_outlined,
+                          size: 34,
+                          color: colorScheme.primary,
+                        ),
+                      ),
                     ),
-                    textAlign: TextAlign.center,
-                    style: theme.textTheme.bodyMedium?.copyWith(
-                      color: colorScheme.onSurfaceVariant,
+                    Gap.v24(),
+                    Text(
+                      context.tr.otpEnterInstruction,
+                      textAlign: TextAlign.center,
+                      style: theme.textTheme.bodyLarge?.copyWith(
+                        color: colorScheme.onSurfaceVariant,
+                        height: 1.6,
+                      ),
                     ),
-                  )
-                else
-                  TextButton(
-                    onPressed: canResend ? resend : null,
-                    child: Text(context.tr.resendOtp),
-                  ),
-                const Spacer(),
-                AppPrimaryButton(
-                  label: context.tr.verifyOtp,
-                  isLoading: isLoading,
-                  onPressed: () => verify(),
+                    Gap.v12(),
+                    Wrap(
+                      alignment: WrapAlignment.center,
+                      crossAxisAlignment: WrapCrossAlignment.center,
+                      spacing: 4,
+                      runSpacing: 4,
+                      children: [
+                        Text(
+                          PersianDigits.toPersian(mobileNumber),
+                          textDirection: TextDirection.ltr,
+                          style: theme.textTheme.titleMedium?.copyWith(
+                            fontWeight: FontWeight.w700,
+                            color: colorScheme.onSurface,
+                          ),
+                        ),
+                        TextButton(
+                          onPressed: isLoading
+                              ? null
+                              : () => context.go(AppRoutes.login),
+                          style: TextButton.styleFrom(
+                            foregroundColor: cTextHint,
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 8,
+                              vertical: 4,
+                            ),
+                            minimumSize: Size.zero,
+                            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                          ),
+                          child: Text(
+                            context.tr.editMobileNumber,
+                            style: theme.textTheme.bodyMedium?.copyWith(
+                              color: cTextHint,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    Gap.v32(),
+                    OtpPinField(
+                      key: otpPinKey,
+                      onCompleted: verify,
+                    ),
+                    Gap.v24(),
+                    if (resendSecondsRemaining.value > 0)
+                      RichText(
+                        textAlign: TextAlign.center,
+                        text: TextSpan(
+                          style: theme.textTheme.bodyMedium?.copyWith(
+                            color: colorScheme.onSurfaceVariant,
+                          ),
+                          children: [
+                            TextSpan(
+                              text: '${context.tr.resendOtpCountdownPrefix} ',
+                            ),
+                            TextSpan(
+                              text: _formatCountdown(
+                                resendSecondsRemaining.value,
+                              ),
+                              style: theme.textTheme.bodyMedium?.copyWith(
+                                fontWeight: FontWeight.w700,
+                                color: colorScheme.primary,
+                              ),
+                            ),
+                            if (context.tr.resendOtpCountdownSuffix.isNotEmpty)
+                              TextSpan(
+                                text:
+                                    ' ${context.tr.resendOtpCountdownSuffix}',
+                              ),
+                          ],
+                        ),
+                      )
+                    else
+                      TextButton(
+                        onPressed: canResend ? resend : null,
+                        child: Text(
+                          context.tr.resendOtp,
+                          style: theme.textTheme.bodyMedium?.copyWith(
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ),
+                    const Spacer(),
+                    DecoratedBox(
+                      decoration: BoxDecoration(
+                        borderRadius: AppRadius.button,
+                        boxShadow: [
+                          BoxShadow(
+                            color: cPrimary.withValues(alpha: 0.2),
+                            blurRadius: 14,
+                            offset: const Offset(0, 6),
+                          ),
+                        ],
+                      ),
+                      child: AppPrimaryButton(
+                        label: context.tr.verifyOtp,
+                        isLoading: isLoading,
+                        onPressed: verify,
+                      ),
+                    ),
+                    Gap.v16(),
+                  ],
                 ),
-                Gap.v16(),
-              ],
+              ),
             ),
-          ),
+          ],
         ),
       ),
     );

@@ -14,6 +14,17 @@
   "verifyOtp": "تأیید و ادامه",
   "resendOtp": "ارسال مجدد کد",
   "resendOtpCountdown": "ارسال مجدد تا {time} دیگر",
+  "@resendOtpCountdown": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "resendOtpCountdownPrefix": "ارسال مجدد تا",
+  "resendOtpCountdownSuffix": "دیگر",
+  "editMobileNumber": "ویرایش شماره",
+  "otpEnterInstruction": "کد ۶ رقمی ارسال‌شده را وارد کنید",
   "otpSentSuccess": "کد تأیید ارسال شد",
   "otpInvalid": "کد تأیید ۶ رقمی را وارد کنید",
   "navRecipes": "دستورها",
@@ -129,7 +140,13 @@
   "categoryStew": "خورشت",
   "noRecipesFound": "دستور پختی یافت نشد",
   "totalTimeLabel": "{minutes} دقیقه در مجموع",
+  "minutesShortLabel": "{minutes} دقیقه",
+  "caloriesShortLabel": "{calories} کالری",
+  "difficultyEasy": "ساده",
+  "difficultyMedium": "متوسط",
+  "difficultyHard": "سخت",
   "noFavoritesFound": "هنوز دستور مورد علاقه‌ای ندارید",
+  "browseRecipes": "مشاهده دستورهای پخت",
   "addToFavorites": "افزودن به علاقه‌مندی‌ها",
   "removeFromFavorites": "حذف از علاقه‌مندی‌ها",
   "networkError": "اتصال اینترنت برقرار نیست. شبکه را بررسی و دوباره تلاش کنید.",
