@@ -20,6 +20,14 @@
   },
   "verifyOtp": "Verify and continue",
   "resendOtp": "Resend code",
+  "resendOtpCountdown": "Resend code in {time}",
+  "@resendOtpCountdown": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
   "otpSentSuccess": "Verification code sent",
   "otpInvalid": "Enter the 6-digit verification code",
   "navRecipes": "Recipes",

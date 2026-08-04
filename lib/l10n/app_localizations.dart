@@ -176,6 +176,12 @@ abstract class AppLocalizations {
   /// **'Resend code'**
   String get resendOtp;
 
+  /// No description provided for @resendOtpCountdown.
+  ///
+  /// In en, this message translates to:
+  /// **'Resend code in {time}'**
+  String resendOtpCountdown(String time);
+
   /// No description provided for @otpSentSuccess.
   ///
   /// In en, this message translates to:

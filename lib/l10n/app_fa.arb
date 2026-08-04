@@ -13,6 +13,7 @@
   "otpSubtitle": "کد ۶ رقمی ارسال‌شده به {mobile} را وارد کنید",
   "verifyOtp": "تأیید و ادامه",
   "resendOtp": "ارسال مجدد کد",
+  "resendOtpCountdown": "ارسال مجدد تا {time} دیگر",
   "otpSentSuccess": "کد تأیید ارسال شد",
   "otpInvalid": "کد تأیید ۶ رقمی را وارد کنید",
   "navRecipes": "دستورها",

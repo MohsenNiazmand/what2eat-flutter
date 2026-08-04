@@ -9,4 +9,7 @@ class Constants {
   static final RegExp mobileNumberPattern = RegExp(r'^09\d{9}$');
 
   static const int otpLength = 6;
+
+  /// Cooldown before the user can request another OTP (seconds).
+  static const int otpResendCooldownSeconds = 120;
 }

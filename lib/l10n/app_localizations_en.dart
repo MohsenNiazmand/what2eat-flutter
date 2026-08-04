@@ -51,6 +51,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get resendOtp => 'Resend code';
 
   @override
+  String resendOtpCountdown(String time) {
+    return 'Resend code in $time';
+  }
+
+  @override
   String get otpSentSuccess => 'Verification code sent';
 
   @override

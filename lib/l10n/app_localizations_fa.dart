@@ -52,6 +52,11 @@ class AppLocalizationsFa extends AppLocalizations {
   String get resendOtp => 'ارسال مجدد کد';
 
   @override
+  String resendOtpCountdown(String time) {
+    return 'ارسال مجدد تا $time دیگر';
+  }
+
+  @override
   String get otpSentSuccess => 'کد تأیید ارسال شد';
 
   @override
