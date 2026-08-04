@@ -84,10 +84,7 @@ class RecipeListScreen extends HookConsumerWidget {
     }
 
     Future<void> openRecipe(Recipe recipe) async {
-      await context.push(
-        AppRoutes.recipeDetailPath(recipe.id),
-        extra: recipe,
-      );
+      await context.push(AppRoutes.recipeDetailPath(recipe.id));
 
       if (context.mounted) {
         await ref.read(recipeListNotifierProvider.notifier).refresh();

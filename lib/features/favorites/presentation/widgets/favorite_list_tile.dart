@@ -92,7 +92,7 @@ class FavoriteListTile extends StatelessWidget {
                   ),
                   Gap.h8(),
                   Icon(
-                    Icons.chevron_left,
+                    Icons.chevron_right,
                     color: colorScheme.onSurfaceVariant.withValues(
                       alpha: 0.7,
                     ),

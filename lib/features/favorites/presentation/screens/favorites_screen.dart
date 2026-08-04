@@ -27,10 +27,7 @@ class FavoritesScreen extends ConsumerWidget {
     }
 
     Future<void> openFavorite(String recipeId, Recipe? recipe) async {
-      await context.push(
-        AppRoutes.recipeDetailPath(recipeId),
-        extra: recipe,
-      );
+      await context.push(AppRoutes.recipeDetailPath(recipeId));
     }
 
     void goToRecipesTab() {

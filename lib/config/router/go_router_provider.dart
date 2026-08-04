@@ -10,12 +10,10 @@ import 'package:what_2_eat/features/auth/presentation/screens/otp_verification_s
 import 'package:what_2_eat/features/favorites/presentation/screens/favorites_screen.dart';
 import 'package:what_2_eat/features/main/presentation/screens/main_shell_screen.dart';
 import 'package:what_2_eat/features/profile/presentation/screens/profile_screen.dart';
-import 'package:what_2_eat/features/recipes/presentation/models/recipe_detail_navigation.dart';
 import 'package:what_2_eat/features/recipes/presentation/screens/generate_recipe_screen.dart';
 import 'package:what_2_eat/features/recipes/presentation/screens/recipe_detail_screen.dart';
 import 'package:what_2_eat/features/recipes/presentation/screens/recipe_list_screen.dart';
 import 'package:what_2_eat/features/splash/presentation/screens/splash_screen.dart';
-import 'package:what_2_eat/shared/domain/entities/recipe.dart';
 
 part 'go_router_provider.g.dart';
 
@@ -84,20 +82,11 @@ GoRouter goRouter(GoRouterRef ref) {
         path: AppRoutes.recipeDetail,
         builder: (context, state) {
           final id = state.pathParameters['id']!;
-          final extra = state.extra;
-          Recipe? initialRecipe;
-          var resolveFavoriteStatus = true;
-
-          if (extra is RecipeDetailNavigation) {
-            initialRecipe = extra.recipe;
-            resolveFavoriteStatus = extra.resolveFavoriteStatus;
-          } else if (extra is Recipe) {
-            initialRecipe = extra;
-          }
+          final resolveFavoriteStatus =
+              state.uri.queryParameters['resolveFavorites'] != 'false';
 
           return RecipeDetailScreen(
             recipeId: id,
-            initialRecipe: initialRecipe,
             resolveFavoriteStatus: resolveFavoriteStatus,
           );
         },

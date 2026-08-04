@@ -3,6 +3,7 @@ import 'package:what_2_eat/config/theme/app_radius.dart';
 import 'package:what_2_eat/core/constants/colors.dart';
 import 'package:what_2_eat/core/extensions/context_extensions.dart';
 import 'package:what_2_eat/core/utils/persian_digits.dart';
+import 'package:what_2_eat/features/recipes/presentation/widgets/recipe_hero_image.dart';
 import 'package:what_2_eat/shared/domain/entities/recipe.dart';
 import 'package:what_2_eat/shared/presentation/widgets/gap.dart';
 
@@ -47,90 +48,76 @@ class RecipeListTile extends StatelessWidget {
             borderRadius: _cardRadius,
             child: Padding(
               padding: const EdgeInsets.all(20),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
+              child: Column(
                 children: [
-                  Container(
-                    width: 60,
-                    height: 60,
-                    decoration: BoxDecoration(
-                      color: colorScheme.primaryContainer.withValues(
-                        alpha: 0.75,
+                  Row(
+                    
+                    children: [
+                      RecipeListHeroThumbnail(
+                        heroTag: recipe.id,
+                        imageUrl: recipe.image,
                       ),
-                      shape: BoxShape.circle,
-                      boxShadow: [
-                        BoxShadow(
-                          color: cPrimary.withValues(alpha: 0.12),
-                          blurRadius: 12,
-                          offset: const Offset(0, 4),
-                        ),
-                      ],
-                    ),
-                    child: Icon(
-                      Icons.restaurant_menu_rounded,
-                      size: 30,
-                      color: colorScheme.primary,
-                    ),
-                  ),
-                  Gap.h16(),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          recipe.title,
-                          style: theme.textTheme.titleMedium?.copyWith(
-                            fontWeight: FontWeight.w700,
-                            fontSize: 17,
-                            color: colorScheme.onSurface,
-                          ),
-                        ),
-                        if (recipe.category != null &&
-                            recipe.category!.isNotEmpty) ...[
-                          Gap.v6(),
-                          Text(
-                            recipe.category!,
-                            style: theme.textTheme.bodySmall?.copyWith(
-                              color: cTextHint,
-                              fontWeight: FontWeight.w500,
+                      Gap.h16(),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              recipe.title,
+                              style: theme.textTheme.titleMedium?.copyWith(
+                                fontWeight: FontWeight.w700,
+                                fontSize: 17,
+                                color: colorScheme.onSurface,
+                              ),
                             ),
-                          ),
-                        ],
-                        if (recipe.description != null &&
-                            recipe.description!.isNotEmpty) ...[
-                          Gap.v8(),
-                          Text(
-                            recipe.description!,
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
-                            style: theme.textTheme.bodyMedium?.copyWith(
-                              color: colorScheme.onSurfaceVariant,
-                              fontWeight: FontWeight.w400,
-                              height: 1.5,
-                            ),
-                          ),
-                        ],
-                        if (infoChips.isNotEmpty) ...[
-                          Gap.v12(),
-                          Wrap(
-                            spacing: 8,
-                            runSpacing: 8,
-                            children: infoChips,
-                          ),
-                        ],
-                      ],
-                    ),
-                  ),
-                  Gap.h8(),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 16),
-                    child: Icon(
-                      Icons.chevron_left,
-                      color: colorScheme.onSurfaceVariant.withValues(
-                        alpha: 0.7,
+                            if (recipe.category != null &&
+                                recipe.category!.isNotEmpty) ...[
+                              Gap.v6(),
+                              Text(
+                                recipe.category!,
+                                style: theme.textTheme.bodySmall?.copyWith(
+                                  color: cTextHint,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ],
+                            if (recipe.description != null &&
+                                recipe.description!.isNotEmpty) ...[
+                              Gap.v8(),
+                              Text(
+                                recipe.description!,
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                                style: theme.textTheme.bodyMedium?.copyWith(
+                                  color: colorScheme.onSurfaceVariant,
+                                  fontWeight: FontWeight.w400,
+                                  height: 1.5,
+                                ),
+                              ),
+                            ],
+                  
+                          ],
+                        ),
                       ),
-                    ),
+                      Gap.h8(),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 16),
+                        child: Icon(
+                          Icons.chevron_right,
+                          color: colorScheme.onSurfaceVariant.withValues(
+                            alpha: 0.7,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
+                            if (infoChips.isNotEmpty) ...[
+                              Gap.v12(),
+                              Row(
+                                
+                                children: infoChips,
+                              ),
+                            ],
                 ],
               ),
             ),
@@ -227,6 +214,7 @@ class _RecipeInfoChip extends StatelessWidget {
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+      margin: const EdgeInsets.only(left: 8),
       decoration: BoxDecoration(
         color: cSurfaceElevated,
         borderRadius: BorderRadius.circular(20),

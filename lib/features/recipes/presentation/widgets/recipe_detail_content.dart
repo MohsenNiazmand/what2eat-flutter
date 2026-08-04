@@ -1,9 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:what_2_eat/config/theme/app_radius.dart';
+import 'package:what_2_eat/core/constants/colors.dart';
 import 'package:what_2_eat/core/extensions/context_extensions.dart';
 import 'package:what_2_eat/core/utils/persian_digits.dart';
 import 'package:what_2_eat/shared/domain/entities/recipe.dart';
 import 'package:what_2_eat/shared/presentation/widgets/gap.dart';
+
+final RegExp _leadingStepNumberPattern =
+    RegExp(r'^[۰-۹0-9]+[\.\-\s]+');
+
+String _sanitizeInstructionText(String instruction) {
+  return instruction.replaceFirst(_leadingStepNumberPattern, '').trim();
+}
 
 class RecipeDetailContent extends StatelessWidget {
   const RecipeDetailContent({
@@ -16,65 +24,69 @@ class RecipeDetailContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final colorScheme = theme.colorScheme;
 
-    return SingleChildScrollView(
-      padding: const EdgeInsets.all(24),
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(24, 40, 24, 0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          if (recipe.category != null && recipe.category!.isNotEmpty) ...[
-            Align(
-              alignment: AlignmentDirectional.centerStart,
-              child: Chip(
-                label: Text(recipe.category!),
-                backgroundColor: colorScheme.primaryContainer,
-                side: BorderSide.none,
+          if (recipe.category != null && recipe.category!.isNotEmpty)
+            Padding(
+              padding: const EdgeInsets.only(bottom: 10),
+              child: Align(
+                alignment: AlignmentDirectional.centerStart,
+                child: _CategoryTag(label: recipe.category!),
               ),
             ),
-            Gap.v12(),
-          ],
-          if (recipe.description != null && recipe.description!.isNotEmpty) ...[
-            Text(
-              context.tr.descriptionSection,
-              style: theme.textTheme.titleMedium,
+          Text(
+            recipe.title,
+            style: theme.textTheme.headlineMedium?.copyWith(
+              fontWeight: FontWeight.w900,
+              color: cTextPrimary,
+              height: 1.25,
+              letterSpacing: 0.3,
             ),
-            Gap.v8(),
+          ),
+          if (recipe.description != null && recipe.description!.isNotEmpty) ...[
+            Gap.v12(),
             Text(
               recipe.description!,
               style: theme.textTheme.bodyLarge?.copyWith(
-                color: colorScheme.onSurfaceVariant,
+                color: cTextSecondary,
+                fontSize: 16,
+                height: 1.85,
+                letterSpacing: 0.25,
+                fontWeight: FontWeight.w400,
               ),
             ),
-            Gap.v24(),
           ],
+          Gap.v24(),
           _MetaRow(recipe: recipe),
           Gap.v24(),
-          Text(
-            context.tr.ingredientsSection,
-            style: theme.textTheme.titleLarge,
-          ),
-          Gap.v12(),
+          _SectionTitle(title: context.tr.ingredientsSection),
+          Gap.v16(),
           if (recipe.ingredients.isEmpty)
             Text(
               context.tr.noIngredients,
               style: theme.textTheme.bodyMedium?.copyWith(
-                color: colorScheme.onSurfaceVariant,
+                color: cTextHint,
+                height: 1.6,
               ),
             )
           else
             ...recipe.ingredients.map(
               (ingredient) => Padding(
-                padding: const EdgeInsets.only(bottom: 8),
+                padding: const EdgeInsets.only(bottom: 12),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.only(top: 8),
-                      child: Icon(
-                        Icons.circle,
-                        size: 8,
-                        color: colorScheme.primary,
+                    Container(
+                      width: 8,
+                      height: 8,
+                      margin: const EdgeInsets.only(top: 10),
+                      decoration: const BoxDecoration(
+                        color: cPrimary,
+                        shape: BoxShape.circle,
                       ),
                     ),
                     Gap.h12(),
@@ -84,6 +96,8 @@ class RecipeDetailContent extends StatelessWidget {
                           text: ingredient.name,
                           style: theme.textTheme.bodyLarge?.copyWith(
                             fontWeight: FontWeight.w600,
+                            color: cTextPrimary,
+                            height: 1.6,
                           ),
                           children: [
                             TextSpan(
@@ -91,7 +105,8 @@ class RecipeDetailContent extends StatelessWidget {
                                   ' — ${PersianDigits.toPersian(ingredient.amount)}',
                               style: theme.textTheme.bodyLarge?.copyWith(
                                 fontWeight: FontWeight.w400,
-                                color: colorScheme.onSurfaceVariant,
+                                color: cTextHint,
+                                height: 1.6,
                               ),
                             ),
                           ],
@@ -103,41 +118,59 @@ class RecipeDetailContent extends StatelessWidget {
               ),
             ),
           Gap.v24(),
-          Text(
-            context.tr.instructionsSection,
-            style: theme.textTheme.titleLarge,
-          ),
-          Gap.v12(),
+          _SectionTitle(title: context.tr.instructionsSection),
+          Gap.v16(),
           if (recipe.instructions.isEmpty)
             Text(
               context.tr.noInstructions,
               style: theme.textTheme.bodyMedium?.copyWith(
-                color: colorScheme.onSurfaceVariant,
+                color: cTextHint,
+                height: 1.6,
               ),
             )
           else
             ...recipe.instructions.asMap().entries.map(
                   (entry) => Padding(
-                    padding: const EdgeInsets.only(bottom: 12),
+                    padding: const EdgeInsets.only(bottom: 16),
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        CircleAvatar(
-                          radius: 16,
-                          backgroundColor: colorScheme.primaryContainer,
+                        Container(
+                          width: 32,
+                          height: 32,
+                          decoration: BoxDecoration(
+                            gradient: const LinearGradient(
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight,
+                              colors: [cPrimaryLight, cPrimary],
+                            ),
+                            shape: BoxShape.circle,
+                            boxShadow: [
+                              BoxShadow(
+                                color: cPrimary.withValues(alpha: 0.22),
+                                blurRadius: 8,
+                                offset: const Offset(0, 3),
+                              ),
+                            ],
+                          ),
+                          alignment: Alignment.center,
                           child: Text(
                             PersianDigits.formatInt(entry.key + 1),
                             style: theme.textTheme.labelLarge?.copyWith(
-                              color: colorScheme.onPrimaryContainer,
+                              color: Colors.white,
+                              fontWeight: FontWeight.w700,
                             ),
                           ),
                         ),
-                        Gap.h12(),
+                        Gap.h16(),
                         Expanded(
                           child: Text(
-                            entry.value,
+                            _sanitizeInstructionText(entry.value),
                             style: theme.textTheme.bodyLarge?.copyWith(
-                              height: 1.7,
+                              color: cTextPrimary,
+                              fontWeight: FontWeight.w600,
+                              height: 1.5,
+                              letterSpacing: 0.1,
                             ),
                           ),
                         ),
@@ -151,31 +184,80 @@ class RecipeDetailContent extends StatelessWidget {
   }
 }
 
+class _CategoryTag extends StatelessWidget {
+  const _CategoryTag({required this.label});
+
+  final String label;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+      decoration: BoxDecoration(
+        color: cSurfaceElevated.withValues(alpha: 0.85),
+        borderRadius: BorderRadius.circular(999),
+        border: Border.all(
+          color: cBorder.withValues(alpha: 0.75),
+        ),
+      ),
+      child: Text(
+        label,
+        style: theme.textTheme.labelMedium?.copyWith(
+          color: cPrimary.withValues(alpha: 0.88),
+          fontWeight: FontWeight.w600,
+          letterSpacing: 0.35,
+          height: 1.2,
+        ),
+      ),
+    );
+  }
+}
+
+class _SectionTitle extends StatelessWidget {
+  const _SectionTitle({required this.title});
+
+  final String title;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
+    return Text(
+      title,
+      style: theme.textTheme.titleLarge?.copyWith(
+        fontWeight: FontWeight.w700,
+        color: cTextPrimary,
+        letterSpacing: 0.2,
+      ),
+    );
+  }
+}
+
 class _MetaRow extends StatelessWidget {
   const _MetaRow({required this.recipe});
 
   final Recipe recipe;
 
+  int? get _totalTimeMinutes {
+    final prep = recipe.prepTime;
+    final cook = recipe.cookTime;
+    if (prep != null && cook != null) return prep + cook;
+    return prep ?? cook;
+  }
+
   @override
   Widget build(BuildContext context) {
     final items = <Widget>[];
 
-    if (recipe.prepTime != null) {
+    final totalTime = _totalTimeMinutes;
+    if (totalTime != null) {
       items.add(
         _MetaChip(
-          icon: Icons.schedule_outlined,
+          icon: Icons.schedule_rounded,
           label: PersianDigits.toPersian(
-            context.tr.prepTimeLabel(recipe.prepTime!),
-          ),
-        ),
-      );
-    }
-    if (recipe.cookTime != null) {
-      items.add(
-        _MetaChip(
-          icon: Icons.local_fire_department_outlined,
-          label: PersianDigits.toPersian(
-            context.tr.cookTimeLabel(recipe.cookTime!),
+            context.tr.minutesShortLabel(totalTime),
           ),
         ),
       );
@@ -183,7 +265,7 @@ class _MetaRow extends StatelessWidget {
     if (recipe.servings != null) {
       items.add(
         _MetaChip(
-          icon: Icons.restaurant_outlined,
+          icon: Icons.restaurant_rounded,
           label: PersianDigits.toPersian(
             context.tr.servingsCountLabel(recipe.servings!),
           ),
@@ -193,7 +275,7 @@ class _MetaRow extends StatelessWidget {
     if (recipe.calories != null) {
       items.add(
         _MetaChip(
-          icon: Icons.local_dining_outlined,
+          icon: Icons.local_fire_department_rounded,
           label: PersianDigits.toPersian(
             context.tr.caloriesLabel(recipe.calories!),
           ),
@@ -206,8 +288,8 @@ class _MetaRow extends StatelessWidget {
     }
 
     return Wrap(
-      spacing: 8,
-      runSpacing: 8,
+      spacing: 10,
+      runSpacing: 10,
       children: items,
     );
   }
@@ -225,20 +307,40 @@ class _MetaChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final colorScheme = theme.colorScheme;
 
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 9),
       decoration: BoxDecoration(
-        color: colorScheme.surfaceContainerHighest,
+        color: cSurface,
         borderRadius: AppRadius.chip,
+        border: Border.all(
+          color: cBorder.withValues(alpha: 0.65),
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.035),
+            blurRadius: 12,
+            offset: const Offset(0, 4),
+          ),
+        ],
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(icon, size: 18, color: colorScheme.primary),
+          Icon(
+            icon,
+            size: 17,
+            color: cPrimary.withValues(alpha: 0.92),
+          ),
           Gap.h8(),
-          Text(label, style: theme.textTheme.labelLarge),
+          Text(
+            label,
+            style: theme.textTheme.labelLarge?.copyWith(
+              color: cTextPrimary,
+              fontWeight: FontWeight.w600,
+              height: 1.2,
+            ),
+          ),
         ],
       ),
     );

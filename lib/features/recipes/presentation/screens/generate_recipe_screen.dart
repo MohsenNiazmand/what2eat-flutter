@@ -13,7 +13,6 @@ import 'package:what_2_eat/core/utils/persian_digits.dart';
 import 'package:what_2_eat/core/utils/persian_input.dart';
 import 'package:what_2_eat/features/auth/presentation/providers/current_user_provider.dart';
 import 'package:what_2_eat/features/profile/presentation/providers/profile_providers.dart';
-import 'package:what_2_eat/features/recipes/presentation/models/recipe_detail_navigation.dart';
 import 'package:what_2_eat/features/recipes/presentation/providers/generate_recipe_provider.dart';
 import 'package:what_2_eat/features/recipes/presentation/providers/recipe_list_provider.dart';
 import 'package:what_2_eat/features/recipes/presentation/widgets/dynamic_text_field_list.dart';
@@ -184,8 +183,7 @@ class GenerateRecipeScreen extends HookConsumerWidget {
       if (!context.mounted) return;
 
       await context.push(
-        AppRoutes.recipeDetailPath(recipe.id),
-        extra: RecipeDetailNavigation.fromGenerate(recipe),
+        AppRoutes.recipeDetailPath(recipe.id, resolveFavorites: false),
       );
     }
 

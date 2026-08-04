@@ -9,11 +9,15 @@ class FavoriteButton extends ConsumerStatefulWidget {
   const FavoriteButton({
     required this.recipeId,
     this.resolveFavoriteStatus = true,
+    this.inactiveIconColor,
+    this.activeIconColor,
     super.key,
   });
 
   final String recipeId;
   final bool resolveFavoriteStatus;
+  final Color? inactiveIconColor;
+  final Color? activeIconColor;
 
   @override
   ConsumerState<FavoriteButton> createState() => _FavoriteButtonState();
@@ -39,6 +43,8 @@ class _FavoriteButtonState extends ConsumerState<FavoriteButton> {
     final colorScheme = Theme.of(context).colorScheme;
 
     return IconButton(
+      padding: EdgeInsets.zero,
+      constraints: const BoxConstraints(minWidth: 44, minHeight: 44),
       onPressed: isBusy
           ? null
           : () async {
@@ -71,7 +77,9 @@ class _FavoriteButtonState extends ConsumerState<FavoriteButton> {
                 isFavorite
                     ? Icons.favorite_rounded
                     : Icons.favorite_border_rounded,
-                color: isFavorite ? colorScheme.error : colorScheme.onSurface,
+                color: isFavorite
+                    ? (widget.activeIconColor ?? colorScheme.error)
+                    : (widget.inactiveIconColor ?? colorScheme.onSurface),
               ),
       ),
     );
