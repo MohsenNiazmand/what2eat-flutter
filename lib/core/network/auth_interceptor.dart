@@ -8,6 +8,7 @@ import 'package:what_2_eat/config/router/go_router_provider.dart';
 import 'package:what_2_eat/config/router/routes.dart';
 import 'package:what_2_eat/core/storage/device_id_service.dart';
 import 'package:what_2_eat/core/storage/token_storage.dart';
+import 'package:what_2_eat/features/auth/domain/enums/auth_status.dart';
 import 'package:what_2_eat/features/auth/presentation/providers/auth_state_provider.dart';
 import 'package:what_2_eat/shared/presentation/utils/toast_utils.dart';
 
@@ -36,10 +37,18 @@ class AuthInterceptor extends QueuedInterceptor {
 
   static Future<bool>? _refreshFuture;
 
-  static const _authExemptPaths = {
+  static const _noAuthHeaderPaths = {
     '/api/auth/otp/request',
     '/api/auth/otp/verify',
     '/api/auth/refresh',
+    '/health',
+  };
+
+  static const _noRefreshOn401Paths = {
+    '/api/auth/otp/request',
+    '/api/auth/otp/verify',
+    '/api/auth/refresh',
+    '/api/auth/logout',
     '/health',
   };
 
@@ -48,7 +57,7 @@ class AuthInterceptor extends QueuedInterceptor {
     RequestOptions options,
     RequestInterceptorHandler handler,
   ) async {
-    if (!_isAuthExempt(options.path)) {
+    if (!_noAuthHeaderPaths.contains(options.path)) {
       final accessToken = await _tokenStorage.getAccessToken();
       if (accessToken != null && accessToken.isNotEmpty) {
         options.headers['Authorization'] = 'Bearer $accessToken';
@@ -65,7 +74,7 @@ class AuthInterceptor extends QueuedInterceptor {
   ) async {
     final statusCode = err.response?.statusCode;
     final shouldRefresh = statusCode == 401 &&
-        !_isAuthExempt(err.requestOptions.path) &&
+        !_noRefreshOn401Paths.contains(err.requestOptions.path) &&
         err.requestOptions.extra['_retried'] != true;
 
     if (!shouldRefresh) {
@@ -147,11 +156,13 @@ class AuthInterceptor extends QueuedInterceptor {
       final context = rootNavigatorKey.currentContext;
       if (context == null || !context.mounted) return;
 
-      ProviderScope.containerOf(context)
-          .read(authStateProvider.notifier)
-          .setUnauthenticated();
+      final container = ProviderScope.containerOf(context);
+      final authNotifier = container.read(authStateProvider.notifier);
+      final wasAuthenticated =
+          container.read(authStateProvider) == AuthStatus.authenticated;
+      final logoutInProgress = authNotifier.logoutInProgress;
 
-      showSessionExpiredToast(context);
+      authNotifier.setUnauthenticated();
 
       final location = GoRouter.of(context)
           .routerDelegate
@@ -159,13 +170,17 @@ class AuthInterceptor extends QueuedInterceptor {
           .uri
           .path;
 
+      final shouldShowSessionExpiredToast = wasAuthenticated &&
+          !logoutInProgress &&
+          location != AppRoutes.login;
+
+      if (shouldShowSessionExpiredToast) {
+        showSessionExpiredToast(context);
+      }
+
       if (location != AppRoutes.login) {
         context.go(AppRoutes.login);
       }
     });
-  }
-
-  bool _isAuthExempt(String path) {
-    return _authExemptPaths.contains(path);
   }
 }

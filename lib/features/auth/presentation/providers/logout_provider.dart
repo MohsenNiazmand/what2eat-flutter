@@ -13,20 +13,25 @@ class LogoutNotifier extends _$LogoutNotifier {
   AsyncValue<void> build() => const AsyncValue.data(null);
 
   Future<Failure?> logout() async {
+    ref.read(authStateProvider.notifier).beginLogout();
     state = const AsyncValue.loading();
 
-    final result = await getIt<LogoutUseCase>()(const NoParams());
+    try {
+      final result = await getIt<LogoutUseCase>()(const NoParams());
 
-    return result.fold(
-      (failure) {
-        state = AsyncValue.error(failure, StackTrace.current);
-        return failure;
-      },
-      (_) {
-        ref.read(authStateProvider.notifier).setUnauthenticated();
-        state = const AsyncValue.data(null);
-        return null;
-      },
-    );
+      return result.fold(
+        (failure) {
+          state = AsyncValue.error(failure, StackTrace.current);
+          return failure;
+        },
+        (_) {
+          ref.read(authStateProvider.notifier).setUnauthenticated();
+          state = const AsyncValue.data(null);
+          return null;
+        },
+      );
+    } finally {
+      ref.read(authStateProvider.notifier).endLogout();
+    }
   }
 }

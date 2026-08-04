@@ -10,6 +10,18 @@ part 'auth_state_provider.g.dart';
 
 @Riverpod(keepAlive: true)
 class AuthState extends _$AuthState {
+  bool _logoutInProgress = false;
+
+  bool get logoutInProgress => _logoutInProgress;
+
+  void beginLogout() {
+    _logoutInProgress = true;
+  }
+
+  void endLogout() {
+    _logoutInProgress = false;
+  }
+
   @override
   AuthStatus build() => AuthStatus.initial;
 
