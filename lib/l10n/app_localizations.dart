@@ -931,6 +931,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Something went wrong. Please try again.'**
   String get genericError;
+
+  /// No description provided for @shareRecipe.
+  ///
+  /// In en, this message translates to:
+  /// **'Share'**
+  String get shareRecipe;
+
+  /// No description provided for @shareInstructionsNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Full cooking steps are available in the What2Eat app.'**
+  String get shareInstructionsNote;
+
+  /// No description provided for @shareImageLinkLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Recipe image'**
+  String get shareImageLinkLabel;
+
+  /// No description provided for @shareRecipeSignature.
+  ///
+  /// In en, this message translates to:
+  /// **'Created by What2Eat AI 🥣'**
+  String get shareRecipeSignature;
 }
 
 class _AppLocalizationsDelegate

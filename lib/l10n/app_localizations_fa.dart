@@ -461,4 +461,18 @@ class AppLocalizationsFa extends AppLocalizations {
 
   @override
   String get genericError => 'خطایی رخ داد. لطفاً دوباره تلاش کنید.';
+
+  @override
+  String get shareRecipe => 'اشتراک‌گذاری';
+
+  @override
+  String get shareInstructionsNote =>
+      'مراحل کامل پخت در اپلیکیشن چی بخورم موجود است.';
+
+  @override
+  String get shareImageLinkLabel => 'تصویر دستور';
+
+  @override
+  String get shareRecipeSignature =>
+      'تولید شده توسط هوش مصنوعی اپلیکیشن چی بخورم 🥣';
 }

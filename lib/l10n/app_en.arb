@@ -229,5 +229,9 @@
   "networkError": "No internet connection. Check your network and try again.",
   "pressBackAgainToExit": "Press back again to exit",
   "sessionExpired": "Your session has expired. Please log in again.",
-  "genericError": "Something went wrong. Please try again."
+  "genericError": "Something went wrong. Please try again.",
+  "shareRecipe": "Share",
+  "shareInstructionsNote": "Full cooking steps are available in the What2Eat app.",
+  "shareImageLinkLabel": "Recipe image",
+  "shareRecipeSignature": "Created by What2Eat AI 🥣"
 }

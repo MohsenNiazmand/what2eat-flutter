@@ -459,4 +459,17 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get genericError => 'Something went wrong. Please try again.';
+
+  @override
+  String get shareRecipe => 'Share';
+
+  @override
+  String get shareInstructionsNote =>
+      'Full cooking steps are available in the What2Eat app.';
+
+  @override
+  String get shareImageLinkLabel => 'Recipe image';
+
+  @override
+  String get shareRecipeSignature => 'Created by What2Eat AI 🥣';
 }

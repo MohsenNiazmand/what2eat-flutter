@@ -132,12 +132,6 @@ class OtpVerificationScreen extends HookConsumerWidget {
 
     return PopScope(
       child: Scaffold(
-        appBar: AppBar(
-          title: Text(context.tr.otpTitle),
-          leading: BackButton(
-            onPressed: () => context.go(AppRoutes.login),
-          ),
-        ),
         body: Stack(
           children: [
             const Positioned.fill(child: OtpBackgroundPattern()),
@@ -147,7 +141,16 @@ class OtpVerificationScreen extends HookConsumerWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    Gap.v16(),
+                    Align(
+                      alignment: AlignmentDirectional.centerStart,
+                      child: IconButton(
+                        onPressed: isLoading
+                            ? null
+                            : () => context.go(AppRoutes.login),
+                        icon: const Icon(Icons.arrow_back_rounded),
+                      ),
+                    ),
+                    Gap.v8(),
                     Center(
                       child: Container(
                         width: 72,

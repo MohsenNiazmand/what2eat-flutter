@@ -5,16 +5,19 @@ import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:what_2_eat/core/constants/colors.dart';
 import 'package:what_2_eat/core/extensions/context_extensions.dart';
 import 'package:what_2_eat/features/favorites/presentation/widgets/favorite_button.dart';
 import 'package:what_2_eat/features/recipes/presentation/providers/recipe_detail_provider.dart';
 import 'package:what_2_eat/features/recipes/presentation/providers/recipe_preview_provider.dart';
+import 'package:what_2_eat/features/recipes/presentation/utils/recipe_share_formatter.dart';
 import 'package:what_2_eat/features/recipes/presentation/widgets/recipe_detail_content.dart';
 import 'package:what_2_eat/features/recipes/presentation/widgets/recipe_hero_image.dart';
 import 'package:what_2_eat/shared/domain/entities/recipe.dart';
 import 'package:what_2_eat/shared/presentation/widgets/app_loading_indicator.dart';
 import 'package:what_2_eat/shared/presentation/widgets/error_retry_view.dart';
+import 'package:what_2_eat/shared/presentation/widgets/gap.dart';
 
 class RecipeDetailScreen extends HookConsumerWidget {
   const RecipeDetailScreen({
@@ -95,7 +98,7 @@ class RecipeDetailScreen extends HookConsumerWidget {
   }
 }
 
-class _RecipeDetailBody extends HookWidget {
+class _RecipeDetailBody extends HookConsumerWidget {
   const _RecipeDetailBody({
     required this.recipe,
     required this.resolveFavoriteStatus,
@@ -108,8 +111,16 @@ class _RecipeDetailBody extends HookWidget {
   static const _bodyOverlap = 30.0;
   static const _bodyTopRadius = 30.0;
 
+  Future<void> _shareRecipe(BuildContext context) {
+    final text = formatRecipeShareText(
+      recipe: recipe,
+      l10n: context.tr,
+    );
+    return Share.share(text);
+  }
+
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
     final scrollController = useScrollController();
     final isCollapsed = useState(false);
@@ -221,6 +232,12 @@ class _RecipeDetailBody extends HookWidget {
                       icon: Icons.arrow_back_rounded,
                     ),
                     const Spacer(),
+                    _FloatingGlassButton(
+                      onPressed: () => _shareRecipe(context),
+                      icon: Icons.ios_share_rounded,
+                      tooltip: context.tr.shareRecipe,
+                    ),
+                    Gap.h8(),
                     _FloatingGlassFavoriteButton(
                       recipeId: recipe.id,
                       resolveFavoriteStatus: resolveFavoriteStatus,
@@ -240,14 +257,16 @@ class _FloatingGlassButton extends StatelessWidget {
   const _FloatingGlassButton({
     required this.onPressed,
     required this.icon,
+    this.tooltip,
   });
 
   final VoidCallback onPressed;
   final IconData icon;
+  final String? tooltip;
 
   @override
   Widget build(BuildContext context) {
-    return ClipOval(
+    final button = ClipOval(
       child: BackdropFilter(
         filter: ImageFilter.blur(sigmaX: 12, sigmaY: 12),
         child: Material(
@@ -273,6 +292,15 @@ class _FloatingGlassButton extends StatelessWidget {
           ),
         ),
       ),
+    );
+
+    if (tooltip == null) {
+      return button;
+    }
+
+    return Tooltip(
+      message: tooltip,
+      child: button,
     );
   }
 }
