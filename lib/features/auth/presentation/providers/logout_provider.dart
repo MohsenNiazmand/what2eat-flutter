@@ -4,6 +4,10 @@ import 'package:what_2_eat/core/injection_container.dart';
 import 'package:what_2_eat/core/usecase/usecase.dart';
 import 'package:what_2_eat/features/auth/domain/usecases/logout_usecase.dart';
 import 'package:what_2_eat/features/auth/presentation/providers/auth_state_provider.dart';
+import 'package:what_2_eat/features/favorites/data/datasources/favorite_local_data_source.dart';
+import 'package:what_2_eat/features/favorites/presentation/providers/favorites_list_provider.dart';
+import 'package:what_2_eat/features/recipes/data/datasources/recipe_local_data_source.dart';
+import 'package:what_2_eat/features/recipes/presentation/providers/recipe_list_provider.dart';
 
 part 'logout_provider.g.dart';
 
@@ -19,12 +23,14 @@ class LogoutNotifier extends _$LogoutNotifier {
     try {
       final result = await getIt<LogoutUseCase>()(const NoParams());
 
-      return result.fold(
-        (failure) {
+      return await result.fold(
+        (failure) async {
           state = AsyncValue.error(failure, StackTrace.current);
           return failure;
         },
-        (_) {
+        (_) async {
+          await _clearLocalCaches();
+          _resetCachedProviders();
           ref.read(authStateProvider.notifier).setUnauthenticated();
           state = const AsyncValue.data(null);
           return null;
@@ -33,5 +39,16 @@ class LogoutNotifier extends _$LogoutNotifier {
     } finally {
       ref.read(authStateProvider.notifier).endLogout();
     }
+  }
+
+  Future<void> _clearLocalCaches() async {
+    await getIt<RecipeLocalDataSource>().clearCache();
+    await getIt<FavoriteLocalDataSource>().clearCache();
+  }
+
+  void _resetCachedProviders() {
+    ref.invalidate(recipeListNotifierProvider);
+    ref.invalidate(favoritesListNotifierProvider);
+    ref.invalidate(favoriteRecipeIdsNotifierProvider);
   }
 }

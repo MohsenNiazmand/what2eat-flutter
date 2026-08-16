@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:what_2_eat/features/favorites/presentation/providers/favorite_toggle_provider.dart';
-import 'package:what_2_eat/features/favorites/presentation/providers/favorites_list_provider.dart';
+import 'package:what_2_eat/features/recipes/presentation/providers/recipe_preview_provider.dart';
 import 'package:what_2_eat/shared/presentation/utils/toast_utils.dart';
 
-class FavoriteButton extends ConsumerStatefulWidget {
+class FavoriteButton extends ConsumerWidget {
   const FavoriteButton({
     required this.recipeId,
     this.resolveFavoriteStatus = true,
@@ -20,25 +19,11 @@ class FavoriteButton extends ConsumerStatefulWidget {
   final Color? activeIconColor;
 
   @override
-  ConsumerState<FavoriteButton> createState() => _FavoriteButtonState();
-}
-
-class _FavoriteButtonState extends ConsumerState<FavoriteButton> {
-  @override
-  void initState() {
-    super.initState();
-    if (widget.resolveFavoriteStatus) {
-      SchedulerBinding.instance.addPostFrameCallback((_) {
-        ref.read(favoriteRecipeIdsNotifierProvider.notifier).loadIfNeeded();
-      });
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final favoriteIds = ref.watch(favoriteRecipeIdsProvider);
+  Widget build(BuildContext context, WidgetRef ref) {
+    final isFavorite = resolveFavoriteStatus
+        ? ref.watch(recipeIsFavoriteProvider(recipeId))
+        : false;
     final toggleState = ref.watch(favoriteToggleNotifierProvider);
-    final isFavorite = favoriteIds.contains(widget.recipeId);
     final isBusy = toggleState.isLoading;
     final colorScheme = Theme.of(context).colorScheme;
 
@@ -51,7 +36,7 @@ class _FavoriteButtonState extends ConsumerState<FavoriteButton> {
               final failure = await ref
                   .read(favoriteToggleNotifierProvider.notifier)
                   .toggle(
-                    recipeId: widget.recipeId,
+                    recipeId: recipeId,
                     isCurrentlyFavorite: isFavorite,
                   );
 
@@ -60,7 +45,6 @@ class _FavoriteButtonState extends ConsumerState<FavoriteButton> {
               }
             },
       icon: AnimatedSwitcher(
-        // Design rationale: Cross-fade heart states for lightweight feedback.
         duration: const Duration(milliseconds: 180),
         child: isBusy
             ? SizedBox(
@@ -78,8 +62,8 @@ class _FavoriteButtonState extends ConsumerState<FavoriteButton> {
                     ? Icons.favorite_rounded
                     : Icons.favorite_border_rounded,
                 color: isFavorite
-                    ? (widget.activeIconColor ?? colorScheme.error)
-                    : (widget.inactiveIconColor ?? colorScheme.onSurface),
+                    ? (activeIconColor ?? colorScheme.error)
+                    : (inactiveIconColor ?? colorScheme.onSurface),
               ),
       ),
     );

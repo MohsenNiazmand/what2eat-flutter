@@ -45,6 +45,7 @@ extension RecipeModelX on RecipeModel {
       image: image,
       createdAt: createdAt,
       updatedAt: updatedAt,
+      isFavorite: isFavorite,
     );
   }
 }

@@ -24,7 +24,7 @@ final favoriteRecipeIdsProvider = AutoDisposeProvider<Set<String>>.internal(
 // ignore: unused_element
 typedef FavoriteRecipeIdsRef = AutoDisposeProviderRef<Set<String>>;
 String _$favoriteRecipeIdsNotifierHash() =>
-    r'11b1d95f901331fe1fd24ce80b510b574c3e7065';
+    r'705a0c54af275b2aafe9c636d488d561c7f856e2';
 
 /// See also [FavoriteRecipeIdsNotifier].
 @ProviderFor(FavoriteRecipeIdsNotifier)
@@ -41,15 +41,12 @@ final favoriteRecipeIdsNotifierProvider =
 
 typedef _$FavoriteRecipeIdsNotifier = Notifier<Set<String>>;
 String _$favoritesListNotifierHash() =>
-    r'37416ad378a0dc92e3fbb8d3d1a989ea6b2189c7';
+    r'd9994ca10b384ffe35811ae04c5bb6b24a03d334';
 
 /// See also [FavoritesListNotifier].
 @ProviderFor(FavoritesListNotifier)
 final favoritesListNotifierProvider =
-    AutoDisposeAsyncNotifierProvider<
-      FavoritesListNotifier,
-      List<Favorite>
-    >.internal(
+    NotifierProvider<FavoritesListNotifier, FavoritesListUiState>.internal(
       FavoritesListNotifier.new,
       name: r'favoritesListNotifierProvider',
       debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -59,6 +56,6 @@ final favoritesListNotifierProvider =
       allTransitiveDependencies: null,
     );
 
-typedef _$FavoritesListNotifier = AutoDisposeAsyncNotifier<List<Favorite>>;
+typedef _$FavoritesListNotifier = Notifier<FavoritesListUiState>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

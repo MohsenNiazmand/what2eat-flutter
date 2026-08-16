@@ -72,7 +72,9 @@ class RecipeListScreen extends HookConsumerWidget {
     );
 
     Future<void> onRefresh() {
-      return ref.read(recipeListNotifierProvider.notifier).refresh();
+      return ref
+          .read(recipeListNotifierProvider.notifier)
+          .refresh(showRefreshingIndicator: true);
     }
 
     void onCategoryChanged(String? category) {
@@ -85,10 +87,6 @@ class RecipeListScreen extends HookConsumerWidget {
 
     Future<void> openRecipe(Recipe recipe) async {
       await context.push(AppRoutes.recipeDetailPath(recipe.id));
-
-      if (context.mounted) {
-        await ref.read(recipeListNotifierProvider.notifier).refresh();
-      }
     }
 
     return Scaffold(

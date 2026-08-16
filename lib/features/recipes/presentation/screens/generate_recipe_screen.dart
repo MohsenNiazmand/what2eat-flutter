@@ -178,7 +178,7 @@ class GenerateRecipeScreen extends HookConsumerWidget {
       }
 
       context.go(AppRoutes.home);
-      await ref.read(recipeListNotifierProvider.notifier).refresh();
+      await ref.read(recipeListNotifierProvider.notifier).prependRecipe(recipe);
 
       if (!context.mounted) return;
 

@@ -7,12 +7,12 @@ part of 'recipe_list_provider.dart';
 // **************************************************************************
 
 String _$recipeListNotifierHash() =>
-    r'4b36d78b6817a4e9a91241b0ef50462f71cd4d16';
+    r'8d2029a344fd73b96d073818a438d601114af018';
 
 /// See also [RecipeListNotifier].
 @ProviderFor(RecipeListNotifier)
 final recipeListNotifierProvider =
-    AutoDisposeNotifierProvider<RecipeListNotifier, RecipeListUiState>.internal(
+    NotifierProvider<RecipeListNotifier, RecipeListUiState>.internal(
       RecipeListNotifier.new,
       name: r'recipeListNotifierProvider',
       debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -22,6 +22,6 @@ final recipeListNotifierProvider =
       allTransitiveDependencies: null,
     );
 
-typedef _$RecipeListNotifier = AutoDisposeNotifier<RecipeListUiState>;
+typedef _$RecipeListNotifier = Notifier<RecipeListUiState>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

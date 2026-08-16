@@ -5,6 +5,8 @@ import 'package:what_2_eat/shared/domain/entities/favorite.dart';
 abstract class FavoriteRepository {
   Future<Either<Failure, List<Favorite>>> listFavorites();
 
+  List<Favorite>? getCachedFavorites();
+
   Future<Either<Failure, Favorite>> addFavorite(String recipeId);
 
   Future<Either<Failure, void>> removeFavorite(String recipeId);

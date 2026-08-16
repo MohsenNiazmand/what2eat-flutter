@@ -4,7 +4,6 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:what_2_eat/core/extensions/context_extensions.dart';
-import 'package:what_2_eat/features/recipes/presentation/providers/recipe_list_provider.dart';
 
 class MainShellScreen extends HookConsumerWidget {
   const MainShellScreen({
@@ -14,11 +13,7 @@ class MainShellScreen extends HookConsumerWidget {
 
   final StatefulNavigationShell navigationShell;
 
-  void _onTap(int index, WidgetRef ref) {
-    if (index == 0) {
-      ref.read(recipeListNotifierProvider.notifier).refresh();
-    }
-
+  void _onTap(int index) {
     navigationShell.goBranch(
       index,
       initialLocation: index == navigationShell.currentIndex,
@@ -27,7 +22,6 @@ class MainShellScreen extends HookConsumerWidget {
 
   void _handleBackPress(
     BuildContext context,
-    WidgetRef ref,
     ObjectRef<DateTime?> lastBackPress,
   ) {
     final router = GoRouter.of(context);
@@ -37,7 +31,6 @@ class MainShellScreen extends HookConsumerWidget {
     }
 
     if (navigationShell.currentIndex != 0) {
-      ref.read(recipeListNotifierProvider.notifier).refresh();
       navigationShell.goBranch(0);
       return;
     }
@@ -68,13 +61,13 @@ class MainShellScreen extends HookConsumerWidget {
       canPop: false,
       onPopInvokedWithResult: (didPop, _) {
         if (didPop) return;
-        _handleBackPress(context, ref, lastBackPress);
+        _handleBackPress(context, lastBackPress);
       },
       child: Scaffold(
         body: navigationShell,
         bottomNavigationBar: NavigationBar(
           selectedIndex: navigationShell.currentIndex,
-          onDestinationSelected: (index) => _onTap(index, ref),
+          onDestinationSelected: _onTap,
           destinations: [
             NavigationDestination(
               icon: const Icon(Icons.restaurant_menu_outlined),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:what_2_eat/config/theme/app_radius.dart';
 import 'package:what_2_eat/core/constants/colors.dart';
 import 'package:what_2_eat/core/extensions/context_extensions.dart';
+import 'package:what_2_eat/features/recipes/presentation/widgets/recipe_hero_image.dart';
 import 'package:what_2_eat/shared/domain/entities/favorite.dart';
 import 'package:what_2_eat/shared/presentation/widgets/gap.dart';
 
@@ -53,16 +54,9 @@ class FavoriteListTile extends StatelessWidget {
               ),
               child: Row(
                 children: [
-                  CircleAvatar(
-                    radius: 26,
-                    backgroundColor: cSecondaryContainer.withValues(
-                      alpha: 0.85,
-                    ),
-                    child: Icon(
-                      Icons.favorite_rounded,
-                      color: colorScheme.error,
-                      size: 24,
-                    ),
+                  RecipeListHeroThumbnail(
+                    heroTag: favorite.recipeId,
+                    imageUrl: recipe?.image,
                   ),
                   Gap.h16(),
                   Expanded(

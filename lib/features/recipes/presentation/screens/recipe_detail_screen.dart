@@ -10,6 +10,7 @@ import 'package:what_2_eat/core/constants/colors.dart';
 import 'package:what_2_eat/core/extensions/context_extensions.dart';
 import 'package:what_2_eat/features/favorites/presentation/widgets/favorite_button.dart';
 import 'package:what_2_eat/features/recipes/presentation/providers/recipe_detail_provider.dart';
+import 'package:what_2_eat/features/recipes/presentation/providers/recipe_list_provider.dart';
 import 'package:what_2_eat/features/recipes/presentation/providers/recipe_preview_provider.dart';
 import 'package:what_2_eat/features/recipes/presentation/utils/recipe_share_formatter.dart';
 import 'package:what_2_eat/features/recipes/presentation/widgets/recipe_detail_content.dart';
@@ -80,7 +81,10 @@ class RecipeDetailScreen extends HookConsumerWidget {
                 Expanded(
                   child: ErrorRetryView(
                     message: message,
-                    onRetry: () {
+                    onRetry: () async {
+                      await ref
+                          .read(recipeListNotifierProvider.notifier)
+                          .refresh();
                       ref.invalidate(recipeDetailProvider(recipeId));
                     },
                   ),

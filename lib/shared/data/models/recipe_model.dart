@@ -19,6 +19,7 @@ class RecipeModel {
     this.image,
     this.createdAt,
     this.updatedAt,
+    this.isFavorite = false,
   });
 
   factory RecipeModel.fromJson(Map<String, dynamic> json) =>
@@ -37,6 +38,7 @@ class RecipeModel {
   final String? image;
   final DateTime? createdAt;
   final DateTime? updatedAt;
+  final bool isFavorite;
 
   Map<String, dynamic> toJson() => _$RecipeModelToJson(this);
 }

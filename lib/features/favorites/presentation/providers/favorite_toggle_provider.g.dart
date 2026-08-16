@@ -7,7 +7,7 @@ part of 'favorite_toggle_provider.dart';
 // **************************************************************************
 
 String _$favoriteToggleNotifierHash() =>
-    r'c135fca734618f6ceebe1f95e59ea6cf5e314839';
+    r'222d3673dad7196214efec7a83a62ea1e0d70351';
 
 /// See also [FavoriteToggleNotifier].
 @ProviderFor(FavoriteToggleNotifier)

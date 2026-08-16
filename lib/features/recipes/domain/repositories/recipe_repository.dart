@@ -23,4 +23,11 @@ abstract class RecipeRepository {
   });
 
   Future<Either<Failure, Recipe>> getRecipeById(String id);
+
+  Recipe? getCachedRecipeById(String id);
+
+  PaginatedResult<Recipe>? getCachedRecipes({
+    String? query,
+    String? category,
+  });
 }

@@ -4,6 +4,7 @@ import 'package:get_it/get_it.dart';
 import 'package:logger/logger.dart';
 import 'package:what_2_eat/core/network/dio_client.dart';
 import 'package:what_2_eat/core/storage/device_id_service.dart';
+import 'package:what_2_eat/core/storage/hive_initializer.dart';
 import 'package:what_2_eat/core/storage/secure_token_storage.dart';
 import 'package:what_2_eat/core/storage/token_storage.dart';
 import 'package:what_2_eat/features/auth/data/repositories/auth_repository_impl.dart';
@@ -16,6 +17,7 @@ import 'package:what_2_eat/features/auth/domain/usecases/refresh_token_usecase.d
 import 'package:what_2_eat/features/auth/domain/usecases/request_otp_usecase.dart';
 import 'package:what_2_eat/features/auth/domain/usecases/update_profile_usecase.dart';
 import 'package:what_2_eat/features/auth/domain/usecases/verify_otp_usecase.dart';
+import 'package:what_2_eat/features/favorites/data/datasources/favorite_local_data_source.dart';
 import 'package:what_2_eat/features/favorites/data/repositories/favorite_repository_impl.dart';
 import 'package:what_2_eat/features/favorites/data/services/favorite_api.dart';
 import 'package:what_2_eat/features/favorites/domain/repositories/favorite_repository.dart';
@@ -29,6 +31,7 @@ import 'package:what_2_eat/features/preferences/domain/repositories/preference_r
 import 'package:what_2_eat/features/preferences/domain/usecases/delete_preferences_usecase.dart';
 import 'package:what_2_eat/features/preferences/domain/usecases/get_preferences_usecase.dart';
 import 'package:what_2_eat/features/preferences/domain/usecases/save_preferences_usecase.dart';
+import 'package:what_2_eat/features/recipes/data/datasources/recipe_local_data_source.dart';
 import 'package:what_2_eat/features/recipes/data/repositories/recipe_repository_impl.dart';
 import 'package:what_2_eat/features/recipes/data/services/recipe_api.dart';
 import 'package:what_2_eat/features/recipes/domain/repositories/recipe_repository.dart';
@@ -39,6 +42,12 @@ import 'package:what_2_eat/features/recipes/domain/usecases/list_recipes_usecase
 final GetIt getIt = GetIt.instance;
 
 Future<void> initializeDependencies() async {
+  await HiveInitializer.init();
+
+  final recipeListCacheBox = await HiveInitializer.openRecipeListCacheBox();
+  final recipesByIdBox = await HiveInitializer.openRecipesByIdBox();
+  final favoritesCacheBox = await HiveInitializer.openFavoritesCacheBox();
+
   getIt
     ..registerLazySingleton<Logger>(
       () => Logger(
@@ -72,14 +81,23 @@ Future<void> initializeDependencies() async {
         deviceIdService: getIt(),
       ),
     )
+    ..registerLazySingleton<RecipeLocalDataSource>(
+      () => RecipeLocalDataSourceImpl(
+        listCacheBox: recipeListCacheBox,
+        recipesByIdBox: recipesByIdBox,
+      ),
+    )
     ..registerLazySingleton<RecipeRepository>(
-      () => RecipeRepositoryImpl(getIt()),
+      () => RecipeRepositoryImpl(getIt(), getIt()),
     )
     ..registerLazySingleton<PreferenceRepository>(
       () => PreferenceRepositoryImpl(getIt()),
     )
+    ..registerLazySingleton<FavoriteLocalDataSource>(
+      () => FavoriteLocalDataSourceImpl(cacheBox: favoritesCacheBox),
+    )
     ..registerLazySingleton<FavoriteRepository>(
-      () => FavoriteRepositoryImpl(getIt()),
+      () => FavoriteRepositoryImpl(getIt(), getIt()),
     )
     ..registerLazySingleton<RequestOtpUseCase>(
       () => RequestOtpUseCase(getIt()),

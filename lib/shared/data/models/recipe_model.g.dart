@@ -32,6 +32,7 @@ RecipeModel _$RecipeModelFromJson(Map<String, dynamic> json) => RecipeModel(
   updatedAt: json['updatedAt'] == null
       ? null
       : DateTime.parse(json['updatedAt'] as String),
+  isFavorite: json['isFavorite'] as bool? ?? false,
 );
 
 Map<String, dynamic> _$RecipeModelToJson(RecipeModel instance) =>
@@ -49,4 +50,5 @@ Map<String, dynamic> _$RecipeModelToJson(RecipeModel instance) =>
       'image': instance.image,
       'createdAt': instance.createdAt?.toIso8601String(),
       'updatedAt': instance.updatedAt?.toIso8601String(),
+      'isFavorite': instance.isFavorite,
     };
